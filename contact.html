@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<audio id="bg-music" loop>
+  <source src="savegameroom.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const music = document.getElementById("bg-music");
+
+  // restore play time if available
+  const lastTime = localStorage.getItem("bg-music-time");
+  if (lastTime) {
+    music.currentTime = parseFloat(lastTime);
+  }
+
+  // play after user clicks
+  document.addEventListener("click", () => {
+    music.play().catch(err => console.log(err));
+  }, { once: true });
+
+  // save time every second
+  setInterval(() => {
+    if (!isNaN(music.currentTime)) {
+      localStorage.setItem("bg-music-time", music.currentTime);
+    }
+  }, 1000);
+</script>
+
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +50,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Play</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Game\Mario Forever Part 1\index.html">Play Game</a></li>
                     <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link active" href="./contact.html">Contact</a></li>
                 </ul>
