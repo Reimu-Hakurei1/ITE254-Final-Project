@@ -1,0 +1,71 @@
+/* ตั้งค่าฟอนต์และพื้นหลัง */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url("Image.jpg")no-repeat center center fixed;;
+  background-size: cover;
+}
+
+/* กล่อง Login */
+.card {
+  border-radius: 20px;
+  background: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ปุ่ม Login */
+.btn-primary {
+  background: #4facfe;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #00c6ff;
+  transform: scale(1.03);
+}
+
+/* ช่อง input */
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+}
+
+/* Remember - Forgot */
+.d-flex a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #4facfe;
+  transition: color 0.3s ease;
+}
+
+.d-flex a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* Register link */
+.register-link p {
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  text-decoration: none;
+  color: #4facfe;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #007bff;
+}
