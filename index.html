@@ -1,243 +1,317 @@
-<!-- To do -->
-<!-- Add accordion -->
-<!-- Add carousel crossfade -->
-<!-- Pagination -->
-<!-- Scrollspy? -->
-
 <!DOCTYPE html>
 <html lang="en">
-
-<audio id="bg-music" loop>
-  <source src="savegameroom.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-  const music = document.getElementById("bg-music");
-
-  // restore play time if available
-  const lastTime = localStorage.getItem("bg-music-time");
-  if (lastTime) {
-    music.currentTime = parseFloat(lastTime);
-  }
-
-  // play after user clicks
-  document.addEventListener("click", () => {
-    music.play().catch(err => console.log(err));
-  }, { once: true });
-
-  // save time every second
-  setInterval(() => {
-    if (!isNaN(music.currentTime)) {
-      localStorage.setItem("bg-music-time", music.currentTime);
-    }
-  }, 1000);
-</script>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario-Type Game - Home</title>
-	<link rel="icon" href="icon.png" type="image/png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./styles (1).css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mario-Type Game - Home</title>
+  <link rel="icon" href="icon.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./styles (1).css">
+  <style>
+    /* small helper to keep the user's email readable on the navbar */
+    #userEmail { font-weight: 500; }
+  </style>
+
+  <!-- Firebase compat SDKs (matches the other files you uploaded) -->
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Firebase config - using the details you provided
+    // (If you already have firebase-config.js, you can remove this block and keep using that)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
+      authDomain: "ite254-final-project.firebaseapp.com",
+      projectId: "ite254-final-project",
+      storageBucket: "ite254-final-project.appspot.com",
+      messagingSenderId: "853636478780",
+      // appId is optional here; replace with your actual appId if desired
+      appId: "1:853636478780:web:REPLACE_WITH_YOUR_APPID"
+    };
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      firebase.app(); // if already initialized
+    }
+  </script>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">Mario Warriors</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Game\Test1\index.html">Play Game</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
-					<li class="nav-item"><a class="nav-link" href="./profile.html">Profile</a></li>
-                </ul>
-                <a class="btn btn-warning" href="https://drive.google.com/drive/folders/1JQHh_Bm8xqfNxNGpdZ4Kl_TEv3BjVqPs">Download</a>
-            </div>
-        </div>
-    </nav>
+  <!-- Background music (kept behavior from original file) -->
+  <audio id="bg-music" loop>
+    <source src="savegameroom.mp3" type="audio/mpeg">
+  </audio>
 
+  <script>
+    // bg music handling (restore time, play after user interacts, save time)
+    (function() {
+      const music = document.getElementById("bg-music");
 
-    <!-- Header with Title and Intro -->
-    <header class="text-center p-5 text-white">
-        <section>
-            <h1>Embark on an Epic Adventure!</h1>
-            <p>Collect coins, avoid obstacles, and save the kingdom!</p>
+      try {
+        // restore play time if available
+        const lastTime = localStorage.getItem("bg-music-time");
+        if (lastTime) {
+          music.currentTime = parseFloat(lastTime);
+        }
+      } catch (e) {
+        console.warn("Could not load bg-music time:", e);
+      }
 
-            <div class="text-center mb-5">
-                <h3>New Levels Coming Soon!</h3>
-                <p id="countdown"></p>
-            </div>
-        </section>
-    </header>
+      // play after user clicks anywhere (single user gesture)
+      document.addEventListener("click", () => {
+        music.play().catch(err => console.log("music play error:", err));
+      }, { once: true });
 
-    <div class="carousel-title mt-3">
-        <h2>The Gameplay</h2>
+      // save time every second
+      setInterval(() => {
+        if (music && !isNaN(music.currentTime)) {
+          localStorage.setItem("bg-music-time", music.currentTime);
+        }
+      }, 1000);
+    })();
+  </script>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">Mario Warriors</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="Game/Test1/index.html">Play Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="./profile.html">Profile</a></li>
+        </ul>
+
+        <a class="btn btn-warning me-2" href="https://drive.google.com/drive/folders/1JQHh_Bm8xqfNxNGpdZ4Kl_TEv3BjVqPs">Download</a>
+
+        <!-- show user email when signed in -->
+        <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
+
+        <!-- sign out button - hidden by default -->
+        <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
+      </div>
     </div>
-    <!-- Image Carousel -->
-    <div id="gameCarousel" class="carousel slide carousel-fade my-5" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="./Image 1.png" class="d-block mx-auto alt=" Level 1">
-            </div>
-            <div class="carousel-item">
-                <img src="./Image 2.png" class="d-block mx-auto" alt="Level 2">
-            </div>
-            <div class="carousel-item">
-                <img src="./Image 3.png" class="d-block mx-auto" alt="Level 3">
-            </div>
-            <div class="carousel-item">
-                <img src="./Image 4.png" class="d-block mx-auto" alt="Level 3">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+  </nav>
+
+
+  <!-- Header with Title and Intro -->
+  <header class="text-center p-5 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));">
+    <section>
+      <h1>Embark on an Epic Adventure!</h1>
+      <p>Collect coins, avoid obstacles, and save the kingdom!</p>
+
+      <div class="text-center mb-5">
+        <h3>New Levels Coming Soon!</h3>
+        <p id="countdown"></p>
+      </div>
+    </section>
+  </header>
+
+  <div class="carousel-title mt-3">
+    <h2 class="text-center">The Gameplay</h2>
+  </div>
+
+  <!-- Image Carousel -->
+  <div id="gameCarousel" class="carousel slide carousel-fade my-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="./Image 1.png" class="d-block mx-auto" alt="Level 1">
+      </div>
+      <div class="carousel-item">
+        <img src="./Image 2.png" class="d-block mx-auto" alt="Level 2">
+      </div>
+      <div class="carousel-item">
+        <img src="./Image 3.png" class="d-block mx-auto" alt="Level 3">
+      </div>
+      <div class="carousel-item">
+        <img src="./Image 4.png" class="d-block mx-auto" alt="Level 4">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Main Content with Animation, Play Button, and Articles -->
+  <main class="container py-5">
+    <!-- 2D Animation and Play Button -->
+    <div class="text-center mb-5">
+      <div class="box mx-auto mb-3">
+        <span style="--i: 1"><img src="./mario.jpeg" alt="Mario"></span>
+        <span style="--i: 2"><img src="./Mario_render.webp" alt="Mario render"></span>
+        <span style="--i: 3"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+        <span style="--i: 4"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
+        <span style="--i: 5"><img src="./Th18Reimu.webp" alt="Reimu"></span>
+        <span style="--i: 6"><img src="./mario.jpeg" alt="Mario"></span>
+        <span style="--i: 7"><img src="./Mario_render.webp" alt="Mario render"></span>
+        <span style="--i: 8"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+      </div>
+      <a href="Game/Mario Forever Part 1/index.html" class="btn btn-warning btn-lg me-2">Play Part 1</a>
+      <a href="Game/Mario Forever Part 2/index.html" class="btn btn-warning btn-lg">Play Part 2</a>
     </div>
 
-    <!-- Main Content with Animation, Play Button, and Articles -->
-    <main class="container py-5">
-        <!-- 2D Animation and Play Button -->
-        <div class="text-center mb-5">
-            <div class="box mx-auto mb-3">
-                <span style="--i: 1"><img src="./mario.jpeg" alt="Mario"></span>
-                <span style="--i: 2"><img src="./Mario_render.webp" alt="Mario"></span>
-                <span style="--i: 3"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
-                <span style="--i: 4"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
-                <span style="--i: 5"><img src="./Th18Reimu.webp" alt="Reimu"></span>
-                <span style="--i: 6"><img src="./mario.jpeg" alt="Mario"></span>
-                <span style="--i: 7"><img src="./Mario_render.webp" alt="Mario"></span>
-                <span style="--i: 8"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
-            </div>
-            <a href="Game\Mario Forever Part 1\index.html" class="btn btn-warning btn-lg">Play Part 1</a>
-            <a href="Game\Mario Forever Part 2\index.html" class="btn btn-warning btn-lg">Play Part 2</a>
+    <!-- Side-by-Side Articles -->
+    <div class="row">
+      <div class="col-lg-6">
+        <article class="bg-light p-4 mb-4 rounded">
+          <h2>About the Game</h2>
+          <p>In this thrilling Mario-type adventure, players navigate through four exciting levels, facing obstacles, collecting coins, and rescuing the kingdom.</p>
+        </article>
+      </div>
+      <div class="col-lg-6">
+        <article class="bg-light p-4 mb-4 rounded">
+          <h2>Game Mechanics</h2>
+          <p>The game is designed with simple yet engaging mechanics. Jump, run, and explore diverse environments while avoiding enemies and traps.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            What is Mario Game?
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+             data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Mario Game is a fan-made project inspired by the iconic Mario series. It includes exciting levels, engaging mechanics, and a new storyline.
+          </div>
         </div>
+      </div>
 
-        <!-- Side-by-Side Articles -->
-        <div class="row">
-            <div class="col-lg-6">
-                <article class="bg-light p-4 mb-4 rounded">
-                    <h2>About the Game</h2>
-                    <p>In this thrilling Mario-type adventure, players navigate through four exciting levels, facing
-                        obstacles, collecting coins, and rescuing the kingdom.</p>
-                </article>
-            </div>
-            <div class="col-lg-6">
-                <article class="bg-light p-4 mb-4 rounded">
-                    <h2>Game Mechanics</h2>
-                    <p>The game is designed with simple yet engaging mechanics. Jump, run, and explore diverse
-                        environments while avoiding enemies and traps.</p>
-                </article>
-            </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            How can I play the game?
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+             data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            You can play the game by clicking the "Play Now" button on the homepage or by navigating to the "Play" page from the navbar.
+          </div>
         </div>
+      </div>
 
-        <!-- FAQ Accordion -->
-        <div class="accordion" id="faqAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        What is Mario Game?
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        Mario Game is a fan-made project inspired by the iconic Mario series. It includes exciting
-                        levels, engaging mechanics, and a new storyline.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        How can I play the game?
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        You can play the game by clicking the "Play Now" button on the homepage or by navigating to the
-                        "Play" page from the navbar.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Is the Mario Game free to play?
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        Yes, the Mario Game is completely free to play. You can enjoy all levels without any charges or
-                        hidden fees.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        Can I play the game on my mobile device?
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                    data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        Yes, the game is designed to be responsive, so you can play it on your mobile device, tablet, or
-                        desktop.
-                    </div>
-                </div>
-            </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Is the Mario Game free to play?
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+             data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Yes, the Mario Game is completely free to play. You can enjoy all levels without any charges or hidden fees.
+          </div>
         </div>
+      </div>
 
-    </main>
-
-    <footer class="text-center p-3 bg-dark text-white">
-        <p>© 2024 Mario-Type Game | Web Development Project</p>
-        <div>
-            <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
-            <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            Can I play the game on my mobile device?
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+             data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Yes, the game is designed to be responsive, so you can play it on your mobile device, tablet, or desktop.
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script>
-        const countdown = document.getElementById('countdown');
-        const targetDate = new Date('2024-12-31').getTime();
+  </main>
 
-        setInterval(() => {
-            const now = new Date().getTime();
-            const timeLeft = targetDate - now;
+  <footer class="text-center p-3 bg-dark text-white">
+    <p>© 2024 Mario-Type Game | Web Development Project</p>
+    <div>
+      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
+      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
+    </div>
+  </footer>
 
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  <!-- countdown -->
+  <script>
+    (function() {
+      const countdown = document.getElementById('countdown');
+      const targetDate = new Date('2024-12-31').getTime();
 
-            countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      setInterval(() => {
+        const now = new Date().getTime();
+        const timeLeft = targetDate - now;
 
+        if (timeLeft <= 0) {
+          countdown.innerHTML = "Released!";
+          return;
+        }
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }, 1000);
+    })();
+  </script>
+
+  <!-- Firebase auth & navbar handling -->
+  <script>
+    (function() {
+      const signOutBtn = document.getElementById('signOutBtn');
+      const userEmailSpan = document.getElementById('userEmail');
+
+      // show/hide sign out and display user email when auth state changes
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // user signed in -> show sign-out and email
+          userEmailSpan.textContent = user.email || user.displayName || '';
+          userEmailSpan.classList.remove('d-none');
+          signOutBtn.classList.remove('d-none');
+        } else {
+          // not signed in -> redirect to Login.html
+          // (if this page is intentionally public, remove this redirect)
+          window.location.href = "Login.html";
+        }
+      });
+
+      // sign out on button click
+      signOutBtn.addEventListener('click', function() {
+        firebase.auth().signOut().then(() => {
+          // optionally stop music
+          const music = document.getElementById('bg-music');
+          try { music.pause(); } catch (e) {}
+          window.location.href = "Login.html";
+        }).catch((err) => {
+          alert("Sign out error: " + err.message);
+        });
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
