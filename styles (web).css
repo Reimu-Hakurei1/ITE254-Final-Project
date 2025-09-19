@@ -9,9 +9,9 @@ body {
     background-color: black;
     max-width: 100%;
 }
-<!--All img -->
+
 img {
-    max-width: 90%;
+    max-width: 80%;
 }
 
 /* Navbar Styles */
@@ -161,7 +161,7 @@ header section {
     transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px);
     -webkit-box-reflect: below 0px linear-gradient(transparent, transparent, #0004)
 }
-<!--แก้ w จาก 100 เป็น 110-->
+
 .box span img {
     position: absolute;
     top: 0;
