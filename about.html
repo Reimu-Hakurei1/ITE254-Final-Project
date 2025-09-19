@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<audio id="bg-music" loop>
-  <source src="savegameroom.mp3" type="audio/mpeg">
-</audio>
+  <!-- Firebase compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
 
-<script>
-  const music = document.getElementById("bg-music");
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
+      authDomain: "ite254-final-project.firebaseapp.com",
+      projectId: "ite254-final-project",
+      storageBucket: "ite254-final-project.appspot.com",
+      messagingSenderId: "853636478780",
+      appId: "1:853636478780:web:bd1af21cb7474926db9039",
+      measurementId: "G-ELH7M25FKW"
+    };
 
-  // restore play time if available
-  const lastTime = localStorage.getItem("bg-music-time");
-  if (lastTime) {
-    music.currentTime = parseFloat(lastTime);
-  }
-
-  // play after user clicks
-  document.addEventListener("click", () => {
-    music.play().catch(err => console.log(err));
-  }, { once: true });
-
-  // save time every second
-  setInterval(() => {
-    if (!isNaN(music.currentTime)) {
-      localStorage.setItem("bg-music-time", music.currentTime);
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
     }
-  }, 1000);
-</script>
+  </script>
+</head>
+
+<body>
+  <!-- Background music -->
+  <audio id="bg-music" loop>
+    <source src="savegameroom.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    (function() {
+      const music = document.getElementById("bg-music");
+      try {
+        const lastTime = localStorage.getItem("bg-music-time");
+        if (lastTime) {
+          music.currentTime = parseFloat(lastTime);
+        }
+      } catch (e) {
+        console.warn("Could not load bg-music time:", e);
+      }
+
+      document.addEventListener("click", () => {
+        music.play().catch(err => console.log("music play error:", err));
+      }, { once: true });
+
+      setInterval(() => {
+        if (music && !isNaN(music.currentTime)) {
+          localStorage.setItem("bg-music-time", music.currentTime);
+        }
+      }, 1000);
+    })();
+  </script>
 
 <head>
 	<link rel="icon" type="image/png" href="icon.png">
@@ -52,12 +79,13 @@
 					<li class="nav-item"><a class="nav-link" href="Game\Tanky\index.html">Play Game</a></li>
                     <li class="nav-item"><a class="nav-link active" href="./about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
-					<li class="nav-item"><a class="nav-link" href="./profile.html">Profile</a></li>
                 </ul>
-                <a class="btn btn-warning" href="https://drive.google.com/drive/folders/1JQHh_Bm8xqfNxNGpdZ4Kl_TEv3BjVqPs">Download</a>
-            </div>
-        </div>
-    </nav>
+                <!-- User info + Sign Out -->
+        <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
+        <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
+      </div>
+    </div>
+  </nav>
 
     <!-- Main Content -->
     <main class="container py-5">
@@ -104,7 +132,33 @@
     <footer class="text-center p-4 bg-dark text-white">
         <p>© 2024 Mario-Type Game | Web Development Project</p>
     </footer>
+ <!-- Firebase Auth -->
+  <script>
+    (function() {
+      const signOutBtn = document.getElementById('signOutBtn');
+      const userEmailSpan = document.getElementById('userEmail');
 
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          userEmailSpan.textContent = user.email || user.displayName || '';
+          userEmailSpan.classList.remove('d-none');
+          signOutBtn.classList.remove('d-none');
+        } else {
+          window.location.href = "Login.html";
+        }
+      });
+
+      signOutBtn.addEventListener('click', function() {
+        firebase.auth().signOut().then(() => {
+          const music = document.getElementById('bg-music');
+          try { music.pause(); } catch (e) {}
+          window.location.href = "Login.html";
+        }).catch((err) => {
+          alert("Sign out error: " + err.message);
+        });
+      });
+    })();
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
