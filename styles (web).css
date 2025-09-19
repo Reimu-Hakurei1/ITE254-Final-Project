@@ -166,7 +166,7 @@ header section {
     position: absolute;
     top: 0;
     left: 0;
-    max-width: 110%;
+    max-width: 100%;
     border: 2px solid white;
     border-radius: 18px;
     height: 100%;
