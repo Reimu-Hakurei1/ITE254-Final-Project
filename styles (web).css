@@ -24,14 +24,6 @@ img {
     color: white;
 }
 
-.nav-container {
-    /* display: flex;
-    justify-content: space-around;
-    align-items: center; */
-    width: 100%;
-    /* background-color: #007bff; */
-}
-
 .navbar-brand {
     font-size: 24px;
     font-weight: bold;
@@ -39,169 +31,80 @@ img {
     display: flex;
     align-items: center;
 }
-
-/* .nav-list {
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    justify-self: center;
-    margin-bottom: 0rem;
-} */
-
-/* .nav-list li a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    transition: color 0.3s ease;
-} */
 
 .nav-list li a:hover {
     color: #f5b10a;
 }
 
-.btn-download {
-    background-color: #f5b10a;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+/* Contact Page improvements */
+main.container {
+    background-color: #1a1a1a;   /* เทาเข้มแทนดำล้วน */
+    padding: 30px;
+    border-radius: 12px;
 }
 
-.btn-download:hover {
-    background-color: #e0a000;
-}
-
-header {
-    background-color: rgba(30, 51, 28, 0.884);
-    background-image: url('./background.jpg');
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+form {
+    background-color: #222;  /* กล่อง form สีเข้มกว่าฉากหลัง */
     padding: 20px;
+    border-radius: 8px;
 }
 
-header section * {
-    text-shadow: -1px 1px 0 #000,
-        1px 1px 0 #000,
-        1px -1px 0 #000,
-        -1px -1px 0 #000;
+form input, form textarea {
+    border-radius: 6px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
 }
 
-header section {
-    background: rgba(8, 248, 248, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    padding: 25px;
+form input::placeholder, form textarea::placeholder {
+    color: #bbb;  /* ให้ placeholder สีอ่อน */
 }
 
-.carousel-title {
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
 }
 
-.carousel-title h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #f5b10a;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    letter-spacing: 1px;
-    margin: 0;
-    padding: 0;
+/* Social Icons */
+.social-icons a {
+    font-size: 2rem;   /* ขยายขนาด icon */
+    margin-right: 15px;
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.carousel-title h2::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 4px;
-    background-color: #f5b10a;
-    margin: 10px auto 0 auto;
-    border-radius: 2px;
+.social-icons a:hover {
+    color: #f5b10a;    /* hover เปลี่ยนสี */
+    transform: scale(1.2);
 }
 
-
-
-.box {
-    position: relative;
-    width: 200px;
-    height: 120px;
-    transform-style: preserve-3d;
-    animation: animate 20s linear infinite;
-}
-
-@keyframes animate {
-    0% {
-        transform: perspective(1000px) rotateY(0deg);
-    }
-
-    100% {
-        transform: perspective(1000px) rotateY(360deg);
-    }
-}
-
-.box span {
-    position: absolute;
-    top: 30px;
-    left: 0;
-    width: 100%;
-    min-height: 180px;
-    transform-origin: center;
-    transform-style: preserve-3d;
-    transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px);
-    -webkit-box-reflect: below 0px linear-gradient(transparent, transparent, #0004)
-}
-
-.box span img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    max-width: 100%;
-    border: 2px solid white;
-    border-radius: 18px;
-    height: 100%;
-    object-fit: cover;
-}
-
-.box:hover {
-    animation-play-state: paused;
-}
-
-.box span img:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
-footer {
-    background-color: #f8f9fa;
-}
-
-.navbar-brand {
-    font-size: 24px;
-    font-weight: bold;
-}
-
+/* Headings and spacing */
 h1 {
     font-size: 3em;
-    /* Scales based on screen size */
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #f5b10a;
 }
 
 p {
     font-size: 1.2em;
+    margin-bottom: 15px;
 }
 
-.btn-warning {
-    font-size: 1.2em;
+/* Footer */
+footer {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 15px;
+    border-top: 1px solid #333;
 }
 
 /* Accordion styles */
@@ -220,59 +123,8 @@ p {
     object-fit: cover;
 }
 
-/* Contact Form styles */
-form input, form textarea {
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 1em;
-}
-
-form button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-}
-
-
-/* Large screens (desktops) */
-@media (min-width: 992px) {
-    header {
-        padding: 5rem;
-        min-height: 80vh;
-    }
-
-    .box {
-        width: 300px;
-        height: 300px;
-    }
-}
-
-/* Medium screens (tablets) */
-@media (min-width: 768px) and (max-width: 991px) {
-    header {
-        padding: 3rem;
-        min-height: 60vh;
-    }
-
-    .box {
-        width: 250px;
-        height: 250px;
-    }
-}
-
-/* Small screens (mobile phones) */
+/* Responsive adjustments */
 @media (max-width: 767px) {
-    header {
-        padding: 2rem;
-        min-height: 50vh;
-    }
-
-    .box {
-        width: 150px;
-        height: 150px;
-    }
-
     h1 {
         font-size: 1.5rem;
     }
@@ -281,7 +133,7 @@ form button {
         font-size: 1rem;
     }
 
-    .btn-warning {
-        font-size: 16px;
+    .social-icons a {
+        font-size: 1.5rem;
     }
 }
