@@ -3,68 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mario Music Player</title>
+  <title>ITE254-Final-Project - Music</title>
   <link rel="icon" href="icon.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./styles (web).css">
   <style>
+    body { background: linear-gradient(180deg,#0f0f0f,#121212 70%); color:#eaeaea; padding-bottom:120px; }
     #userEmail { font-weight: 500; }
-    body {
-      background-color: #121212;
-      color: #fff;
-    }
-    .playlist-container {
-      max-width: 700px;
-      margin: 2rem auto;
-    }
-    .playlist-item {
-      padding: 15px;
-      border-bottom: 1px solid #333;
-      cursor: pointer;
-    }
-    .playlist-item:hover {
-      background-color: #1db95433;
-    }
-    .playlist-item.active {
-      background-color: #1db95455;
-      font-weight: bold;
-    }
-    /* Bottom Player Bar */
-    .player-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #181818;
-      border-top: 1px solid #333;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 1000;
-    }
-    .player-info {
-      flex: 1;
-      padding-left: 10px;
-    }
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .progress {
-      flex: 2;
-      height: 6px;
-      margin: 0 15px;
-    }
+    .page-header { text-align:center; padding:2rem 1rem; color:white; }
+    .album-container { display:flex; justify-content:center; margin:2rem 0; }
+    .album-container img { width:340px; height:340px; border-radius:12px; object-fit:cover; box-shadow:0 12px 28px rgba(0,0,0,0.7); }
+    .music-section { width:100%; max-width:1200px; margin:0 auto; padding:0 2rem; }
+    .track { display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.1); cursor:pointer; transition:background .15s; }
+    .track:hover { background:rgba(255,255,255,0.05); }
+    .track.active { background:rgba(29,185,84,0.15); }
+    .track img { width:56px; height:56px; border-radius:6px; object-fit:cover; }
+    .track-info { flex:1; min-width:0; }
+    .track-title { font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .track-artist { font-size:0.9rem; color:#bdbdbd; }
+    /* Player bar */
+    .player-bar { position:fixed; left:0; right:0; bottom:0; background:#181818; border-top:1px solid rgba(255,255,255,0.05); color:#fff; padding:10px 18px; display:flex; align-items:center; gap:12px; z-index:2000; }
+    .player-left { display:flex; align-items:center; gap:12px; width:250px; }
+    .player-left img { width:56px; height:56px; border-radius:6px; object-fit:cover; }
+    .player-center { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .controls button { background:transparent; border:none; color:#fff; font-size:1.2rem; }
+    .controls button.play { background:#1DB954; color:#000; font-weight:bold; border-radius:50%; width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+    .progress-wrap { display:flex; align-items:center; gap:8px; width:100%; }
+    .time { font-size:0.8rem; color:#bdbdbd; width:40px; text-align:center; }
+    .progress { flex:1; height:6px; background:#333; border-radius:999px; position:relative; cursor:pointer; }
+    .progress .bar { height:100%; background:#1DB954; width:0%; border-radius:999px; }
+    .progress .thumb { width:14px; height:14px; border-radius:50%; background:#fff; position:absolute; top:50%; transform:translate(-50%,-50%); left:0%; display:none; }
+    .progress:hover .thumb { display:block; }
   </style>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
       authDomain: "ite254-final-project.firebaseapp.com",
@@ -74,9 +50,7 @@
       appId: "1:853636478780:web:bd1af21cb7474926db9039",
       measurementId: "G-ELH7M25FKW"
     };
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
   </script>
 </head>
 <body>
@@ -84,12 +58,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-              aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
@@ -104,139 +75,143 @@
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="text-center p-5 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));">
-    <h1>Music Use In Game</h1>
-  </header>
 
-  <!-- Playlist -->
-  <main class="playlist-container">
-    <div class="playlist-item" data-src="songs/fastrun.mp3">Apoplexytanks</div>
-    <div class="playlist-item" data-src="songs/yky.mp3">Fastrun 1</div>
-    <div class="playlist-item" data-src="songs/overworld.mp3">Fastrun 2</div>
-    <div class="playlist-item" data-src="songs/Intro 2.mp3">Yoshi Island - Ending</div>
-	<div class="playlist-item" data-src="songs/Intro 2.mp3">Yoshi Island - Big Boss</div>
-    <div class="playlist-item" data-src="songs/Mario RPG - Bowser Battle</.mp3">Mario RPG - Bowser Battle</div>
-	<div class="playlist-item" data-src="songs/Mario World - Athletic (Yoshi).mp3">Mario World - Athletic (Yoshi)</div>
-	<div class="playlist-item" data-src="songs/Mario World - Athletic.mp3">Mario World - Athletic</div>
-	<div class="playlist-item" data-src="songs/Mario World - Ending.mp3">Mario World - Ending</div>
-	<div class="playlist-item" data-src="songs/Mario World - Overworld.mp3">Mario World - Overworld</div>
-	<div class="playlist-item" data-src="songs/Mario World - Underground.mp3">Mario World - Underground</div>
-	<div class="playlist-item" data-src="songs/Super Mario Bros All-Star - Underground.mp3">Super Mario Bros All-Star - Underground</div>
-	<div class="playlist-item" data-src="songs/Super Mario Bros All-Star- Underwater Sped up.mp3">Super Mario Bros All-Star- Underwater Sped up</div>
-	<div class="playlist-item" data-src="songs/Yky.mp3">Yky</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - Aboveground.mp3">Yoshi Island - Aboveground</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - Athletic.mp3">Yoshi Island - Athletic</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - Castle.mp3">Yoshi Island - Castle</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - Underground.mp3">Yoshi Island - Underground</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - levelselector.mp3">Touhou Spell Bubble - Characters Select</div>
-	<div class="playlist-item" data-src="songs/Yoshi Island - savegameroom.mp3">Mario World - Overworld Map Theme</div>
-    <!-- add as many as you want -->
-  </main>
-
-  <!-- Player Bar -->
-  <div class="player-bar d-none">
-    <div class="player-info">
-      <strong id="currentSong">No song selected</strong>
-      <div id="timeDisplay">0:00 / 0:00</div>
-    </div>
-
-    <button id="prevBtn" class="btn btn-sm btn-light">⏮</button>
-    <button id="playBtn" class="btn btn-sm btn-success">▶</button>
-    <button id="pauseBtn" class="btn btn-sm btn-danger">⏸</button>
-    <button id="nextBtn" class="btn btn-sm btn-light">⏭</button>
-
-    <div class="progress">
-      <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
-    </div>
-    <audio id="audio"></audio>
+  <!-- Big album -->
+  <div class="album-container">
+    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover">
   </div>
+
+  <!-- Music list -->
+  <div class="music-section">
+    <h2>Music</h2>
+    <div id="trackList"></div>
+  </div>
+
+  <!-- Player bar -->
+  <div class="player-bar">
+    <div class="player-left">
+      <img id="miniCover" src="covers/fastrun.jpg" alt="cover">
+      <div>
+        <div id="songTitle" style="font-weight:600">Fast Run</div>
+        <div id="songArtist" style="font-size:0.9rem; color:#bdbdbd">Composer A</div>
+      </div>
+    </div>
+    <div class="player-center">
+      <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play" class="play">▶</button>
+        <button id="next">⏭</button>
+      </div>
+      <div class="progress-wrap">
+        <div class="time" id="curTime">0:00</div>
+        <div class="progress" id="progress">
+          <div class="bar" id="progressBar"></div>
+          <div class="thumb" id="thumb"></div>
+        </div>
+        <div class="time" id="durTime">0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audioEl" preload="metadata"></audio>
 
   <!-- Footer -->
   <footer class="text-center p-3 bg-dark text-white">
     <p>© ITE254 Final Project</p>
+    <div>
+      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
+      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
+    </div>
   </footer>
 
   <!-- Script -->
   <script>
-    const audio = document.getElementById("audio");
-    const playerBar = document.querySelector(".player-bar");
-    const playlistItems = document.querySelectorAll(".playlist-item");
-    const currentSongTitle = document.getElementById("currentSong");
-    const progressBar = document.getElementById("progressBar");
-    const timeDisplay = document.getElementById("timeDisplay");
-    const playBtn = document.getElementById("playBtn");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const tracks = [
+      {title:"Super Mario World - Wandering the Plains", artist:"Koji Kondo", file:"songs/savegameroom.mp3", cover:"covers/mario world.jpg"},
+      {title:"Touhou Spell Bubble - Character Select", artist:"Masaki (ZUNTATA)", file:"songs/levelselector.mp3", cover:"covers/Touhou spell bubble.png"},
+      {title:"Super Mario Yoshi Island - Ending", artist:"Koji Kondo", file:"songs/Intro 1.ogg", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario Yoshi Island - Big Boss BGM", artist:"Koji Kondo", file:"songs/Intro 2.mp3", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario World - Overworld", artist:"Koji Kondo", file:"songs/Mario World - Overworld.mp3", cover:"covers/mario world.jpg"},
+      {title:"Super Mario World - Underground", artist:"Koji Kondo", file:"songs/Mario World - Underground.mp3", cover:"covers/mario world.jpg"},
+      {title:"Super Mario World - Athletic", artist:"Koji Kondo", file:"songs/Mario World - Athletic.mp3", cover:"covers/mario world.jpg"},
+      {title:"Super Mario Yoshi Island - Castle & Fortress", artist:"Koji Kondo", file:"songs/Yoshi Island - Castle.mp3", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario All-Stars - Swimming(Hurry Up)", artist:"Koji Kondo", file:"songs/Super Mario Bros All-Star- Underwater Sped up.mp3", cover:"covers/mario all-star.png"},
+      {title:"Super Mario World - Haunted House", artist:"Koji Kondo", file:"songs/Haunted House.mp3", cover:"covers/mario world.jpg"},
+      {title:"Super Mario Yoshi Island - Underground BGM", artist:"Koji Kondo", file:"songs/Yoshi Island - Underground.mp3", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario All-Stars - Underground", artist:"Koji Kondo", file:"songs/Super Mario Bros All-Star - Underground.mp3", cover:"covers/mario all-star.png"},
+      {title:"Super Mario Yoshi Island - Aboveground", artist:"Koji Kondo", file:"songs/Yoshi Island - Aboveground.mp3", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario World - Athletic(Yoshi)", artist:"Koji Kondo", file:"songs/Mario World - Athletic (Yoshi).mp3", cover:"covers/mario world.jpg"},
+      {title:"Rigit Obstacles", artist:"Virgill", file:"songs/Rigit Obstacles.mp3", cover:"covers/00000401.png"},
+      {title:"Sirens", artist:"Dave the Brave", file:"songs/Fastrun 2.ogg", cover:"covers/mf.jpg"},
+      {title:"Jaguar XJ220 - Speed-E-Boy", artist:"Martin Iveson", file:"songs/Yky.mp3", cover:"covers/jaguar_xj220_01.png"},
+      {title:"Super Mario Yoshi Island - Flower Garden", artist:"Koji Kondo", file:"songs/Yoshi Island - Flower Garden.mp3", cover:"covers/Yoshi Island.png"},
+      {title:"Apoplexy", artist:"Bee Hunter", file:"songs/Apoplexytanks.ogg", cover:"covers/600x600bf-60.jpg"},
+      {title:"Super Mario Yoshi Island - Bowser", artist:"Koji Kondo", file:"songs/Yoshi Island - Final Boss.ogg", cover:"covers/Yoshi Island.png"},
+      {title:"Super Mario World - Staff Roll", artist:"Koji Kondo", file:"songs/Mario World - Ending.mp3", cover:"covers/mario world.jpg"},
+    ];
 
-    let currentIndex = -1;
+    let currentIndex = 0, isPlaying = false;
+    const audio = document.getElementById('audioEl');
+    const albumCover = document.getElementById('albumCover');
+    const miniCover = document.getElementById('miniCover');
+    const songTitle = document.getElementById('songTitle');
+    const songArtist = document.getElementById('songArtist');
+    const playBtn = document.getElementById('play');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const progress = document.getElementById('progress');
+    const progressBar = document.getElementById('progressBar');
+    const thumb = document.getElementById('thumb');
+    const curTime = document.getElementById('curTime');
+    const durTime = document.getElementById('durTime');
+    const trackList = document.getElementById('trackList');
 
-    function loadSong(index) {
-      playlistItems.forEach(item => item.classList.remove("active"));
-      playlistItems[index].classList.add("active");
-      audio.src = playlistItems[index].dataset.src;
-      currentSongTitle.textContent = playlistItems[index].textContent;
-      audio.load();
-      currentIndex = index;
+    function loadTrack(i) {
+      const t = tracks[i];
+      currentIndex = i;
+      audio.src = t.file;
+      songTitle.textContent = t.title;
+      songArtist.textContent = t.artist;
+      albumCover.src = t.cover;
+      miniCover.src = t.cover;
+      document.querySelectorAll('.track').forEach(el=>el.classList.remove('active'));
+      const active = document.querySelector(`.track[data-index="${i}"]`);
+      if (active) active.classList.add('active');
     }
-
-    function playSong() {
-      audio.play();
-      playerBar.classList.remove("d-none");
-    }
-
-    function pauseSong() {
-      audio.pause();
-    }
-
-    playlistItems.forEach((item, index) => {
-      item.addEventListener("click", () => {
-        loadSong(index);
-        playSong();
-      });
-    });
-
-    playBtn.addEventListener("click", playSong);
-    pauseBtn.addEventListener("click", pauseSong);
-
-    prevBtn.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        loadSong(currentIndex - 1);
-        playSong();
+    function playTrack() { audio.play(); isPlaying=true; playBtn.textContent='❚❚'; }
+    function pauseTrack() { audio.pause(); isPlaying=false; playBtn.textContent='▶'; }
+    playBtn.addEventListener('click',()=>{isPlaying?pauseTrack():playTrack();});
+    prevBtn.addEventListener('click',()=>{loadTrack((currentIndex-1+tracks.length)%tracks.length);playTrack();});
+    nextBtn.addEventListener('click',()=>{loadTrack((currentIndex+1)%tracks.length);playTrack();});
+    audio.addEventListener('timeupdate',()=>{
+      if(audio.duration){
+        const pct=(audio.currentTime/audio.duration)*100;
+        progressBar.style.width=pct+"%"; thumb.style.left=pct+"%";
+        curTime.textContent=formatTime(audio.currentTime);
+        durTime.textContent=formatTime(audio.duration);
       }
     });
-
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < playlistItems.length - 1) {
-        loadSong(currentIndex + 1);
-        playSong();
-      }
+    progress.addEventListener('click',(e)=>{
+      const rect=progress.getBoundingClientRect();
+      const pct=(e.clientX-rect.left)/rect.width;
+      audio.currentTime=pct*audio.duration;
     });
-
-    audio.addEventListener("timeupdate", () => {
-      if (audio.duration) {
-        const percent = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = percent + "%";
-
-        const curMin = Math.floor(audio.currentTime / 60);
-        const curSec = Math.floor(audio.currentTime % 60).toString().padStart(2,"0");
-        const durMin = Math.floor(audio.duration / 60);
-        const durSec = Math.floor(audio.duration % 60).toString().padStart(2,"0");
-
-        timeDisplay.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
-      }
+    function formatTime(sec){const m=Math.floor(sec/60);const s=Math.floor(sec%60).toString().padStart(2,"0");return `${m}:${s}`;}
+    audio.addEventListener('ended',()=>{nextBtn.click();});
+    tracks.forEach((t,i)=>{
+      const div=document.createElement('div');
+      div.className='track';
+      div.dataset.index=i;
+      div.innerHTML=`<img src="${t.cover}" alt="${t.title}"><div class="track-info"><div class="track-title">${t.title}</div><div class="track-artist">${t.artist}</div></div>`;
+      div.addEventListener('click',()=>{loadTrack(i);playTrack();});
+      trackList.appendChild(div);
     });
+    loadTrack(currentIndex);
 
-    audio.addEventListener("ended", () => {
-      nextBtn.click();
-    });
-
-    // Firebase Auth
+    // Firebase auth
     (function() {
       const signOutBtn = document.getElementById('signOutBtn');
       const userEmailSpan = document.getElementById('userEmail');
-
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           userEmailSpan.textContent = user.email || user.displayName || '';
@@ -246,17 +221,13 @@
           window.location.href = "Login.html";
         }
       });
-
       signOutBtn.addEventListener('click', function() {
         firebase.auth().signOut().then(() => {
           window.location.href = "Login.html";
-        }).catch((err) => {
-          alert("Sign out error: " + err.message);
-        });
+        }).catch((err) => { alert("Sign out error: " + err.message); });
       });
     })();
   </script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
