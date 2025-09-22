@@ -550,6 +550,23 @@ form button {
 }
 
 
+html, body {
+  height: 100%;              /* กำหนดความสูงเต็มหน้าจอ */
+  display: flex;
+  flex-direction: column;    /* จัดเรียงเป็นแนวตั้ง */
+}
+
+main {
+  flex: 1;                   /* กินพื้นที่เหลือเพื่อดัน footer ลง */
+}
+
+footer {
+  margin-top: auto;          /* ดัน footer ไปอยู่ล่าง */
+}
+
+
+
+
 /* Large screens (desktops) */
 @media (min-width: 992px) {
     header {
