@@ -1,0 +1,27 @@
+body { background: linear-gradient(180deg,#0f0f0f,#121212 70%); color:#eaeaea; padding-bottom:120px; }
+    #userEmail { font-weight: 500; }
+    .page-header { text-align:center; padding:2rem 1rem; color:white; }
+    .album-container { display:flex; justify-content:center; margin:2rem 0; }
+    .album-container img { width:340px; height:340px; border-radius:12px; object-fit:cover; box-shadow:0 12px 28px rgba(0,0,0,0.7); }
+    .music-section { width:100%; max-width:1200px; margin:0 auto; padding:0 2rem; }
+    .track { display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.1); cursor:pointer; transition:background .15s; }
+    .track:hover { background:rgba(255,255,255,0.05); }
+    .track.active { background:rgba(29,185,84,0.15); }
+    .track img { width:56px; height:56px; border-radius:6px; object-fit:cover; }
+    .track-info { flex:1; min-width:0; }
+    .track-title { font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .track-artist { font-size:0.9rem; color:#bdbdbd; }
+    /* Player bar */
+    .player-bar { position:fixed; left:0; right:0; bottom:0; background:#181818; border-top:1px solid rgba(255,255,255,0.05); color:#fff; padding:10px 18px; display:flex; align-items:center; gap:12px; z-index:2000; }
+    .player-left { display:flex; align-items:center; gap:12px; width:250px; }
+    .player-left img { width:56px; height:56px; border-radius:6px; object-fit:cover; }
+    .player-center { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .controls button { background:transparent; border:none; color:#fff; font-size:1.2rem; }
+    .controls button.play { background:#1DB954; color:#000; font-weight:bold; border-radius:50%; width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+    .progress-wrap { display:flex; align-items:center; gap:8px; width:100%; }
+    .time { font-size:0.8rem; color:#bdbdbd; width:40px; text-align:center; }
+    .progress { flex:1; height:6px; background:#333; border-radius:999px; position:relative; cursor:pointer; }
+    .progress .bar { height:100%; background:#1DB954; width:0%; border-radius:999px; }
+    .progress .thumb { width:14px; height:14px; border-radius:50%; background:#fff; position:absolute; top:50%; transform:translate(-50%,-50%); left:0%; display:none; }
+    .progress:hover .thumb { display:block; }
