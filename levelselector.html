@@ -63,36 +63,13 @@
       firebase.initializeApp(firebaseConfig);
     }
   </script>
+    <script>
+  let frame = document.getElementById("hidden-frame").contentWindow;
+</script>
 </head>
+  <!-- Hidden iframe (completely invisible) -->
+  <iframe src="levelselector/index.html" style="display:none;" id="hidden-frame"></iframe>
 <body>
-  <!-- Background music -->
-  <audio id="bg-music" loop>
-    <source src="levelselector.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    (function() {
-      const music = document.getElementById("bg-music");
-      try {
-        const lastTime = localStorage.getItem("bg-music-time");
-        if (lastTime) {
-          music.currentTime = parseFloat(lastTime);
-        }
-      } catch (e) {
-        console.warn("Could not load bg-music time:", e);
-      }
-
-      document.addEventListener("click", () => {
-        music.play().catch(err => console.log("music play error:", err));
-      }, { once: true });
-
-      setInterval(() => {
-        if (music && !isNaN(music.currentTime)) {
-          localStorage.setItem("bg-music-time", music.currentTime);
-        }
-      }, 1000);
-    })();
-  </script>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
