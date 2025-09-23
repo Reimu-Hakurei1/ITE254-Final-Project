@@ -15,6 +15,33 @@
       margin: 0.3rem;
       min-width: 70px;
     }
+
+    /* Sunset-inspired custom button colors */
+    .btn-orange {
+      background-color: #FF7E5F;
+      color: white;
+    }
+    .btn-purple {
+      background-color: #6A0572;
+      color: white;
+    }
+    .btn-pink {
+      background-color: #FC466B;
+      color: white;
+    }
+    .btn-yellow {
+      background-color: #FFD452;
+      color: black;
+    }
+
+    /* Hover effect for custom buttons */
+    .btn-orange:hover,
+    .btn-purple:hover,
+    .btn-pink:hover,
+    .btn-yellow:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
   </style>
 
   <!-- Firebase compat SDKs -->
@@ -81,7 +108,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link active" href="./levelselector.html">Play Game</a></li>
-		  <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
+          <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
           <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
         </ul>
@@ -99,42 +126,41 @@
   </header>
 
   <!-- Main Content -->
-	    <main class="container py-5">
-  <div class="row">
-    <!-- Story -->
-    <div class="col-md-6 world-card">
-      <div class="card shadow">
-        <div class="card-body text-center">
-          <h3>Story</h3>
-          <a href="Mario Forever/Story/Story/index.html" class="btn btn-primary level-btn">Story</a>
+  <main class="container py-5">
+    <div class="row">
+      <!-- Story -->
+      <div class="col-md-6 world-card">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <h3>Story</h3>
+            <a href="Mario Forever/Story/Story/index.html" class="btn btn-primary level-btn">Story</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- World 1 -->
-    <div class="col-md-6 world-card">
-      <div class="card shadow">
-        <div class="card-body text-center">
-          <h3>World 1</h3>
-          <a href="Mario Forever/World 1/World 1-1/index.html" class="btn btn-primary level-btn">1-1</a>
-          <a href="Mario Forever/World 1/World 1-2/index.html" class="btn btn-primary level-btn">1-2</a>
-          <a href="Mario Forever/World 1/World 1-3/index.html" class="btn btn-primary level-btn">1-3</a>
-          <a href="Mario Forever/World 1/World 1-4/index.html" class="btn btn-primary level-btn">1-4</a>
+      <!-- World 1 -->
+      <div class="col-md-6 world-card">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <h3>World 1</h3>
+            <a href="Mario Forever/World 1/World 1-1/index.html" class="btn btn-success level-btn">1-1</a>
+            <a href="Mario Forever/World 1/World 1-2/index.html" class="btn btn-success level-btn">1-2</a>
+            <a href="Mario Forever/World 1/World 1-3/index.html" class="btn btn-success level-btn">1-3</a>
+            <a href="Mario Forever/World 1/World 1-4/index.html" class="btn btn-success level-btn">1-4</a>
+          </div>
         </div>
       </div>
-    </div>
 
-	  
       <!-- World 2 -->
       <div class="col-md-6 world-card">
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 2</h3>
-            <a href="Mario Forever/World 2/World 2-1/index.html" class="btn btn-success level-btn">2-1</a>
-            <a href="Mario Forever/World 2/World 2-2/index.html" class="btn btn-success level-btn">2-2</a>
-            <a href="Mario Forever/World 2/World 2-3/index.html" class="btn btn-success level-btn">2-3</a>
-            <a href="Mario Forever/World 2/World 2-4/index.html" class="btn btn-success level-btn">2-4</a>
-            <a href="Mario Forever/World 2/World 2-5/index.html" class="btn btn-success level-btn">2-5</a>
+            <a href="Mario Forever/World 2/World 2-1/index.html" class="btn btn-orange level-btn">2-1</a>
+            <a href="Mario Forever/World 2/World 2-2/index.html" class="btn btn-orange level-btn">2-2</a>
+            <a href="Mario Forever/World 2/World 2-3/index.html" class="btn btn-orange level-btn">2-3</a>
+            <a href="Mario Forever/World 2/World 2-4/index.html" class="btn btn-orange level-btn">2-4</a>
+            <a href="Mario Forever/World 2/World 2-5/index.html" class="btn btn-orange level-btn">2-5</a>
           </div>
         </div>
       </div>
@@ -144,10 +170,10 @@
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 3</h3>
-            <a href="Mario Forever/World 3/World 3-1/index.html" class="btn btn-danger level-btn">3-1</a>
-            <a href="Mario Forever/World 3/World 3-2/index.html" class="btn btn-danger level-btn">3-2</a>
-            <a href="Mario Forever/World 3/World 3-3/index.html" class="btn btn-danger level-btn">3-3</a>
-            <a href="Mario Forever/World 3/World 3-4/index.html" class="btn btn-danger level-btn">3-4</a>
+            <a href="Mario Forever/World 3/World 3-1/index.html" class="btn btn-purple level-btn">3-1</a>
+            <a href="Mario Forever/World 3/World 3-2/index.html" class="btn btn-purple level-btn">3-2</a>
+            <a href="Mario Forever/World 3/World 3-3/index.html" class="btn btn-purple level-btn">3-3</a>
+            <a href="Mario Forever/World 3/World 3-4/index.html" class="btn btn-purple level-btn">3-4</a>
           </div>
         </div>
       </div>
@@ -170,9 +196,9 @@
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 5</h3>
-            <a href="Mario Forever/World 5/World 5-1/index.html" class="btn btn-info level-btn">5-1</a>
-            <a href="Mario Forever/World 5/World 5-2/index.html" class="btn btn-info level-btn">5-2</a>
-            <a href="Mario Forever/World 5/World 5-3/index.html" class="btn btn-info level-btn">5-3</a>
+            <a href="Mario Forever/World 5/World 5-1/index.html" class="btn btn-orange level-btn">5-1</a>
+            <a href="Mario Forever/World 5/World 5-2/index.html" class="btn btn-orange level-btn">5-2</a>
+            <a href="Mario Forever/World 5/World 5-3/index.html" class="btn btn-orange level-btn">5-3</a>
           </div>
         </div>
       </div>
@@ -182,10 +208,10 @@
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 6</h3>
-            <a href="Mario Forever/World 6/World 6-1/index.html" class="btn btn-dark level-btn">6-1</a>
-            <a href="Mario Forever/World 6/World 6-2/index.html" class="btn btn-dark level-btn">6-2</a>
-            <a href="Mario Forever/World 6/World 6-3/index.html" class="btn btn-dark level-btn">6-3</a>
-            <a href="Mario Forever/World 6/World 6-4/index.html" class="btn btn-dark level-btn">6-4</a>
+            <a href="Mario Forever/World 6/World 6-1/index.html" class="btn btn-success level-btn">6-1</a>
+            <a href="Mario Forever/World 6/World 6-2/index.html" class="btn btn-success level-btn">6-2</a>
+            <a href="Mario Forever/World 6/World 6-3/index.html" class="btn btn-success level-btn">6-3</a>
+            <a href="Mario Forever/World 6/World 6-4/index.html" class="btn btn-success level-btn">6-4</a>
           </div>
         </div>
       </div>
@@ -195,10 +221,10 @@
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 7</h3>
-            <a href="Mario Forever/World 7/World 7-1/index.html" class="btn btn-secondary level-btn">7-1</a>
-            <a href="Mario Forever/World 7/World 7-2/index.html" class="btn btn-secondary level-btn">7-2</a>
-            <a href="Mario Forever/World 7/World 7-3/index.html" class="btn btn-secondary level-btn">7-3</a>
-            <a href="Mario Forever/World 7/World 7-4/index.html" class="btn btn-secondary level-btn">7-4</a>
+            <a href="Mario Forever/World 7/World 7-1/index.html" class="btn btn-info level-btn">7-1</a>
+            <a href="Mario Forever/World 7/World 7-2/index.html" class="btn btn-info level-btn">7-2</a>
+            <a href="Mario Forever/World 7/World 7-3/index.html" class="btn btn-info level-btn">7-3</a>
+            <a href="Mario Forever/World 7/World 7-4/index.html" class="btn btn-info level-btn">7-4</a>
           </div>
         </div>
       </div>
@@ -208,10 +234,20 @@
         <div class="card shadow">
           <div class="card-body text-center">
             <h3>World 8</h3>
-            <a href="Mario Forever/World 8/World 8-1/index.html" class="btn btn-light level-btn">8-1</a>
-            <a href="Mario Forever/World 8/World 8-2/index.html" class="btn btn-light level-btn">8-2</a>
-            <a href="Mario Forever/World 8/World 8-3/index.html" class="btn btn-light level-btn">8-3</a>
-            <a href="Mario Forever/World 8/World 8-4/index.html" class="btn btn-light level-btn">8-4</a>
+            <a href="Mario Forever/World 8/World 8-1/index.html" class="btn btn-secondary level-btn">8-1</a>
+            <a href="Mario Forever/World 8/World 8-2/index.html" class="btn btn-secondary level-btn">8-2</a>
+            <a href="Mario Forever/World 8/World 8-3/index.html" class="btn btn-secondary level-btn">8-3</a>
+            <a href="Mario Forever/World 8/World 8-4/index.html" class="btn btn-secondary level-btn">8-4</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ending -->
+      <div class="col-md-6 world-card">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <h3>Ending</h3>
+            <a href="Mario Forever/Ending/Ending/index.html" class="btn btn-light level-btn">Ending</a>
           </div>
         </div>
       </div>
