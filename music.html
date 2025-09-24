@@ -25,6 +25,34 @@
     };
     if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
   </script>
+  <style>
+    .music-section {
+      margin-top: 2rem;
+    }
+    .track {
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-radius: 10px;
+    }
+    .track:hover {
+      background: #f1f1f1;
+    }
+    .track.active {
+      background: #dcdcdc;
+    }
+    .track-cover {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .track-title {
+      font-size: 1rem;
+    }
+    .track-artist {
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
@@ -48,16 +76,15 @@
     </div>
   </nav>
 
-
   <!-- Big album -->
-  <div class="album-container">
-    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover">
+  <div class="album-container text-center mt-4">
+    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover" class="img-fluid">
   </div>
 
   <!-- Music list -->
-  <div class="music-section">
+  <div class="music-section container">
     <h2>Music</h2>
-    <div id="trackList"></div>
+    <div id="trackList" class="row"></div>
   </div>
 
   <!-- Player bar -->
