@@ -23,128 +23,118 @@
     }
   </script>
   <script>
-  let frame = document.getElementById("hidden-frame").contentWindow;
-</script>
+    let frame = document.getElementById("hidden-frame").contentWindow;
+  </script>
 </head>
-  <!-- Hidden iframe (completely invisible) -->
-  <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
-<body>
 
+<!-- Hidden iframe (completely invisible) -->
+<iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
 
-
-<head>
+<body class="text-white">
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - ITE254 Final Project</title>
-	<link rel="icon" href="icon.png" type="image/png">
+    <link rel="icon" href="icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles (web).css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
+  </head>
 
-<body class="text-white">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
-					<li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="./contact.html">Contact</a></li>
-                </ul>
-                <!-- User info + Sign Out -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
+          <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./contact.html">Contact</a></li>
+        </ul>
+        <!-- User info + Sign Out -->
         <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
         <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
       </div>
     </div>
   </nav>
+
+  <main class="container py-5">
+    <h1>Contact Us</h1>
+    <p>If you have questions or feedback about the ITE254 Final Project,
+      contact us via the form below or our social media.</p>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <div class="mb-3">
+            <input type="hidden" name="access_key" value="8ec72cd9-a014-40d7-96a8-f2d0a260a53d">
+            <label for="name" class="form-label">Name</label>
+            <div class="input-group">
+              <input type="text" name="name" class="form-control" required>
             </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <div class="input-group">
+              <input type="email" name="email" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <div class="input-group">
+              <textarea name="message" class="form-control" rows="6" placeholder="Write your message here..." required></textarea>
+            </div>
+          </div>
+
+          <!-- Honeypot Spam Protection -->
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+          <button type="submit" class="btn btn-primary">Submit Form</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6">
+        <h3>Contact Info</h3>
+        <p><i class="bi bi-envelope"></i> support@mariogame.com</p>
+        <p><i class="bi bi-telephone"></i> +1-800-MARIO-GAME</p>
+
+        <p>
+          <a href="https://maps.app.goo.gl/zEkexyka1d9b5rFB8" target="_blank" class="text-info text-decoration-none">
+            <i class="bi bi-geo-alt"></i> View on Google Maps
+          </a>
+        </p>
+
+        <h2>Follow Us</h2>
+        <p>Follow us on social media for updates, game tips, and more:</p>
+
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
         </div>
-    </nav>
+      </div>
+    </div>
+  </main>
 
-    <main class="container py-5">
-        <h1>Contact Us</h1>
-        <p>If you have questions or feedback about the ITE254 Final Project,
-          contact us via the form below or our social media.</p>
+  <footer class="text-center p-3 bg-dark text-white">
+    <p>© ITE254 Final Project</p>
+  </footer>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <form>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <div class="input-group">
-                         <!--   <span class="input-group-text"><i class="bi bi-person"></i></span> --> 
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                        </div>
-                    </div>
-                  
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                         <!--   <span class="input-group-text"><i class="bi bi-envelope"></i></span> -->
-                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
-                        </div>
-                    </div>
-                  
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea class="form-control" id="message" rows="5" placeholder="Your Message"
-                            required></textarea>
-                    </div>
-                  
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
-            </div>
-
-            <div class="col-lg-6">
-                <h3>Contact Info</h3>
-              <p><i class="bi bi-envelope"></i> support@mariogame.com</p>
-              <p><i class="bi bi-telephone"></i> +1-800-MARIO-GAME</p>
-
-              <p>
-               <a href="https://maps.app.goo.gl/zEkexyka1d9b5rFB8" 
-                 target="_blank" 
-                 class="text-info text-decoration-none">
-                  <i class="bi bi-geo-alt"></i> View on Google Maps
-                </a>
-              </p>
-
-                <h2>Follow Us</h2>
-                <p>Follow us on social media for updates, game tips, and more:</p>
-              <!--<ul>
-                    <li>Facebook: <a href="https://www.facebook.com/MarioGame" target="_blank">@MarioGame</a></li>
-                    <li>Twitter: <a href="https://www.twitter.com/MarioGameOfficial"
-                            target="_blank">@MarioGameOfficial</a></li>
-                    <li>Instagram: <a href="https://www.instagram.com/MarioGame" target="_blank">@MarioGame</a></li>
-                </ul>-->
-             
-              <div class="social-icons">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-twitter"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
-              </div>
-              
-            </div>
-        </div>
-    </main>
-
-    <footer class="text-center p-3 bg-dark text-white">
-        <p>© ITE254 Final Project</p>
-    </footer>
- <!-- Firebase Auth -->
+  <!-- Firebase Auth -->
   <script>
-    (function() {
+    (function () {
       const signOutBtn = document.getElementById('signOutBtn');
       const userEmailSpan = document.getElementById('userEmail');
 
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           userEmailSpan.textContent = user.email || user.displayName || '';
           userEmailSpan.classList.remove('d-none');
@@ -154,10 +144,10 @@
         }
       });
 
-      signOutBtn.addEventListener('click', function() {
+      signOutBtn.addEventListener('click', function () {
         firebase.auth().signOut().then(() => {
           const music = document.getElementById('bg-music');
-          try { music.pause(); } catch (e) {}
+          try { music.pause(); } catch (e) { }
           window.location.href = "Login.html";
         }).catch((err) => {
           alert("Sign out error: " + err.message);
@@ -165,7 +155,7 @@
       });
     })();
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
