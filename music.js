@@ -28,6 +28,7 @@ const tracks = [
   {title:"Apoplexy", artist:"Bee Hunter", file:"songs/Apoplexytanks.ogg", cover:"covers/600x600bf-60.jpg"},
   {title:"Super Mario Yoshi Island - Bowser", artist:"Koji Kondo", file:"songs/Yoshi Island - Final Boss.ogg", cover:"covers/Yoshi Island.png"},
   {title:"Super Mario World - Staff Roll", artist:"Koji Kondo", file:"songs/Mario World - Ending.mp3", cover:"covers/mario world.jpg"},
+  {title:"Dream Off", artist:"Hmc", file:"songs/dreamoff.mp3", cover:"covers/art-placeholder.jpg"},
 ];
 
 let currentIndex = 0, isPlaying = false;
