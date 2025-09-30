@@ -29,6 +29,8 @@ const tracks = [
   {title:"Super Mario Yoshi Island - Bowser", artist:"Koji Kondo", file:"songs/Yoshi Island - Final Boss.ogg", cover:"covers/Yoshi Island.png"},
   {title:"Super Mario World - Staff Roll", artist:"Koji Kondo", file:"songs/Mario World - Ending.mp3", cover:"covers/mario world.jpg"},
   {title:"Dream Off", artist:"Hmc", file:"songs/dreamoff.mp3", cover:"covers/art-placeholder.jpg"},
+  {title:"Atelier Iris ETERNAL MANA - Big Play Board", artist:"Ken Nakagawa, Daisuke Achiwa, and Akira Tsuchiya", file:"songs/Atelier Iris ETERNAL MANA - Big Play Board.mp3", cover:"covers/Atelier Iris ETERNAL MANA.jpg"},
+  {title:"MegaMari - Marisa no Yabou - Boss Battle", artist:"Uni Akiyama", file:"songs/MegaMari - Marisa no Yabou - Boss Battle.mp3", cover:"covers/Megamari.jpg"},
 ];
 
 let currentIndex = 0, isPlaying = false;
