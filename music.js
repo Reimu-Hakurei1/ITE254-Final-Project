@@ -31,13 +31,15 @@ const tracks = [
   {title:"Dream Off", artist:"Hmc", file:"songs/dreamoff.mp3", cover:"covers/art-placeholder.jpg"},
   {title:"Atelier Iris ETERNAL MANA - Big Play Board", artist:"Ken Nakagawa, Daisuke Achiwa, and Akira Tsuchiya", file:"songs/Atelier Iris ETERNAL MANA - Big Play Board.mp3", cover:"covers/Atelier Iris ETERNAL MANA.jpg"},
   {title:"MegaMari - Marisa no Yabou - Boss Battle", artist:"Uni Akiyama", file:"songs/MegaMari - Marisa no Yabou - Boss Battle.mp3", cover:"covers/Megamari.jpg"},
+  {title:"Oriental Sacred Place 2 - A Midnight Fairy Dance", artist:"Zun", file:"songs/Oriental Sacred Place 2 - A Midnight Fairy Dance.mp3", cover:"covers/Oriental Sacred Place 2.jpg"},
+  {title:"Magical Astronomy - Greenwich in the Sky", artist:"Zun", file:"songs/Magical Astronomy - Greenwich in the Sky.mp3", cover:"covers/Magical Astronomy.jpg"},
 ];
 
 let currentIndex = 0, isPlaying = false;
 const audio = document.getElementById('audioEl');
 const albumCover = document.getElementById('albumCover');
 const miniCover = document.getElementById('miniCover');
-const songTitle = document.getElementById('songTitle');
+const songTitleInner = document.getElementById('songTitleInner');
 const songArtist = document.getElementById('songArtist');
 const playBtn = document.getElementById('play');
 const prevBtn = document.getElementById('prev');
@@ -53,19 +55,35 @@ function loadTrack(i) {
   const t = tracks[i];
   currentIndex = i;
   audio.src = t.file;
-  songTitle.textContent = t.title;
+  songTitleInner.textContent = t.title;
   songArtist.textContent = t.artist;
   albumCover.src = t.cover;
   miniCover.src = t.cover;
+
+  // Restart scrolling animation
+  songTitleInner.style.animation = 'none';
+  void songTitleInner.offsetWidth;
+  songTitleInner.style.animation = 'scroll-left 12s linear infinite';
+
   document.querySelectorAll('.track').forEach(el => el.classList.remove('active'));
   const active = document.querySelector(`.track[data-index="${i}"]`);
   if (active) active.classList.add('active');
 }
 function playTrack() { audio.play(); isPlaying=true; playBtn.textContent='❚❚'; }
 function pauseTrack() { audio.pause(); isPlaying=false; playBtn.textContent='▶'; }
+
 playBtn.addEventListener('click',()=>{isPlaying?pauseTrack():playTrack();});
 prevBtn.addEventListener('click',()=>{loadTrack((currentIndex-1+tracks.length)%tracks.length);playTrack();});
 nextBtn.addEventListener('click',()=>{loadTrack((currentIndex+1)%tracks.length);playTrack();});
+
+// Spacebar control
+document.addEventListener('keydown',(e)=>{
+  if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    isPlaying ? pauseTrack() : playTrack();
+  }
+});
+
 audio.addEventListener('timeupdate',()=>{
   if(audio.duration){
     const pct=(audio.currentTime/audio.duration)*100;
@@ -79,7 +97,11 @@ progress.addEventListener('click',(e)=>{
   const pct=(e.clientX-rect.left)/rect.width;
   audio.currentTime=pct*audio.duration;
 });
-function formatTime(sec){const m=Math.floor(sec/60);const s=Math.floor(sec%60).toString().padStart(2,"0");return `${m}:${s}`;}
+function formatTime(sec){
+  const m=Math.floor(sec/60);
+  const s=Math.floor(sec%60).toString().padStart(2,"0");
+  return `${m}:${s}`;
+}
 audio.addEventListener('ended',()=>{nextBtn.click();});
 
 // Build track list
@@ -91,13 +113,14 @@ tracks.forEach((t,i)=>{
       <img src="${t.cover}" alt="${t.title}" class="track-cover me-3">
       <div class="track-info">
         <div class="track-title fw-bold">${t.title}</div>
-        <div class="track-artist text-muted">${t.artist}</div>
+        <div class="track-artist">${t.artist}</div>
       </div>
     </div>
   `;
   col.querySelector('.track').addEventListener('click',()=>{loadTrack(i);playTrack();});
   trackList.appendChild(col);
 });
+
 loadTrack(currentIndex);
 
 // Firebase auth

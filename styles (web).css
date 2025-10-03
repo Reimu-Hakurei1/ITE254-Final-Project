@@ -183,8 +183,21 @@ header section {
 }
 
 footer {
-    background-color: #f8f9fa;
+  position: relative !important;
+  bottom: 100px !important;  
+  width: 100% !important;
+  background: #111 !important;
+  color: #fff !important;
+  text-align: center !important;
+  padding: 15px 0 !important;
+  z-index: 5 !important;
 }
+
+body {
+  display: block !important;  
+}
+
+
 
 .navbar-brand {
     font-size: 24px;

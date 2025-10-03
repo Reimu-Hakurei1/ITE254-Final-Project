@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ITE254-Final-Project - Music</title>
   <link rel="icon" href="icon.png" type="image/png">
+
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Css -->
   <link rel="stylesheet" href="./styles (web).css">
-  <link rel="stylesheet" href="./music.css">
+
+  <!-- Page script -->
   <script type="module" src="music.js" defer></script>
 
   <!-- Firebase -->
@@ -25,32 +30,135 @@
     };
     if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
   </script>
+
   <style>
-    .music-section {
-      margin-top: 2rem;
+    body {
+      background: #121212;
+      color: #fff;
+      padding-bottom: 160px; /* space for player bar + footer */
+      display: block !important; /* undo flex from styles(web).css */
     }
+
+.music-section {
+  margin-top: 2rem;
+  margin-bottom: 140px; 
+}
     .track {
       cursor: pointer;
       transition: background 0.2s ease;
       border-radius: 10px;
+      background: #1e1e1e;
+      color: #fff;
     }
-    .track:hover {
-      background: #f1f1f1;
-    }
-    .track.active {
-      background: #dcdcdc;
-    }
+    .track:hover { background: #2a2a2a; }
+    .track.active { background: #333333; }
+
     .track-cover {
       width: 60px;
       height: 60px;
       object-fit: cover;
       border-radius: 8px;
     }
-    .track-title {
-      font-size: 1rem;
+    .track-title { font-size: 1rem; }
+    .track-artist { font-size: 0.85rem; color: #ccc; }
+
+    /* Album cover */
+    .album-container img {
+      max-width: 280px;
+      max-height: 280px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
-    .track-artist {
-      font-size: 0.85rem;
+
+    /* Player bar */
+    .player-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: #181818;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      box-shadow: 0 -4px 18px rgba(0,0,0,.6);
+      z-index: 9999;
+    }
+    .player-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .player-left img {
+      width: 64px; height: 64px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .song-meta { overflow:hidden; }
+    .song-title {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 240px;
+    }
+    .song-title-inner {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 12s linear infinite;
+    }
+    .song-artist { font-size: 0.9rem; color:#ccc; }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .player-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+    }
+    .controls button {
+      background: #282828;
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .controls button:hover {
+      background: #1db954;
+      transform: scale(1.1);
+    }
+    .progress-wrap {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .time { font-size: .75rem; color: #fff; min-width: 36px; text-align:center; }
+    .progress { background:#404040; height:6px; border-radius:4px; position:relative; flex:1; cursor:pointer; }
+    .bar { background:#1db954; height:100%; width:0%; border-radius:4px; }
+    .thumb { width:12px; height:12px; border-radius:50%; background:#fff; position:absolute; top:50%; transform: translate(-50%,-50%); left:0; }
+
+    /* Footer fix */
+    footer {
+      position: relative !important;
+      bottom: 100px !important;  /* sits above player bar */
+      width: 100% !important;
+      background: #111 !important;
+      color: #fff !important;
+      text-align: center !important;
+      padding: 15px 0 !important;
+      z-index: 5 !important;
     }
   </style>
 </head>
@@ -78,7 +186,7 @@
 
   <!-- Big album -->
   <div class="album-container text-center mt-4">
-    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover" class="img-fluid">
+    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover">
   </div>
 
   <!-- Music list -->
@@ -91,9 +199,11 @@
   <div class="player-bar">
     <div class="player-left">
       <img id="miniCover" src="covers/fastrun.jpg" alt="cover">
-      <div>
-        <div id="songTitle" style="font-weight:600">Fast Run</div>
-        <div id="songArtist" style="font-size:0.9rem; color:#bdbdbd">Composer A</div>
+      <div class="song-meta">
+        <div class="song-title">
+          <span id="songTitleInner" class="song-title-inner">Fast Run</span>
+        </div>
+        <div id="songArtist" class="song-artist">Composer A</div>
       </div>
     </div>
     <div class="player-center">
@@ -116,13 +226,10 @@
   <audio id="audioEl" preload="metadata"></audio>
 
   <!-- Footer -->
-  <footer class="text-center p-3 bg-dark text-white">
+  <footer>
     <p>© ITE254 Final Project</p>
-    <div>
-      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
-      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
-    </div>
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
