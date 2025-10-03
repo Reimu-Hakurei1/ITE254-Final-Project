@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Characters</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./styles (web).css">
+
+  <!-- Custom Modern Game Style -->
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba(255,255,255,0.9);
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #eee;
+    }
+
+    .card {
+      background: #1e1e2f;
+      border: none;
+      border-radius: 15px;
+      padding: 1.2rem;
+      overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+    }
+    .card img {
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .card-title {
+      color: #ff5f9e;
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px rgba(255,95,158,.8);
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    audio {
+      width: 100%;
+      margin: 6px 0;
+      filter: drop-shadow(0 0 6px rgba(255, 0, 150, 0.6));
+    }
+  </style>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
+      authDomain: "ite254-final-project.firebaseapp.com",
+      projectId: "ite254-final-project",
+      storageBucket: "ite254-final-project.appspot.com",
+      messagingSenderId: "853636478780",
+      appId: "1:853636478780:web:bd1af21cb7474926db9039",
+      measurementId: "G-ELH7M25FKW"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  </script>
+
+</head>
+<body>
+  <!-- Hidden iframe (completely invisible) -->
+  <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="./index.html">ITE254-Final-Project</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./characters.html">Characters</a></li>
+          <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
+          <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+        </ul>
+        <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
+        <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Meet the Characters</h1>
+  </header>
+
+  <!-- Characters -->
+  <main class="container py-5">
+    <div class="row g-4">
+
+      <!-- Mario -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <h3 class="card-title">Mario</h3>
+          <img src="Mario_render.webp" alt="Mario" class="img-fluid">
+          <p><strong>Personality & Role:</strong> Mario is courageous, joyful, and endlessly optimistic. When danger strikes, he leaps first and thinks later, always with a smile and a sense of justice. As the Mushroom Kingdom’s hero, he has saved Princess Peach countless times, stood up to Bowser and his minions, and inspires other heroes by example.</p>
+          <p><strong>Likes & Hobbies:</strong> Racing karts, exploring new worlds, collecting power-ups, helping friends, and celebrating every small victory.</p>
+          <div>
+            <p><strong>Voice Lines:</strong></p>
+            <audio controls src="Voice/Mario1.mp3"></audio>
+            <audio controls src="Voice/Mario2.mp3"></audio>
+            <audio controls src="Voice/Mario3.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+      <!-- Luigi -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <h3 class="card-title">Luigi</h3>
+          <img src="Luigi_by_Shigehisa_Nakaue.png" alt="Luigi" class="img-fluid">
+          <p><strong>Personality & Role:</strong> Luigi may seem timid and shy, but he is also deeply loyal, kindhearted, and always ready to step up when it matters most. Though he often lives in Mario’s shadow, his courage shines through—especially when he helps his brother or faces his fears head-on.</p>
+          <p><strong>Likes & Hobbies:</strong> Exploring haunted mansions (despite being scared), experimenting with gadgets, spending time with his brother, and secretly wanting to prove himself as a hero in his own right.</p>
+          <div>
+            <p><strong>Voice Lines:</strong></p>
+            <audio controls src="Voice/Luigi1.mp3"></audio>
+            <audio controls src="Voice/Luigi2.mp3"></audio>
+            <audio controls src="Voice/Luigi3.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toad -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <h3 class="card-title">Toad</h3>
+          <img src="Toad_by_Shigehisa_Nakaue.png" alt="Toad" class="img-fluid">
+          <p><strong>Personality & Role:</strong> Toad is cheerful, humble, and full of energy. Even though he sometimes gets scared in the face of danger, he refuses to give up. He’s always ready to help his friends and puts the Mushroom Kingdom first, no matter how small he might feel.</p>
+          <p><strong>Likes & Hobbies:</strong> Mushrooms, assisting Mario, organizing events, adventures (like Mario Kart or the many parties), and making people smile.</p>
+          <div>
+            <p><strong>Voice Lines:</strong></p>
+            <audio controls src="Voice/Toad1.mp3"></audio>
+            <audio controls src="Voice/Toad2.mp3"></audio>
+            <audio controls src="Voice/Toad3.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reimu Hakurei -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <h3 class="card-title">Reimu Hakurei</h3>
+          <img src="Th18Reimu.webp" alt="Reimu Hakurei" class="img-fluid">
+          <p><strong>Personality & Role:</strong> A shrine maiden called to safeguard the barrier between the human world and the youkai realm, Reimu is cool, calm, and straightforward. She often appears laid-back—sometimes even lazy—but in critical times she shows tremendous skill, strength, and willpower. She faces supernatural threats with determination, even when she dislikes unnecessary effort.</p>
+          <p><strong>Likes & Hobbies:</strong> Peaceful solitude, shrine maintenance, floating study breaks, enjoying simple pleasures, and occasionally letting out her spiritual power when the boundary between worlds is disturbed.</p>
+          <div>
+            <p><strong>Voice Lines:</strong></p>
+            <audio controls src="Voice/Reimu1.mp3"></audio>
+            <audio controls src="Voice/Reimu2.mp3"></audio>
+            <audio controls src="Voice/Reimu3.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center p-3 bg-dark text-white">
+    <p>© ITE254 Final Project</p>
+    <div>
+      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
+      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
+    </div>
+  </footer>
+
+  <!-- Firebase Auth -->
+  <script>
+    (function() {
+      const signOutBtn = document.getElementById('signOutBtn');
+      const userEmailSpan = document.getElementById('userEmail');
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          userEmailSpan.textContent = user.email || user.displayName || '';
+          userEmailSpan.classList.remove('d-none');
+          signOutBtn.classList.remove('d-none');
+        } else {
+          window.location.href = "Login.html";
+        }
+      });
+
+      signOutBtn.addEventListener('click', function() {
+        firebase.auth().signOut().then(() => {
+          window.location.href = "Login.html";
+        }).catch((err) => {
+          alert("Sign out error: " + err.message);
+        });
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
