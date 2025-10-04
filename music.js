@@ -1,3 +1,4 @@
+// ================== MUSIC LIST ==================
 const tracks = [
   {title:"Super Mario World - Wandering the Plains", artist:"Koji Kondo", file:"songs/savegameroom.mp3", cover:"covers/mario world.jpg"},
   {title:"Touhou Spell Bubble - Character Select", artist:"Masaki (ZUNTATA)", file:"songs/levelselector.mp3", cover:"covers/Touhou spell bubble.png"},
@@ -32,11 +33,16 @@ const tracks = [
   {title:"Atelier Iris ETERNAL MANA - Big Play Board", artist:"Ken Nakagawa, Daisuke Achiwa, and Akira Tsuchiya", file:"songs/Atelier Iris ETERNAL MANA - Big Play Board.mp3", cover:"covers/Atelier Iris ETERNAL MANA.jpg"},
   {title:"MegaMari - Marisa no Yabou - Boss Battle", artist:"Uni Akiyama", file:"songs/MegaMari - Marisa no Yabou - Boss Battle.mp3", cover:"covers/Megamari.jpg"},
   {title:"Oriental Sacred Place 2 - A Midnight Fairy Dance", artist:"Zun", file:"songs/Oriental Sacred Place 2 - A Midnight Fairy Dance.mp3", cover:"covers/Oriental Sacred Place 2.jpg"},
-  {title:"Magical Astronomy - Greenwich in the Sky", artist:"Zun", file:"songs/Magical Astronomy - Greenwich in the Sky.mp3", cover:"covers/Magical Astronomy.jpg"},
+  {title:"Magical Astronomy - Greenwich in the Sky", artist:"Zun", file:"songs/Magical Astronomy - Greenwich in the Sky.mp3", cover:"covers/Magical Astronomy.jpg"}
 ];
 
-let currentIndex = 0, isPlaying = false;
+// ================== ELEMENTS ==================
+let currentIndex = 0;
+let isPlaying = false;
+
 const audio = document.getElementById('audioEl');
+
+// mini player
 const albumCover = document.getElementById('albumCover');
 const miniCover = document.getElementById('miniCover');
 const songTitleInner = document.getElementById('songTitleInner');
@@ -49,66 +55,125 @@ const progressBar = document.getElementById('progressBar');
 const thumb = document.getElementById('thumb');
 const curTime = document.getElementById('curTime');
 const durTime = document.getElementById('durTime');
-const trackList = document.getElementById('trackList');
 
+// big player
+const playerLeft = document.querySelector('.player-left');
+const bigPlayer = document.getElementById('bigPlayer');
+const closeBigPlayer = document.getElementById('closeBigPlayer');
+const bigPlayerCover = document.getElementById('bigPlayerCover');
+const bigPlayerTitle = document.getElementById('bigPlayerTitle');
+const bigPlayerArtist = document.getElementById('bigPlayerArtist');
+const bigPlay = document.getElementById('bigPlay');
+const bigPrev = document.getElementById('bigPrev');
+const bigNext = document.getElementById('bigNext');
+const bigProgress = document.getElementById('bigProgress');
+const bigProgressBar = document.getElementById('bigProgressBar');
+const bigThumb = document.getElementById('bigThumb');
+const bigCurTime = document.getElementById('bigCurTime');
+const bigDurTime = document.getElementById('bigDurTime');
+
+// misc
+const trackList = document.getElementById('trackList');
+const noResults = document.getElementById('noResults');
+const searchBar = document.getElementById('searchBar');
+
+// ================== FUNCTIONS ==================
 function loadTrack(i) {
   const t = tracks[i];
   currentIndex = i;
   audio.src = t.file;
+
+  // mini player
   songTitleInner.textContent = t.title;
   songArtist.textContent = t.artist;
   albumCover.src = t.cover;
   miniCover.src = t.cover;
 
-  // Restart scrolling animation
-  songTitleInner.style.animation = 'none';
-  void songTitleInner.offsetWidth;
-  songTitleInner.style.animation = 'scroll-left 12s linear infinite';
+  // big player
+  bigPlayerCover.src = t.cover;
+  bigPlayerTitle.textContent = t.title;
+  bigPlayerArtist.textContent = t.artist;
 
+  // highlight active
   document.querySelectorAll('.track').forEach(el => el.classList.remove('active'));
   const active = document.querySelector(`.track[data-index="${i}"]`);
   if (active) active.classList.add('active');
 }
-function playTrack() { audio.play(); isPlaying=true; playBtn.textContent='❚❚'; }
-function pauseTrack() { audio.pause(); isPlaying=false; playBtn.textContent='▶'; }
 
-playBtn.addEventListener('click',()=>{isPlaying?pauseTrack():playTrack();});
-prevBtn.addEventListener('click',()=>{loadTrack((currentIndex-1+tracks.length)%tracks.length);playTrack();});
-nextBtn.addEventListener('click',()=>{loadTrack((currentIndex+1)%tracks.length);playTrack();});
+function playTrack() {
+  audio.play();
+  isPlaying = true;
+  playBtn.textContent = '❚❚';
+  bigPlay.textContent = '❚❚';
+}
 
-// Spacebar control
-document.addEventListener('keydown',(e)=>{
-  if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+function pauseTrack() {
+  audio.pause();
+  isPlaying = false;
+  playBtn.textContent = '▶';
+  bigPlay.textContent = '▶';
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+// ================== EVENTS ==================
+// mini controls
+playBtn.addEventListener('click', ()=>{isPlaying ? pauseTrack() : playTrack();});
+prevBtn.addEventListener('click', ()=>{loadTrack((currentIndex-1+tracks.length)%tracks.length); playTrack();});
+nextBtn.addEventListener('click', ()=>{loadTrack((currentIndex+1)%tracks.length); playTrack();});
+
+// big controls
+bigPlay.addEventListener('click', ()=>{isPlaying ? pauseTrack() : playTrack();});
+bigPrev.addEventListener('click', ()=>{prevBtn.click();});
+bigNext.addEventListener('click', ()=>{nextBtn.click();});
+
+// keyboard spacebar
+document.addEventListener('keydown', e=>{
+  if(e.code==='Space' && e.target.tagName!=='INPUT' && e.target.tagName!=='TEXTAREA'){
     e.preventDefault();
     isPlaying ? pauseTrack() : playTrack();
   }
 });
 
-audio.addEventListener('timeupdate',()=>{
+// time update sync
+audio.addEventListener('timeupdate', ()=>{
   if(audio.duration){
-    const pct=(audio.currentTime/audio.duration)*100;
-    progressBar.style.width=pct+"%"; thumb.style.left=pct+"%";
-    curTime.textContent=formatTime(audio.currentTime);
-    durTime.textContent=formatTime(audio.duration);
+    const pct = (audio.currentTime/audio.duration)*100;
+    progressBar.style.width = pct+"%";
+    thumb.style.left = pct+"%";
+    bigProgressBar.style.width = pct+"%";
+    bigThumb.style.left = pct+"%";
+    curTime.textContent = formatTime(audio.currentTime);
+    durTime.textContent = formatTime(audio.duration);
+    bigCurTime.textContent = formatTime(audio.currentTime);
+    bigDurTime.textContent = formatTime(audio.duration);
   }
 });
-progress.addEventListener('click',(e)=>{
-  const rect=progress.getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  audio.currentTime=pct*audio.duration;
-});
-function formatTime(sec){
-  const m=Math.floor(sec/60);
-  const s=Math.floor(sec%60).toString().padStart(2,"0");
-  return `${m}:${s}`;
-}
-audio.addEventListener('ended',()=>{nextBtn.click();});
 
-// Build track list
+// seek
+progress.addEventListener('click', e=>{
+  const rect = progress.getBoundingClientRect();
+  const pct = (e.clientX-rect.left)/rect.width;
+  audio.currentTime = pct*audio.duration;
+});
+bigProgress.addEventListener('click', e=>{
+  const rect = bigProgress.getBoundingClientRect();
+  const pct = (e.clientX-rect.left)/rect.width;
+  audio.currentTime = pct*audio.duration;
+});
+
+// autoplay next
+audio.addEventListener('ended', ()=>{ nextBtn.click(); });
+
+// build track list
 tracks.forEach((t,i)=>{
-  const col=document.createElement('div');
-  col.className='col-md-6 mb-3';
-  col.innerHTML=`
+  const col = document.createElement('div');
+  col.className = 'col-md-6 mb-3';
+  col.innerHTML = `
     <div class="track card h-100 d-flex flex-row align-items-center p-2" data-index="${i}">
       <img src="${t.cover}" alt="${t.title}" class="track-cover me-3">
       <div class="track-info">
@@ -117,18 +182,45 @@ tracks.forEach((t,i)=>{
       </div>
     </div>
   `;
-  col.querySelector('.track').addEventListener('click',()=>{loadTrack(i);playTrack();});
+  col.querySelector('.track').addEventListener('click', ()=>{loadTrack(i); playTrack();});
   trackList.appendChild(col);
 });
 
+// init first track
 loadTrack(currentIndex);
 
-// Firebase auth
-(function() {
+// search
+searchBar.addEventListener('input', ()=>{
+  const query = searchBar.value.toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('#trackList .track').forEach(track=>{
+    const title = track.querySelector('.track-title').textContent.toLowerCase();
+    const artist = track.querySelector('.track-artist').textContent.toLowerCase();
+    if(title.includes(query) || artist.includes(query)){
+      track.parentElement.style.display = 'block';
+      anyVisible = true;
+    } else {
+      track.parentElement.style.display = 'none';
+    }
+  });
+  noResults.style.display = anyVisible ? 'none' : 'block';
+});
+
+// big player open/close
+playerLeft.addEventListener('click', ()=>{ bigPlayer.classList.add('active'); });
+closeBigPlayer.addEventListener('click', ()=>{ bigPlayer.classList.remove('active'); });
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && bigPlayer.classList.contains('active')){
+    bigPlayer.classList.remove('active');
+  }
+});
+
+// ================== FIREBASE AUTH ==================
+(function(){
   const signOutBtn = document.getElementById('signOutBtn');
   const userEmailSpan = document.getElementById('userEmail');
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){
       userEmailSpan.textContent = user.email || user.displayName || '';
       userEmailSpan.classList.remove('d-none');
       signOutBtn.classList.remove('d-none');
@@ -136,9 +228,9 @@ loadTrack(currentIndex);
       window.location.href = "Login.html";
     }
   });
-  signOutBtn.addEventListener('click', function() {
-    firebase.auth().signOut().then(() => {
+  signOutBtn.addEventListener('click', function(){
+    firebase.auth().signOut().then(()=>{
       window.location.href = "Login.html";
-    }).catch((err) => { alert("Sign out error: " + err.message); });
+    }).catch(err=>{ alert("Sign out error: "+err.message); });
   });
 })();
