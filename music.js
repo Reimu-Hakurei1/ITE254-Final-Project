@@ -33,7 +33,8 @@ const tracks = [
   {title:"Atelier Iris ETERNAL MANA - Big Play Board", artist:"Ken Nakagawa, Daisuke Achiwa, and Akira Tsuchiya", file:"songs/Atelier Iris ETERNAL MANA - Big Play Board.mp3", cover:"covers/Atelier Iris ETERNAL MANA.jpg"},
   {title:"MegaMari - Marisa no Yabou - Boss Battle", artist:"Uni Akiyama", file:"songs/MegaMari - Marisa no Yabou - Boss Battle.mp3", cover:"covers/Megamari.jpg"},
   {title:"Oriental Sacred Place 2 - A Midnight Fairy Dance", artist:"Zun", file:"songs/Oriental Sacred Place 2 - A Midnight Fairy Dance.mp3", cover:"covers/Oriental Sacred Place 2.jpg"},
-  {title:"Magical Astronomy - Greenwich in the Sky", artist:"Zun", file:"songs/Magical Astronomy - Greenwich in the Sky.mp3", cover:"covers/Magical Astronomy.jpg"}
+  {title:"Magical Astronomy - Greenwich in the Sky", artist:"Zun", file:"songs/Magical Astronomy - Greenwich in the Sky.mp3", cover:"covers/Magical Astronomy.jpg"},
+  {title:"Touhou 6 The Embodiment of Scarlet Devil - Septette for the Dead Princess", artist:"Zun", file:"songs/Septette for the Dead Princess.mp3", cover:"covers/Th06cover.png"}
 ];
 
 // ================== ELEMENTS ==================
