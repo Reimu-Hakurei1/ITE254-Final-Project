@@ -1,166 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ITE254-Final-Project- Home</title>
-  <link rel="icon" href="icon.png" type="image/png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./styles (web).css">
-  <style>
-    #userEmail { font-weight: 500; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITE254-Final-Project - Home</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles (web).css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta name="theme-color" content="#0a0a0a">
+    <style>
+        #userEmail { 
+            font-weight: 500; 
+            margin-right: 15px;
+        }
+    </style>
 
-  <!-- Firebase compat SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-
-  <script>
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
-      authDomain: "ite254-final-project.firebaseapp.com",
-      projectId: "ite254-final-project",
-      storageBucket: "ite254-final-project.appspot.com",
-      messagingSenderId: "853636478780",
-      appId: "1:853636478780:web:bd1af21cb7474926db9039",
-      measurementId: "G-ELH7M25FKW"
-    };
-
-    // Initialize Firebase
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-  </script>
-  <script>
-  let frame = document.getElementById("hidden-frame").contentWindow;
-</script>
 </head>
 
 <body>
-  <!-- Hidden iframe (completely invisible) -->
-  <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
-		  <li class="nav-item"><a class="nav-link" href="./characters.html">Characters</a></li>
-		  <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
-          <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
-        </ul>
-
-        <!-- User info + Sign Out -->
-        <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
-        <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
-      </div>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="light-icon">☀️</span>
+            <span class="dark-icon">🌙</span>
+        </button>
     </div>
-  </nav>
+</head>
 
-  <!-- Header -->
-  <header class="text-center p-5 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));">
-    <section>
-      <h1>Embark on an Epic Adventure!</h1>
-      <p>Collect coins, avoid obstacles, and save the kingdom!</p>
-    </section>
-  </header>
+    <!-- Hidden iframe (completely invisible) -->
+    <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-  <!-- Carousel -->
-  <div id="gameCarousel" class="carousel slide carousel-fade my-5" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active"><img src="./Image 1.png" class="d-block mx-auto" alt="Level 1"></div>
-      <div class="carousel-item"><img src="./Image 2.png" class="d-block mx-auto" alt="Level 3"></div>
-      <div class="carousel-item"><img src="./image 3.png" class="d-block mx-auto" alt="Level 3"></div>
-      <div class="carousel-item"><img src="./image 4.png" class="d-block mx-auto" alt="Level 4"></div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./characters.html">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                </ul>
+
+                <!-- User info + Sign Out -->
+                <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
+                <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center text-white">
+        <section>
+            <h1 class="display-3 fw-bold mb-4">Embark on an Epic Adventure!</h1>
+            <p class="lead mb-4">Collect coins, avoid obstacles, and save the kingdom in this thrilling Mario adventure!</p>
+            <a href="./levelselector.html" class="btn btn-warning btn-lg px-5">Start Playing</a>
+        </section>
+    </header>
+
+    <!-- Carousel -->
+    <div class="container my-5">
+        <div class="carousel-title">
+            <h2>Game Preview</h2>
+        </div>
+        <div id="gameCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                    <img src="./Image 1.png" class="d-block w-100" alt="Level 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Exciting World 1</h5>
+                        <p>Start your journey in the Mushroom Kingdom</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./Image 2.png" class="d-block w-100" alt="Level 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Challenging Obstacles</h5>
+                        <p>Navigate through tricky platforms</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./image 3.png" class="d-block w-100" alt="Level 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Boss Battles</h5>
+                        <p>Face epic boss encounters</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="./image 4.png" class="d-block w-100" alt="Level 4">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Secret Areas</h5>
+                        <p>Discover hidden paths and surprises</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 
-  <!-- Main content -->
-  <main class="container py-5">
-    <div class="text-center mb-5">
-      <div class="box mx-auto mb-3">
-        <span style="--i: 1"><img src="./mario.jpeg" alt="Mario"></span>
-        <span style="--i: 2"><img src="./Mario_render.webp" alt="Mario render"></span>
-        <span style="--i: 3"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
-        <span style="--i: 4"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
-        <span style="--i: 5"><img src="./Th18Reimu.webp" alt="Reimu"></span>
-        <span style="--i: 6"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
-        <span style="--i: 7"><img src="./Th18Reimu.webp" alt="Reimu"></span>
-        <span style="--i: 8"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
-      </div>
-      <a href="./levelselector.html" class="btn btn-warning btn-lg me-2">Play Game</a>
+    <!-- 3D Character Carousel -->
+    <div class="container text-center my-5">
+        <div class="carousel-title">
+            <h2>Meet the Characters</h2>
+        </div>
+        <div class="box-container">
+            <div class="box">
+			    <span style="--i: 1"><img src="./Mario_render.webp" alt="Mario render"></span>
+                <span style="--i: 2"><img src="./Mario_render.webp" alt="Mario render"></span>
+                <span style="--i: 3"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+                <span style="--i: 4"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
+                <span style="--i: 5"><img src="./Th18Reimu.webp" alt="Reimu"></span>
+                <span style="--i: 6"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
+                <span style="--i: 7"><img src="./Th18Reimu.webp" alt="Reimu"></span>
+                <span style="--i: 8"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="./characters.html" class="btn btn-warning btn-lg me-3">View All Characters</a>
+            <a href="./levelselector.html" class="btn btn-primary btn-lg">Play Game Now</a>
+        </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-6">
-        <article class="bg-light p-4 mb-4 rounded">
-          <h2>About the Game</h2>
-          <p>This game is a remake of Mario Forever by Buziol Games in 2004.</p>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="bg-light p-4 mb-4 rounded">
-          <h2>Game Mechanics</h2>
-          <p>The game is designed with simple yet engaging mechanics. Jump with Z, fire/run with X, use the item box with Space Bar, and move with the arrow keys</p>
-        </article>
-      </div>
-    </div>
-  </main>
+    <!-- Main content -->
+    <main class="container py-5">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">About the Game</h2>
+                        <p class="card-text">This game is a modern remake of the classic Mario Forever by Buziol Games from 2004. We've enhanced the graphics, added new features, and improved gameplay while keeping the nostalgic feel that made the original so beloved.</p>
+                        <p class="card-text">Experience 42 exciting levels across different worlds, each with unique challenges and enemies. The game stays true to the classic Mario formula while introducing modern gameplay elements.</p>
+                        <a href="./about.html" class="btn btn-primary mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Game Mechanics</h2>
+                        <p class="card-text">The game features simple yet engaging mechanics that are easy to learn but challenging to master:</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>🎮 Controls:</strong> Jump with Z, Fire/Run with X, Use Item Box with Space Bar</li>
+                            <li class="mb-2"><strong>🎯 Movement:</strong> Arrow Keys for precise platforming</li>
+                            <li class="mb-2"><strong>⭐ Power-ups:</strong> Collect mushrooms, fire flowers, and stars</li>
+                            <li class="mb-2"><strong>🏆 Goals:</strong> Reach the flag at the end of each level</li>
+                            <li class="mb-2"><strong>💎 Collectibles:</strong> Coins and hidden items throughout levels</li>
+                        </ul>
+                        <a href="./levelselector.html" class="btn btn-warning mt-3">Try It Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Footer -->
-  <footer class="text-center p-3 bg-dark text-white">
-    <p>© ITE254 Final Project</p>
-    <div>
-      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
-      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
-    </div>
-  </footer>
-  <!-- Firebase Auth -->
-  <script>
-    (function() {
-      const signOutBtn = document.getElementById('signOutBtn');
-      const userEmailSpan = document.getElementById('userEmail');
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="game-feature">
+                    <h3 class="text-center mb-4">Key Features</h3>
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-4">
+                            <div class="feature-icon">
+                                <h1>🎮</h1>
+                            </div>
+                            <h5>42 Levels</h5>
+                            <p>Exciting challenges across multiple worlds</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="feature-icon">
+                                <h1>👾</h1>
+                            </div>
+                            <h5>Unique Enemies</h5>
+                            <p>Face new challenges in each level</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="feature-icon">
+                                <h1>🎵</h1>
+                            </div>
+                            <h5>Original Music</h5>
+                            <p>Enjoy nostalgic Mario tunes</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="feature-icon">
+                                <h1>🌟</h1>
+                            </div>
+                            <h5>Classic Gameplay</h5>
+                            <p>True to original Mario mechanics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          userEmailSpan.textContent = user.email || user.displayName || '';
-          userEmailSpan.classList.remove('d-none');
-          signOutBtn.classList.remove('d-none');
-        } else {
-          window.location.href = "Login.html";
-        }
-      });
-
-      signOutBtn.addEventListener('click', function() {
-        firebase.auth().signOut().then(() => {
-          const music = document.getElementById('bg-music');
-          try { music.pause(); } catch (e) {}
-          window.location.href = "Login.html";
-        }).catch((err) => {
-          alert("Sign out error: " + err.message);
-        });
-      });
-    })();
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+    <footer class="text-center p-4 bg-dark">
+        <div class="container">
+            <p class="mb-3">© 2025 ITE254 Final Project - Mario Forever Remake</p>
+            <div class="social-icons mb-3">
+                <a href="https://www.facebook.com/" class="me-2" title="Share on Facebook">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://www.twitter.com/" class="me-2" title="Share on Twitter">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/" title="Share on Instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+            <div>
+                <a href="./contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
+                <a href="./about.html" class="btn btn-outline-dark btn-sm">About Project</a>
+            </div>
+        </div>
+    </footer>
+	
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+    <script src="./firebase-config.js"></script>
+    <script src="./theme-switcher.js"></script>
 </body>
 </html>

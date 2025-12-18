@@ -84,7 +84,7 @@ function loadTrack(i) {
   currentIndex = i;
   audio.src = t.file;
 
-  // mini player
+  // mini player - show full title without truncation
   songTitleInner.textContent = t.title;
   songArtist.textContent = t.artist;
   albumCover.src = t.cover;
@@ -191,7 +191,7 @@ tracks.forEach((t,i)=>{
 loadTrack(currentIndex);
 
 // search
-searchBar.addEventListener('input', ()=>{
+function performSearch() {
   const query = searchBar.value.toLowerCase();
   let anyVisible = false;
   document.querySelectorAll('#trackList .track').forEach(track=>{
@@ -205,7 +205,12 @@ searchBar.addEventListener('input', ()=>{
     }
   });
   noResults.style.display = anyVisible ? 'none' : 'block';
-});
+}
+
+searchBar.addEventListener('input', performSearch);
+
+// Initial search to hide "No results found" when there are tracks
+performSearch();
 
 // big player open/close
 playerLeft.addEventListener('click', ()=>{ bigPlayer.classList.add('active'); });

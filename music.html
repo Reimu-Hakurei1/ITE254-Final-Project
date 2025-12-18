@@ -8,185 +8,124 @@
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="./styles (web).css">
+  <!-- Music Specific Styles -->
+  <link rel="stylesheet" href="./music.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <meta name="theme-color" content="#0a0a0a">
 
   <!-- Page script -->
   <script type="module" src="music.js" defer></script>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDXWF4fNvq4aS4RWBkqEuykt4zzFdt6cqU",
-      authDomain: "ite254-final-project.firebaseapp.com",
-      projectId: "ite254-final-project",
-      storageBucket: "ite254-final-project.appspot.com",
-      messagingSenderId: "853636478780",
-      appId: "1:853636478780:web:bd1af21cb7474926db9039",
-      measurementId: "G-ELH7M25FKW"
-    };
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-  </script>
-
-  <style>
-    /* ---------- Page basics ---------- */
-    :root {
-      --overlay-side-padding: 40px; /* change to widen or narrow the space on big player sides */
+ <style>
+    #userEmail { 
+      font-weight: 500; 
+      margin-right: 15px;
     }
-
-    body {
-      background: #121212;
-      color: #fff;
-      padding-bottom: 160px; /* space for mini player + footer */
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      margin: 0;
-    }
-
-    .music-section { margin-top: 2rem; margin-bottom: 140px; padding: 0 16px; }
-
-    .track { cursor: pointer; transition: background .18s ease, transform .12s ease;
-      border-radius: 10px; background: #1e1e1e; color: #fff; }
-    .track:hover { background: #2a2a2a; transform: translateY(-2px); }
-    .track.active { background: #333; }
-    .track-cover { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-
-    .album-container img { max-width: 280px; max-height: 280px; border-radius: 12px; box-shadow: 0 6px 30px rgba(0,0,0,.6); }
-
-    /* ---------- Mini player (bottom) ---------- */
-    .player-bar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: 100px;
-      background: #181818;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      box-shadow: 0 -6px 20px rgba(0,0,0,.6);
-      z-index: 9998;
-    }
-
-    .player-left { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .player-left img { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; }
-    .song-title { position: relative; overflow: hidden; white-space: nowrap; width: 240px; }
-    .song-title-inner { display: inline-block; padding-left: 100%; animation: scroll-left 12s linear infinite; }
-    .song-artist { font-size: 0.9rem; color: #cfcfcf; }
-    @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    .player-center { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .controls { display: flex; gap: 20px; align-items: center; }
-    .controls button { background: #282828; border: none; color: #fff; font-size: 22px; padding: 8px 14px; border-radius: 10px; cursor: pointer; }
-    .controls button:hover { background: #1db954; }
-
-    .progress-wrap { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 480px; }
-    .time { font-size: .75rem; min-width: 36px; text-align: center; color: #fff; }
-    .progress { background: #404040; height: 6px; border-radius: 4px; position: relative; flex: 1; cursor: pointer; }
-    .bar { background: #1db954; height: 100%; width: 0%; border-radius: 4px; }
-    .thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; position: absolute; top: 50%; transform: translate(-50%,-50%); left: 0; }
-
-    footer { position: relative !important; bottom: 100px !important; width: 100% !important; background: #111 !important; color: #fff !important; text-align: center !important; padding: 15px 0 !important; z-index: 5 !important; }
-
-    #noResults { display: none; text-align: center; color: #bbb; margin-top: 20px; }
-
-    /* ---------- Big player vertical overlay ---------- */
-    .big-player-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      color: #fff;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 24px 0 40px; /* keep top small to allow close button */
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity .28s ease, transform .28s ease;
-      pointer-events: none;
-    }
-    .big-player-overlay.active {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    #closeBigPlayer {
-      position: absolute; top: 18px; right: 18px;
-      font-size: 22px; border: none; background: rgba(255,255,255,0.04);
-      color: #fff; width: 40px; height: 40px; border-radius: 8px; cursor: pointer;
-    }
-
-    .big-cover { margin-top: 28px; }
-    .big-cover img {
-      width: min(420px, 86vw);      /* responsive */
-      height: min(420px, 86vw);
-      object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 14px 48px rgba(0,0,0,0.7);
-    }
-
-    .big-title { font-size: clamp(20px, 3.4vw, 36px); font-weight: 700; text-align: center; margin-top: 18px; margin-bottom: 6px; }
-    .big-artist { color: #cfcfcf; font-size: clamp(14px, 1.8vw, 18px); text-align: center; margin-bottom: 18px; }
-
-    .big-controls {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      margin-top: 8px;
-    }
-    .big-controls .controls { gap: 24px; }
-    .big-controls .controls button { font-size: 30px; padding: 10px 18px; border-radius: 12px; }
-
-    /* ---------- MAKE THE BIG PROGRESS BAR FILL VIEWPORT ---------- */
-    .big-progress-wrap {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0 var(--overlay-side-padding);    /* side padding for the whole bar */
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: space-between;
-    }
-
-    /* timestamps are fixed width */
-    #bigCurTime, #bigDurTime {
-      width: 64px;            /* reserved space for time */
+    /* ---------- Music Page Specific ---------- */
+    .music-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 4rem 1rem;
       text-align: center;
-      color: #fff;
-      font-size: 0.95rem;
-      flex: 0 0 64px;
-    }
-
-    /* the inner progress (fills all remaining space) */
-    .big-progress-wrap .progress {
-      flex: 1 1 auto;         /* critical: let it expand */
-      height: 12px;           /* taller for visibility */
-      background: #33353a;
-      border-radius: 8px;
       position: relative;
-      cursor: pointer;
-      min-width: 40px;        /* prevent collapse */
+      overflow: hidden;
+      margin-top: 1rem;
+      border-radius: var(--border-radius);
     }
-    .big-progress-wrap .bar { height: 100%; width: 0%; background: #1db954; border-radius: 8px; }
-    .big-progress-wrap .thumb { position: absolute; top: 50%; transform: translate(-50%,-50%); left: 0; width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+    
+    .music-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      text-shadow: 0 0 30px rgba(255,255,255,0.5);
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
+    
+    .music-header p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-    /* make sure overlay elements don't get horizontally shrunk by other containers */
-    .big-player-overlay * { box-sizing: border-box; }
+    .album-container {
+      text-align: center;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--surface-color);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      max-width: 800px;
+    }
 
-    /* responsive tweaks */
-    @media (max-width: 600px) {
-      :root { --overlay-side-padding: 20px; }
-      #bigCurTime, #bigDurTime { width: 48px; flex: 0 0 48px; font-size: 0.9rem; }
+    .album-container img {
+      max-width: 280px;
+      max-height: 280px;
+      border-radius: 12px;
+      box-shadow: 0 6px 30px rgba(0,0,0,.6);
+      border: 3px solid var(--border-color);
+    }
+
+    /* Adjust for theme switching */
+    [data-theme="dark"] .music-header {
+      background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+    }
+
+    /* Initially hide "No results found" */
+    #noResults {
+      display: none !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .music-header {
+        padding: 3rem 1rem;
+      }
+      
+      .music-header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .album-container {
+        padding: 1.5rem;
+      }
+      
+      .album-container img {
+        max-width: 220px;
+        max-height: 220px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .music-header h1 {
+        font-size: 2rem;
+      }
+      
+      .album-container img {
+        max-width: 180px;
+        max-height: 180px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="light-icon">☀️</span>
+      <span class="dark-icon">🌙</span>
+    </button>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -203,29 +142,46 @@
           <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
         </ul>
-        <span id="userEmail" class="navbar-text text-white me-2 d-none"></span>
-        <button id="signOutBtn" class="btn btn-outline-light d-none">Sign Out</button>
+        <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
+        <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
       </div>
     </div>
   </nav>
 
+  <!-- Header -->
+  <div class="music-header">
+    <h1>Game Music Collection</h1>
+    <p>Listen to the complete soundtrack of our Mario Forever remake</p>
+  </div>
+
   <!-- Big album cover -->
-  <div class="album-container text-center mt-4">
+  <div class="album-container">
     <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover">
+    <h3 class="mt-3">Featured Track</h3>
+    <p class="text-muted">Click on any track to start listening</p>
   </div>
 
   <!-- Music list -->
   <div class="music-section container">
-    <h2>Music</h2>
-    <div class="mb-3">
-      <input type="text" id="searchBar" class="form-control" placeholder="Search by music name or artist...">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="card-title mb-4">All Tracks</h2>
+            <div class="mb-4">
+              <input type="text" id="searchBar" class="form-control" placeholder="Search by music name or artist...">
+            </div>
+            <p id="noResults" class="text-center">No results found</p>
+            <div id="trackList" class="row g-3"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <p id="noResults">No results found</p>
-    <div id="trackList" class="row"></div>
   </div>
 
   <!-- Mini player -->
   <div class="player-bar">
+    <!-- Left side: Album cover and song info -->
     <div class="player-left" title="Open Now Playing">
       <img id="miniCover" src="covers/fastrun.jpg" alt="cover">
       <div class="song-meta">
@@ -234,11 +190,12 @@
       </div>
     </div>
 
+    <!-- Center: Controls and progress bar -->
     <div class="player-center">
       <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶</button>
-        <button id="next">⏭</button>
+        <button id="prev" aria-label="Previous track"><i class="bi bi-skip-backward-fill"></i></button>
+        <button id="play" aria-label="Play/Pause" class="play"><i class="bi bi-play-fill"></i></button>
+        <button id="next" aria-label="Next track"><i class="bi bi-skip-forward-fill"></i></button>
       </div>
       <div class="progress-wrap">
         <div class="time" id="curTime">0:00</div>
@@ -255,7 +212,7 @@
 
   <!-- Big Player Vertical -->
   <div id="bigPlayer" class="big-player-overlay" aria-hidden="true">
-    <button id="closeBigPlayer" aria-label="Close Now Playing">✖</button>
+    <button id="closeBigPlayer" aria-label="Close Now Playing"><i class="bi bi-x-lg"></i></button>
 
     <div class="big-cover">
       <img id="bigPlayerCover" src="covers/fastrun.jpg" alt="Big cover">
@@ -266,36 +223,50 @@
 
     <div class="big-controls">
       <div class="controls">
-        <button id="bigPrev">⏮</button>
-        <button id="bigPlay">▶</button>
-        <button id="bigNext">⏭</button>
+        <button id="bigPrev" aria-label="Previous track"><i class="bi bi-skip-backward-fill"></i></button>
+        <button id="bigPlay" aria-label="Play/Pause" class="play"><i class="bi bi-play-fill"></i></button>
+        <button id="bigNext" aria-label="Next track"><i class="bi bi-skip-forward-fill"></i></button>
       </div>
 
-     
       <div class="big-progress-wrap" role="group" aria-label="Now playing progress">
         <div id="bigCurTime">0:00</div>
-
-  
         <div class="progress" id="bigProgress">
           <div class="bar" id="bigProgressBar"></div>
           <div class="thumb" id="bigThumb"></div>
         </div>
-
         <div id="bigDurTime">0:00</div>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="text-center p-3 bg-dark text-white">
-    <p>© ITE254 Final Project</p>
-    <div>
-      <a href="https://www.facebook.com/" class="btn btn-outline-light btn-sm">Share on Facebook</a>
-      <a href="https://www.twitter.com/" class="btn btn-outline-light btn-sm">Share on Twitter</a>
+  <footer class="text-center p-4 bg-dark">
+    <div class="container">
+      <p class="mb-3">© 2025 ITE254 Final Project</p>
+      <div class="social-icons mb-3">
+        <a href="https://www.facebook.com/" class="me-2" title="Share on Facebook">
+          <i class="bi bi-facebook"></i>
+        </a>
+        <a href="https://www.twitter.com/" class="me-2" title="Share on Twitter">
+          <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://www.instagram.com/" title="Share on Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+      </div>
+      <div>
+        <a href="./contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
+        <a href="./about.html" class="btn btn-outline-dark btn-sm me-2">About Project</a>
+        <a href="./levelselector.html" class="btn btn-warning btn-sm">Play Game</a>
+      </div>
     </div>
   </footer>
 
-  <!-- Bootstrap script -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+    <script src="./firebase-config.js"></script>
+    <script src="./theme-switcher.js"></script>
 </body>
 </html>
