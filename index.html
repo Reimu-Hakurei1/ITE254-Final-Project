@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITE254-Final-Project - Home</title>
-    <link rel="icon" href="icon.png" type="image/png">
+    <link rel="icon" href="image/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles (web).css">
+    <!-- Curtain Animation -->
+    <link rel="stylesheet" href="./curtain.css">
+    <!-- Pages CSS -->
+    <link rel="stylesheet" href="./pages.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="theme-color" content="#0a0a0a">
-    <style>
-        #userEmail { 
-            font-weight: 500; 
-            margin-right: 15px;
-        }
-    </style>
-
 </head>
-
 <body>
+    <!-- CURTAIN SCRIPT LOADS FIRST -->
+    <script src="./curtain.js"></script>
+    
     <!-- Theme Switcher -->
     <div class="theme-switcher">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -29,7 +28,6 @@
             <span class="dark-icon">🌙</span>
         </button>
     </div>
-</head>
 
     <!-- Hidden iframe (completely invisible) -->
     <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
@@ -78,28 +76,28 @@
         <div id="gameCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner rounded-4">
                 <div class="carousel-item active">
-                    <img src="./Image 1.png" class="d-block w-100" alt="Level 1">
+                    <img src="image/Image 1.png" class="d-block w-100" alt="Level 1">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Exciting World 1</h5>
                         <p>Start your journey in the Mushroom Kingdom</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="./Image 2.png" class="d-block w-100" alt="Level 2">
+                    <img src="image/Image 2.png" class="d-block w-100" alt="Level 2">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Challenging Obstacles</h5>
                         <p>Navigate through tricky platforms</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="./image 3.png" class="d-block w-100" alt="Level 3">
+                    <img src="image/image 3.png" class="d-block w-100" alt="Level 3">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Boss Battles</h5>
                         <p>Face epic boss encounters</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="./image 4.png" class="d-block w-100" alt="Level 4">
+                    <img src="image/image 4.png" class="d-block w-100" alt="Level 4">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Secret Areas</h5>
                         <p>Discover hidden paths and surprises</p>
@@ -124,14 +122,14 @@
         </div>
         <div class="box-container">
             <div class="box">
-			    <span style="--i: 1"><img src="./Mario_render.webp" alt="Mario render"></span>
-                <span style="--i: 2"><img src="./Mario_render.webp" alt="Mario render"></span>
-                <span style="--i: 3"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
-                <span style="--i: 4"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
-                <span style="--i: 5"><img src="./Th18Reimu.webp" alt="Reimu"></span>
-                <span style="--i: 6"><img src="./Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
-                <span style="--i: 7"><img src="./Th18Reimu.webp" alt="Reimu"></span>
-                <span style="--i: 8"><img src="./Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+                <span style="--i: 1"><img src="image/Mario_render.webp" alt="Mario render"></span>
+                <span style="--i: 2"><img src="image/Mario_render.webp" alt="Mario render"></span>
+                <span style="--i: 3"><img src="image/Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
+                <span style="--i: 4"><img src="image/Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
+                <span style="--i: 5"><img src="image/Th18Reimu.webp" alt="Reimu"></span>
+                <span style="--i: 6"><img src="image/Toad_by_Shigehisa_Nakaue.png" alt="Toad"></span>
+                <span style="--i: 7"><img src="image/Th18Reimu.webp" alt="Reimu"></span>
+                <span style="--i: 8"><img src="image/Luigi_by_Shigehisa_Nakaue.png" alt="Luigi"></span>
             </div>
         </div>
         <div class="mt-4">
@@ -231,8 +229,8 @@
             </div>
         </div>
     </footer>
-	
-    <!-- Scripts -->
+    
+    <!-- Other Scripts (at the bottom) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>

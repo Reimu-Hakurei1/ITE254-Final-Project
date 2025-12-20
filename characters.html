@@ -1,124 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Characters - ITE254 Final Project</title>
+	<link rel="icon" href="image/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles (web).css">
+    <!-- Curtain Animation -->
+    <link rel="stylesheet" href="./curtain.css">
+    <!-- Pages CSS -->
+    <link rel="stylesheet" href="./pages.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="theme-color" content="#0a0a0a">
-    
-    <!-- Custom Character Styles -->
-    <style>
-        #userEmail { 
-            font-weight: 500; 
-            margin-right: 15px;
-        }
-        .character-header {
-            background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
-            padding: 5rem 1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .character-header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            text-shadow: 0 0 30px rgba(255,255,255,0.5);
-            position: relative;
-            z-index: 1;
-            color: white;
-        }
-        
-        .character-header p {
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.9);
-            position: relative;
-            z-index: 1;
-        }
-
-        .character-card {
-            background: linear-gradient(145deg, var(--card-bg), var(--surface-color));
-            border: none;
-            border-radius: 20px;
-            padding: 2rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            color: var(--text-primary);
-        }
-        
-        .character-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(255, 0, 150, 0.4);
-        }
-        
-        .character-card img {
-            border-radius: 15px;
-            margin-bottom: 20px;
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border: 3px solid rgba(255, 95, 158, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .character-card:hover img {
-            border-color: rgba(255, 95, 158, 0.8);
-            transform: scale(1.05);
-        }
-        
-        .character-title {
-            color: #ff5f9e;
-            font-size: 2rem;
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(255,95,158,0.5);
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(255, 95, 158, 0.3);
-            padding-bottom: 0.5rem;
-        }
-        
-        .character-card p {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .voice-section {
-            background: rgba(255, 95, 158, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 1px solid rgba(255, 95, 158, 0.2);
-        }
-        
-        .voice-section h6 {
-            color: #ff5f9e;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .character-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff5f9e, #ff0066);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 <body>
+    <!-- CURTAIN SCRIPT LOADS FIRST -->
+    <script src="./curtain.js"></script>
+    
     <!-- Theme Switcher -->
     <div class="theme-switcher">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -126,10 +28,10 @@
             <span class="dark-icon">🌙</span>
         </button>
     </div>
-	
+    
     <!-- Hidden iframe (completely invisible) -->
     <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
-	
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
         <div class="container">
@@ -166,7 +68,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="character-card">
                     <h3 class="character-title">Mario</h3>
-                    <img src="Mario_render.webp" alt="Mario" class="img-fluid">
+                    <img src="image/Mario_render.webp" alt="Mario" class="img-fluid">
                     <div class="character-tags mb-3">
                         <span class="character-tag">Hero</span>
                         <span class="character-tag">Adventurer</span>
@@ -187,7 +89,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="character-card">
                     <h3 class="character-title">Luigi</h3>
-                    <img src="Luigi_by_Shigehisa_Nakaue.png" alt="Luigi" class="img-fluid">
+                    <img src="image/Luigi_by_Shigehisa_Nakaue.png" alt="Luigi" class="img-fluid">
                     <div class="character-tags mb-3">
                         <span class="character-tag">Loyal</span>
                         <span class="character-tag">Brave</span>
@@ -208,7 +110,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="character-card">
                     <h3 class="character-title">Toad</h3>
-                    <img src="Toad_by_Shigehisa_Nakaue.png" alt="Toad" class="img-fluid">
+                    <img src="image/Toad_by_Shigehisa_Nakaue.png" alt="Toad" class="img-fluid">
                     <div class="character-tags mb-3">
                         <span class="character-tag">Cheerful</span>
                         <span class="character-tag">Helpful</span>
@@ -229,7 +131,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="character-card">
                     <h3 class="character-title">Reimu Hakurei</h3>
-                    <img src="Th18Reimu.webp" alt="Reimu Hakurei" class="img-fluid">
+                    <img src="image/Th18Reimu.webp" alt="Reimu Hakurei" class="img-fluid">
                     <div class="character-tags mb-3">
                         <span class="character-tag">Shrine Maiden</span>
                         <span class="character-tag">Protector</span>
@@ -270,8 +172,8 @@
             </div>
         </div>
     </footer>
-	
-    <!-- Scripts -->
+    
+    <!-- Other Scripts (at the bottom) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>

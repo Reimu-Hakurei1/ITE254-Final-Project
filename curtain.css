@@ -1,0 +1,342 @@
+/* ========== CURTAIN ANIMATION ========== */
+/* Initial state - curtains closed to hide page */
+body.curtains-loading {
+  overflow: hidden !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+}
+
+.curtain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  pointer-events: none;
+  display: none;
+  overflow: hidden;
+}
+
+/* Block interactions when curtains are animating */
+.curtain-container.curtain-closing,
+.curtain-container.curtain-opening,
+.curtain-container.initial-closed {
+  pointer-events: all !important;
+  cursor: wait !important;
+}
+
+/* Prevent body scroll when curtains are active */
+.curtain-container.curtain-closing ~ *,
+.curtain-container.curtain-opening ~ *,
+.curtain-container.initial-closed ~ * {
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Initial closed state - hides page completely */
+.curtain-container.initial-closed {
+  display: flex;
+}
+
+.curtain-container.initial-closed .curtain-left {
+  transform: translateX(-5%);
+  z-index: 2;
+}
+
+.curtain-container.initial-closed .curtain-right {
+  transform: translateX(5%);
+  z-index: 1;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 55%; /* Slightly wider than 50% for overlap */
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curtain-left {
+  left: 0;
+  transform: translateX(-100%); /* Start completely off-screen left */
+  justify-content: flex-end;
+  z-index: 2; /* Left curtain on top when overlapping */
+}
+
+.curtain-right {
+  right: 0;
+  transform: translateX(100%); /* Start completely off-screen right */
+  justify-content: flex-start;
+  z-index: 1; /* Right curtain behind when overlapping */
+}
+
+.curtain-image {
+  height: 100vh;
+  width: auto;
+  object-fit: cover;
+  max-width: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Fade in curtain images when loaded */
+.curtain-image.loaded {
+  opacity: 1;
+}
+
+/* Curtain animation states */
+.curtain-closing {
+  display: flex;
+}
+
+.curtain-closing .curtain-left {
+  animation: curtainCloseLeft 0.6s ease-out forwards;
+}
+
+.curtain-closing .curtain-right {
+  animation: curtainCloseRight 0.6s ease-out forwards;
+}
+
+.curtain-closed {
+  display: flex;
+}
+
+.curtain-closed .curtain-left {
+  transform: translateX(-5%); /* Overlap position - left curtain goes 5% past center */
+}
+
+.curtain-closed .curtain-right {
+  transform: translateX(5%); /* Overlap position - right curtain goes 5% past center */
+}
+
+.curtain-opening {
+  display: flex;
+}
+
+.curtain-opening .curtain-left {
+  animation: curtainOpenLeft 0.6s ease-out forwards;
+}
+
+.curtain-opening .curtain-right {
+  animation: curtainOpenRight 0.6s ease-out forwards;
+}
+
+/* Curtain animations - full off-screen to overlap position */
+@keyframes curtainCloseLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(-5%); /* Overlap position */
+  }
+}
+
+@keyframes curtainCloseRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(5%); /* Overlap position */
+  }
+}
+
+@keyframes curtainOpenLeft {
+  0% {
+    transform: translateX(-5%); /* Start from overlap position */
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes curtainOpenRight {
+  0% {
+    transform: translateX(5%); /* Start from overlap position */
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* More dramatic overlap (optional) */
+.curtain-container.dramatic-overlap .curtain {
+  width: 60%; /* Even wider for more overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closed .curtain-left {
+  transform: translateX(-10%); /* More overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closed .curtain-right {
+  transform: translateX(10%); /* More overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closing .curtain-left {
+  animation: curtainCloseLeftDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-closing .curtain-right {
+  animation: curtainCloseRightDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-opening .curtain-left {
+  animation: curtainOpenLeftDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-opening .curtain-right {
+  animation: curtainOpenRightDramatic 0.6s ease-out forwards;
+}
+
+@keyframes curtainCloseLeftDramatic {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(-10%); /* More dramatic overlap */
+  }
+}
+
+@keyframes curtainCloseRightDramatic {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(10%); /* More dramatic overlap */
+  }
+}
+
+@keyframes curtainOpenLeftDramatic {
+  0% {
+    transform: translateX(-10%); /* Start from dramatic overlap position */
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes curtainOpenRightDramatic {
+  0% {
+    transform: translateX(10%); /* Start from dramatic overlap position */
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Ensure curtains cover entire screen */
+.curtain-image.full-coverage {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+/* For very wide curtain images */
+.curtain-image.wide-image {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+}
+
+/* For very tall curtain images */
+.curtain-image.tall-image {
+  width: auto;
+  height: 100%;
+  min-width: 100%;
+}
+
+/* Additional styles for reload handling */
+body.reloading {
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Style for browser's reload button area (limited effect) */
+.curtain-closing *,
+.curtain-opening * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Responsive adjustments with overlap */
+@media (max-width: 768px) {
+  .curtain {
+    width: 100%; /* Full width on mobile, no side-by-side */
+  }
+  
+  .curtain-left {
+    transform: translateX(-100%);
+    justify-content: center;
+  }
+  
+  .curtain-right {
+    transform: translateX(100%);
+    justify-content: center;
+  }
+  
+  .curtain-closed .curtain-left {
+    transform: translateX(0%);
+  }
+  
+  .curtain-closed .curtain-right {
+    transform: translateX(0%);
+  }
+  
+  /* On mobile, curtains stack vertically instead of overlapping */
+  .curtain-closed .curtain-left {
+    transform: translateX(0%);
+    width: 100%;
+  }
+  
+  .curtain-closed .curtain-right {
+    transform: translateX(0%);
+    width: 100%;
+  }
+  
+  @keyframes curtainCloseLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainCloseRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainOpenLeft {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes curtainOpenRight {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .curtain-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}

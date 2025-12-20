@@ -4,12 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ITE254-Final-Project - Music</title>
-  <link rel="icon" href="icon.png" type="image/png">
+  <link rel="icon" href="image/icon.png" type="image/png">
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Main Styles -->
   <link rel="stylesheet" href="./styles (web).css">
+  <!-- Curtain Animation -->
+  <link rel="stylesheet" href="./curtain.css">
+  <!-- Pages CSS -->
+  <link rel="stylesheet" href="./pages.css">
   <!-- Music Specific Styles -->
   <link rel="stylesheet" href="./music.css">
   <!-- Fonts -->
@@ -19,105 +23,48 @@
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <meta name="theme-color" content="#0a0a0a">
-
-  <!-- Page script -->
-  <script type="module" src="music.js" defer></script>
-
- <style>
-    #userEmail { 
-      font-weight: 500; 
-      margin-right: 15px;
-    }
-    /* ---------- Music Page Specific ---------- */
-    .music-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 4rem 1rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      margin-top: 1rem;
-      border-radius: var(--border-radius);
-    }
-    
-    .music-header h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      text-shadow: 0 0 30px rgba(255,255,255,0.5);
-      position: relative;
-      z-index: 1;
-      color: white;
-    }
-    
-    .music-header p {
-      font-size: 1.2rem;
-      color: rgba(255,255,255,0.9);
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .album-container {
-      text-align: center;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: var(--surface-color);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-color);
-      max-width: 800px;
-    }
-
-    .album-container img {
-      max-width: 280px;
-      max-height: 280px;
-      border-radius: 12px;
-      box-shadow: 0 6px 30px rgba(0,0,0,.6);
-      border: 3px solid var(--border-color);
-    }
-
-    /* Adjust for theme switching */
-    [data-theme="dark"] .music-header {
-      background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
-    }
-
-    /* Initially hide "No results found" */
-    #noResults {
+  
+  <!-- Add this inline style to fix the big player issue -->
+  <style>
+    /* TEMPORARY FIX - Remove this after confirming CSS works */
+    #bigPlayer {
       display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
     }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .music-header {
-        padding: 3rem 1rem;
-      }
-      
-      .music-header h1 {
-        font-size: 2.5rem;
-      }
-      
-      .album-container {
-        padding: 1.5rem;
-      }
-      
-      .album-container img {
-        max-width: 220px;
-        max-height: 220px;
-      }
+    
+    #bigPlayer.active {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
     }
-
-    @media (max-width: 576px) {
-      .music-header h1 {
-        font-size: 2rem;
-      }
-      
-      .album-container img {
-        max-width: 180px;
-        max-height: 180px;
-      }
+    
+    /* Ensure body has proper overflow */
+    body {
+      overflow-x: hidden !important;
+      position: relative !important;
+    }
+    
+    /* Make sure content is visible */
+    .music-section,
+    .album-container,
+    .music-header {
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    
+    /* Fix navbar z-index */
+    .navbar {
+      z-index: 1000 !important;
     }
   </style>
 </head>
 <body>
+  <!-- CURTAIN SCRIPT LOADS FIRST -->
+  <script src="./curtain.js"></script>
+  
   <!-- Theme Switcher -->
   <div class="theme-switcher">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -150,19 +97,23 @@
 
   <!-- Header -->
   <div class="music-header">
-    <h1>Game Music Collection</h1>
-    <p>Listen to the complete soundtrack of our Mario Forever remake</p>
+    <div class="container">
+      <h1>Game Music Collection</h1>
+      <p>Listen to the complete soundtrack of our Mario Forever remake</p>
+    </div>
   </div>
 
   <!-- Big album cover -->
-  <div class="album-container">
-    <img id="albumCover" src="covers/fastrun.jpg" alt="Album cover">
-    <h3 class="mt-3">Featured Track</h3>
-    <p class="text-muted">Click on any track to start listening</p>
+  <div class="container mt-4">
+    <div class="album-container">
+      <img id="albumCover" src="covers/mario world.jpg" alt="Album cover">
+      <h3 class="mt-3">Featured Track</h3>
+      <p class="text-muted">Click on any track below to start listening</p>
+    </div>
   </div>
 
   <!-- Music list -->
-  <div class="music-section container">
+  <div class="music-section container mt-4">
     <div class="row">
       <div class="col-12">
         <div class="card mb-4">
@@ -171,8 +122,10 @@
             <div class="mb-4">
               <input type="text" id="searchBar" class="form-control" placeholder="Search by music name or artist...">
             </div>
-            <p id="noResults" class="text-center">No results found</p>
-            <div id="trackList" class="row g-3"></div>
+            <p id="noResults" class="text-center" style="display: none;">No results found</p>
+            <div id="trackList" class="row g-3">
+              <!-- Tracks will be loaded by JavaScript -->
+            </div>
           </div>
         </div>
       </div>
@@ -183,10 +136,10 @@
   <div class="player-bar">
     <!-- Left side: Album cover and song info -->
     <div class="player-left" title="Open Now Playing">
-      <img id="miniCover" src="covers/fastrun.jpg" alt="cover">
+      <img id="miniCover" src="covers/mario world.jpg" alt="cover">
       <div class="song-meta">
-        <div class="song-title"><span id="songTitleInner" class="song-title-inner">Fast Run</span></div>
-        <div id="songArtist" class="song-artist">Composer A</div>
+        <div class="song-title"><span id="songTitleInner" class="song-title-inner">Super Mario World - Wandering the Plains</span></div>
+        <div id="songArtist" class="song-artist">Koji Kondo</div>
       </div>
     </div>
 
@@ -215,11 +168,11 @@
     <button id="closeBigPlayer" aria-label="Close Now Playing"><i class="bi bi-x-lg"></i></button>
 
     <div class="big-cover">
-      <img id="bigPlayerCover" src="covers/fastrun.jpg" alt="Big cover">
+      <img id="bigPlayerCover" src="covers/mario world.jpg" alt="Big cover">
     </div>
 
-    <div id="bigPlayerTitle" class="big-title">Fast Run</div>
-    <div id="bigPlayerArtist" class="big-artist">Composer A</div>
+    <div id="bigPlayerTitle" class="big-title">Super Mario World - Wandering the Plains</div>
+    <div id="bigPlayerArtist" class="big-artist">Koji Kondo</div>
 
     <div class="big-controls">
       <div class="controls">
@@ -240,7 +193,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="text-center p-4 bg-dark">
+  <footer class="text-center p-4 bg-dark mt-5">
     <div class="container">
       <p class="mb-3">© 2025 ITE254 Final Project</p>
       <div class="social-icons mb-3">
@@ -262,11 +215,11 @@
     </div>
   </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-    <script src="./firebase-config.js"></script>
-    <script src="./theme-switcher.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+  <script src="./theme-switcher.js"></script>
+  <script src="./music.js"></script>
 </body>
 </html>
