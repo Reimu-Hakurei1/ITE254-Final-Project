@@ -4,7 +4,7 @@ class PageTransitionManager {
     this.isAnimating = false;
     this.transitionEnabled = true;
     this.imagesLoaded = false;
-    this.isReloading = false;
+    this.animationTimeout = null;
     this.init();
   }
 
@@ -14,7 +14,6 @@ class PageTransitionManager {
       this.imagesLoaded = true;
       this.setupPageLoadAnimation();
       this.interceptLinks();
-      this.setupReloadDetection();
     });
   }
 
@@ -82,10 +81,20 @@ class PageTransitionManager {
           };
           img.onerror = () => {
             // Even if image fails to load, mark as loaded to proceed
+            console.warn('Curtain image failed to load:', img.src);
             checkAllLoaded();
           };
         }
       });
+      
+      // Fallback: resolve after 2 seconds even if images don't load
+      setTimeout(() => {
+        if (loadedCount < totalImages) {
+          console.warn('Some curtain images timed out, proceeding anyway');
+          images.forEach(img => img.classList.add('loaded'));
+          resolve();
+        }
+      }, 2000);
     });
   }
 
@@ -98,17 +107,17 @@ class PageTransitionManager {
       
       const href = link.getAttribute('href');
       
-      // Check if it's an internal link (not external, not anchor, not javascript)
+      // Check if it's an internal link
       if (href && 
           !href.startsWith('http') && 
           !href.startsWith('//') && 
           !href.startsWith('#') &&
           !href.startsWith('javascript:') &&
           !href.startsWith('mailto:') &&
-          !href.startsWith('tel:')) {
+          !href.startsWith('tel:') &&
+          !link.target) {
         
         e.preventDefault();
-        e.stopPropagation();
         
         // Get current page and target page
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -122,97 +131,10 @@ class PageTransitionManager {
           this.transitionToPage(href);
         }
       }
-    }, true); // Use capture phase to catch all clicks
-  }
-
-  setupReloadDetection() {
-    // Detect browser reload button click
-    this.detectReloadButton();
-    
-    // Detect Ctrl+F5 (hard refresh) and F5
-    this.detectKeyboardReload();
-    
-    // Detect beforeunload (when page is about to reload/close)
-    this.setupBeforeUnload();
-  }
-
-  detectReloadButton() {
-    // This is tricky because browsers don't expose direct reload button events
-    // We'll use a combination of methods
-    
-    // Method 1: Listen for visibility changes (some browsers trigger this on reload)
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        // Page might be reloading, but could also be tab switch
-        // We'll check other signals
-      }
-    });
-    
-    // Method 2: Override location.reload()
-    const originalReload = window.location.reload;
-    window.location.reload = function(forceReload) {
-      // Trigger curtain animation before reload
-      if (window.pageTransitionManager && !window.pageTransitionManager.isReloading) {
-        window.pageTransitionManager.isReloading = true;
-        window.pageTransitionManager.animateReload(() => {
-          originalReload.call(window.location, forceReload);
-        });
-        return;
-      }
-      originalReload.call(window.location, forceReload);
-    };
-    
-    // Store reference for the overridden method
-    window.pageTransitionManager = this;
-  }
-
-  detectKeyboardReload() {
-    document.addEventListener('keydown', (e) => {
-      // Check for F5 or Ctrl+F5 or Ctrl+R or Cmd+R (Mac)
-      const isReloadKey = 
-        e.key === 'F5' || 
-        (e.key === 'r' && (e.ctrlKey || e.metaKey)) ||
-        (e.key === 'R' && (e.ctrlKey || e.metaKey));
-      
-      if (isReloadKey && !this.isReloading) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        this.isReloading = true;
-        
-        // Check if it's a hard refresh (Ctrl+F5 or Cmd+Shift+R)
-        const isHardRefresh = (e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey) || e.key === 'F5';
-        
-        this.animateReload(() => {
-          if (isHardRefresh) {
-            // Hard refresh - bypass cache
-            window.location.href = window.location.href;
-          } else {
-            // Normal reload
-            window.location.reload();
-          }
-        });
-      }
-    }, true);
-  }
-
-  setupBeforeUnload() {
-    window.addEventListener('beforeunload', (e) => {
-      // If we're already animating a reload, don't show confirmation
-      if (this.isReloading || this.isAnimating) {
-        // Some browsers might still show prompt, but we try to prevent it
-        return undefined;
-      }
-      
-      // Check if this is likely a navigation (not just closing tab)
-      // We'll try to distinguish between page navigation and tab close
-      // This is imperfect but helps
-      return undefined;
     });
   }
 
   transitionToPage(url) {
-    // Prevent multiple transitions
     if (!this.transitionEnabled || this.isAnimating) {
       return;
     }
@@ -220,20 +142,21 @@ class PageTransitionManager {
     this.transitionEnabled = false;
     this.isAnimating = true;
     
-    // Disable all interactions
-    this.disablePageInteractions();
+    // Clear any existing timeout
+    if (this.animationTimeout) {
+      clearTimeout(this.animationTimeout);
+    }
     
     // Close curtains
-    this.closeCurtains();
-    
-    // Navigate after curtains are closed AND 0.5 second pause
-    setTimeout(() => {
-      window.location.href = url;
-    }, 700); // 600ms for closing animation + 500ms pause
+    this.closeCurtains(() => {
+      // Navigate after curtains are closed
+      this.animationTimeout = setTimeout(() => {
+        window.location.href = url;
+      }, 100); // Small delay to ensure animation completes
+    });
   }
 
   animateSamePage() {
-    // Prevent multiple animations
     if (!this.transitionEnabled || this.isAnimating) {
       return;
     }
@@ -241,138 +164,109 @@ class PageTransitionManager {
     this.transitionEnabled = false;
     this.isAnimating = true;
     
-    // Disable all interactions
-    this.disablePageInteractions();
+    // Clear any existing timeout
+    if (this.animationTimeout) {
+      clearTimeout(this.animationTimeout);
+    }
     
     // Close curtains
-    this.closeCurtains();
-    
-    // After curtains close and pause, open them again
-    setTimeout(() => {
-      this.openCurtains();
-    }, 700); // 600ms for closing + 500ms pause
+    this.closeCurtains(() => {
+      // After curtains close, open them again
+      this.animationTimeout = setTimeout(() => {
+        this.openCurtains();
+      }, 400); // Pause between close and open
+    });
   }
 
-  animateReload(callback) {
-    // Prevent multiple animations
-    if (this.isAnimating) {
-      // If already animating, just execute callback immediately
-      if (callback) setTimeout(callback, 100);
+  closeCurtains(callback) {
+    const curtainContainer = document.querySelector('.curtain-container');
+    
+    if (!curtainContainer) {
+      if (callback) callback();
       return;
     }
     
-    this.isAnimating = true;
-    this.transitionEnabled = false;
+    // Remove any existing animation classes
+    curtainContainer.classList.remove('initial-closed', 'curtain-opening', 'curtain-closed');
     
-    // Disable all interactions
-    this.disablePageInteractions();
+    // Force reflow
+    void curtainContainer.offsetWidth;
     
-    // Close curtains
-    this.closeCurtains();
+    // Add closing class
+    curtainContainer.classList.add('curtain-closing');
     
-    // Execute callback after curtains are closed
-    setTimeout(() => {
+    // Wait for animation to complete
+    this.animationTimeout = setTimeout(() => {
+      curtainContainer.classList.remove('curtain-closing');
+      curtainContainer.classList.add('curtain-closed');
+      
       if (callback) {
         callback();
       }
-    }, 700); // 600ms for closing + 500ms pause
-  }
-
-  closeCurtains() {
-    const curtainContainer = document.querySelector('.curtain-container');
-    
-    if (!curtainContainer) return;
-    
-    // Reset position first
-    curtainContainer.className = 'curtain-container';
-    
-    // Force reflow
-    curtainContainer.offsetHeight;
-    
-    // Start closing animation
-    curtainContainer.className = 'curtain-container curtain-closing';
-    
-    // After closing animation completes, set to closed state
-    setTimeout(() => {
-      curtainContainer.className = 'curtain-container curtain-closed';
-    }, 600);
+    }, 600); // Match CSS animation duration
   }
 
   openCurtains() {
     const curtainContainer = document.querySelector('.curtain-container');
     
-    if (!curtainContainer) return;
+    if (!curtainContainer) {
+      this.finishOpening();
+      return;
+    }
     
-    // Wait 0.5 seconds before opening
-    setTimeout(() => {
-      // Start opening animation
-      curtainContainer.className = 'curtain-container curtain-opening';
-      
-      // After opening animation completes, hide curtains and enable interactions
-      setTimeout(() => {
-        curtainContainer.className = 'curtain-container';
-        this.transitionEnabled = true;
-        this.isAnimating = false;
-        this.isReloading = false;
-        this.enablePageInteractions();
-        document.body.classList.remove('curtains-loading');
-      }, 600);
-    }, 500); // 0.5 second pause before opening
+    // Remove any existing classes
+    curtainContainer.classList.remove('initial-closed', 'curtain-closing', 'curtain-closed');
+    
+    // Force reflow
+    void curtainContainer.offsetWidth;
+    
+    // Add opening class
+    curtainContainer.classList.add('curtain-opening');
+    
+    // Wait for animation to complete
+    this.animationTimeout = setTimeout(() => {
+      curtainContainer.classList.remove('curtain-opening');
+      this.finishOpening();
+    }, 600); // Match CSS animation duration
+  }
+
+  finishOpening() {
+    this.transitionEnabled = true;
+    this.isAnimating = false;
+    document.body.classList.remove('curtains-loading');
   }
 
   setupPageLoadAnimation() {
     // Open curtains when page loads and images are ready
-    if (document.readyState === 'complete') {
-      this.openCurtains();
-    } else {
-      window.addEventListener('load', () => {
+    const openCurtainsNow = () => {
+      // Small delay to ensure everything is ready
+      this.animationTimeout = setTimeout(() => {
         this.openCurtains();
-      });
+      }, 100);
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      openCurtainsNow();
+    } else {
+      window.addEventListener('load', openCurtainsNow);
     }
-  }
-
-  disablePageInteractions() {
-    // Add class to body to block interactions via CSS
-    document.body.style.pointerEvents = 'none';
-    document.body.style.cursor = 'wait';
-    
-    // Disable all buttons and links
-    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea');
-    interactiveElements.forEach(el => {
-      el.setAttribute('data-was-disabled', el.disabled || el.getAttribute('disabled') ? 'true' : 'false');
-      el.disabled = true;
-      el.style.pointerEvents = 'none';
-      el.style.cursor = 'wait';
-    });
-  }
-
-  enablePageInteractions() {
-    // Remove blocking styles from body
-    document.body.style.pointerEvents = '';
-    document.body.style.cursor = '';
-    
-    // Re-enable all buttons and links
-    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea');
-    interactiveElements.forEach(el => {
-      const wasDisabled = el.getAttribute('data-was-disabled');
-      if (wasDisabled === 'false') {
-        el.disabled = false;
-        el.style.pointerEvents = '';
-        el.style.cursor = '';
-      }
-      el.removeAttribute('data-was-disabled');
-    });
   }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const pageTransition = new PageTransitionManager();
-  
-  // If page is loaded via browser back/forward, also open curtains
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-      const pageTransition = new PageTransitionManager();
-    }
-  });
+  // Small delay to ensure DOM is fully ready
+  setTimeout(() => {
+    new PageTransitionManager();
+  }, 50);
+});
+
+// Handle browser back/forward navigation
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    // Page was restored from cache, reinitialize after a small delay
+    setTimeout(() => {
+      new PageTransitionManager();
+    }, 100);
+  }
 });
