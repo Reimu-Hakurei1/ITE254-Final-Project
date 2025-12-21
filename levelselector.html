@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="./curtain.css">
   <!-- Pages CSS -->
   <link rel="stylesheet" href="./pages.css">
+  	    <!-- Snow Effect CSS -->
+    <link rel="stylesheet" href="./snow.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -54,6 +56,9 @@
 
         <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
         <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
+        <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
+                    <i class="bi bi-snow"></i>
+                </button>
       </div>
     </div>
   </nav>
@@ -259,5 +264,7 @@
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
   <script src="./firebase-config.js"></script>
   <script src="./theme-switcher.js"></script>
+      <!-- Snow Effect Script -->
+    <script src="./snow.js"></script>
 </body>
 </html>
