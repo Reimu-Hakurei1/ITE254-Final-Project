@@ -3,15 +3,13 @@ class PageTransitionManager {
   constructor() {
     this.isAnimating = false;
     this.transitionEnabled = true;
-    this.imagesLoaded = false;
     this.animationTimeout = null;
     this.init();
   }
 
   init() {
     this.createCurtainElements();
-    this.waitForImagesToLoad().then(() => {
-      this.imagesLoaded = true;
+    this.preloadImages().then(() => {
       this.setupPageLoadAnimation();
       this.interceptLinks();
     });
@@ -26,20 +24,10 @@ class PageTransitionManager {
       // Create left curtain
       const curtainLeft = document.createElement('div');
       curtainLeft.className = 'curtain curtain-left';
-      const imgLeft = document.createElement('img');
-      imgLeft.src = 'image/Left curtain.png';
-      imgLeft.alt = 'Left Curtain';
-      imgLeft.className = 'curtain-image';
-      curtainLeft.appendChild(imgLeft);
       
       // Create right curtain
       const curtainRight = document.createElement('div');
       curtainRight.className = 'curtain curtain-right';
-      const imgRight = document.createElement('img');
-      imgRight.src = 'image/Right curtain.png';
-      imgRight.alt = 'Right Curtain';
-      imgRight.className = 'curtain-image';
-      curtainRight.appendChild(imgRight);
       
       curtainContainer.appendChild(curtainLeft);
       curtainContainer.appendChild(curtainRight);
@@ -51,51 +39,16 @@ class PageTransitionManager {
     }
   }
 
-  waitForImagesToLoad() {
-    return new Promise((resolve) => {
-      const images = document.querySelectorAll('.curtain-image');
-      let loadedCount = 0;
-      const totalImages = images.length;
-      
-      if (totalImages === 0) {
-        resolve();
-        return;
-      }
-      
-      const checkAllLoaded = () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          resolve();
-        }
-      };
-      
-      images.forEach(img => {
-        // Check if image is already loaded
-        if (img.complete) {
-          img.classList.add('loaded');
-          checkAllLoaded();
-        } else {
-          img.onload = () => {
-            img.classList.add('loaded');
-            checkAllLoaded();
-          };
-          img.onerror = () => {
-            // Even if image fails to load, mark as loaded to proceed
-            console.warn('Curtain image failed to load:', img.src);
-            checkAllLoaded();
-          };
-        }
+  preloadImages() {
+    const sources = ['image/Left curtain.png', 'image/Right curtain.png'];
+    return Promise.all(sources.map(src => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve; // Proceed even on error
+        img.src = src;
       });
-      
-      // Fallback: resolve after 2 seconds even if images don't load
-      setTimeout(() => {
-        if (loadedCount < totalImages) {
-          console.warn('Some curtain images timed out, proceeding anyway');
-          images.forEach(img => img.classList.add('loaded'));
-          resolve();
-        }
-      }, 2000);
-    });
+    }));
   }
 
   interceptLinks() {
