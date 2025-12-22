@@ -65,7 +65,7 @@ body.curtains-loading {
 .curtain {
   position: absolute;
   top: 0;
-  width: 60%; /* Wider than 50% to ensure full coverage with overlap */
+  width: 140%; /* Wider than 50% to ensure full coverage with overlap */
   height: 100%;
   overflow: hidden; /* Prevent image overflow cutoff */
   display: flex;
@@ -81,7 +81,7 @@ body.curtains-loading {
   justify-content: flex-end;
   z-index: 2; /* Left curtain on top when overlapping */
   background-position: right center; /* Focus on right side of image for left curtain */
-  background-image: url('image/Left curtain.png');
+  background-image: url('image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161.png');
 }
 
 .curtain-right {
@@ -90,7 +90,7 @@ body.curtains-loading {
   justify-content: flex-start;
   z-index: 1; /* Right curtain behind when overlapping */
   background-position: left center; /* Focus on left side of image for right curtain */
-  background-image: url('image/Right curtain.png');
+  background-image: url('image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161_2.png');
 }
 
 /* Curtain animation states */

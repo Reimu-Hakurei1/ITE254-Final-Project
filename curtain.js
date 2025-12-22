@@ -40,7 +40,7 @@ class PageTransitionManager {
   }
 
   preloadImages() {
-    const sources = ['image/Left curtain.png', 'image/Right curtain.png'];
+    const sources = ['image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161.png', 'image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161_2.png'];
     return Promise.all(sources.map(src => {
       return new Promise((resolve) => {
         const img = new Image();
