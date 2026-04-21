@@ -4,20 +4,60 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Characters - ITE254 Final Project</title>
-	<link rel="icon" href="image/icon.png" type="image/png">
+    <link rel="icon" href="image/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles (web).css">
     <!-- Curtain Animation -->
     <link rel="stylesheet" href="./curtain.css">
     <!-- Pages CSS -->
     <link rel="stylesheet" href="./pages.css">
-	    <!-- Snow Effect CSS -->
+    <!-- Snow Effect CSS -->
     <link rel="stylesheet" href="./snow.css">
+    <!-- Cherry Blossom Effect CSS -->
+    <link rel="stylesheet" href="./cherry-blossom.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="theme-color" content="#0a0a0a">
+    <style>
+        /* Custom voice player styles */
+        .voice-player {
+            background: rgba(255, 95, 158, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 95, 158, 0.2);
+        }
+        .voice-player select {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 8px;
+            padding: 0.5rem;
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+        .voice-player button {
+            background: linear-gradient(135deg, #ff5f9e, #ff0066);
+            border: none;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .voice-player button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(255, 95, 158, 0.4);
+        }
+        .voice-player audio {
+            width: 100%;
+            margin-top: 0.75rem;
+            border-radius: 30px;
+        }
+    </style>
 </head>
 <body>
     <!-- CURTAIN SCRIPT LOADS FIRST -->
@@ -52,8 +92,13 @@
                 </ul>
                 <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
                 <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
-				<button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
+                <!-- Snow Toggle Button -->
+                <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
                     <i class="bi bi-snow"></i>
+                </button>
+                <!-- Cherry Blossom Toggle Button -->
+                <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable cherry blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
+                    🌸
                 </button>
             </div>
         </div>
@@ -81,11 +126,15 @@
                     </div>
                     <p><strong>Personality & Role:</strong> Mario is courageous, joyful, and endlessly optimistic. When danger strikes, he leaps first and thinks later, always with a smile and a sense of justice. As the Mushroom Kingdom's hero, he has saved Princess Peach countless times, stood up to Bowser and his minions, and inspires other heroes by example.</p>
                     <p><strong>Likes & Hobbies:</strong> Racing karts, exploring new worlds, collecting power-ups, helping friends, and celebrating every small victory.</p>
-                    <div class="voice-section">
-                        <h6><i class="bi bi-mic-fill me-2"></i>Voice Lines:</h6>
-                        <audio controls src="Voice/Mario1.mp3"></audio>
-                        <audio controls src="Voice/Mario2.mp3"></audio>
-                        <audio controls src="Voice/Mario3.mp3"></audio>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="marioVoiceSelect">
+                            <option value="Voice/Mario1.mp3">Line 1 - "Hehe I got it!"</option>
+                            <option value="Voice/Mario2.mp3">Line 2 - "All right the!"</option>
+                            <option value="Voice/Mario3.mp3">Line 3 - "Woohoo!"</option>
+                        </select>
+                        <button onclick="playVoice('marioVoiceSelect', 'marioAudio')">▶ Play Voice Line</button>
+                        <audio id="marioAudio" controls style="display: none;"></audio>
                     </div>
                 </div>
             </div>
@@ -102,11 +151,15 @@
                     </div>
                     <p><strong>Personality & Role:</strong> Luigi may seem timid and shy, but he is also deeply loyal, kindhearted, and always ready to step up when it matters most. Though he often lives in Mario's shadow, his courage shines through—especially when he helps his brother or faces his fears head-on.</p>
                     <p><strong>Likes & Hobbies:</strong> Exploring haunted mansions (despite being scared), experimenting with gadgets, spending time with his brother, and secretly wanting to prove himself as a hero in his own right.</p>
-                    <div class="voice-section">
-                        <h6><i class="bi bi-mic-fill me-2"></i>Voice Lines:</h6>
-                        <audio controls src="Voice/Luigi1.mp3"></audio>
-                        <audio controls src="Voice/Luigi2.mp3"></audio>
-                        <audio controls src="Voice/Luigi3.mp3"></audio>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="luigiVoiceSelect">
+                            <option value="Voice/Luigi1.mp3">Line 1 - "Yes!"</option>
+                            <option value="Voice/Luigi2.mp3">Line 2 - "All right!"</option>
+                            <option value="Voice/Luigi3.mp3">Line 3 - "Yeah!"</option>
+                        </select>
+                        <button onclick="playVoice('luigiVoiceSelect', 'luigiAudio')">▶ Play Voice Line</button>
+                        <audio id="luigiAudio" controls style="display: none;"></audio>
                     </div>
                 </div>
             </div>
@@ -123,11 +176,15 @@
                     </div>
                     <p><strong>Personality & Role:</strong> Toad is cheerful, humble, and full of energy. Even though he sometimes gets scared in the face of danger, he refuses to give up. He's always ready to help his friends and puts the Mushroom Kingdom first, no matter how small he might feel.</p>
                     <p><strong>Likes & Hobbies:</strong> Mushrooms, assisting Mario, organizing events, adventures (like Mario Kart or the many parties), and making people smile.</p>
-                    <div class="voice-section">
-                        <h6><i class="bi bi-mic-fill me-2"></i>Voice Lines:</h6>
-                        <audio controls src="Voice/Toad1.mp3"></audio>
-                        <audio controls src="Voice/Toad2.mp3"></audio>
-                        <audio controls src="Voice/Toad3.mp3"></audio>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="toadVoiceSelect">
+                            <option value="Voice/Toad1.mp3">Line 1 - "yahoo!!!"</option>
+                            <option value="Voice/Toad2.mp3">Line 2 - "Let's go!"</option>
+                            <option value="Voice/Toad3.mp3">Line 3 - "yahoo!"</option>
+                        </select>
+                        <button onclick="playVoice('toadVoiceSelect', 'toadAudio')">▶ Play Voice Line</button>
+                        <audio id="toadAudio" controls style="display: none;"></audio>
                     </div>
                 </div>
             </div>
@@ -144,11 +201,15 @@
                     </div>
                     <p><strong>Personality & Role:</strong> A shrine maiden called to safeguard the barrier between the human world and the youkai realm, Reimu is cool, calm, and straightforward. She often appears laid-back—sometimes even lazy—but in critical times she shows tremendous skill, strength, and willpower.</p>
                     <p><strong>Likes & Hobbies:</strong> Peaceful solitude, shrine maintenance, floating study breaks, enjoying simple pleasures, and occasionally letting out her spiritual power when the boundary between worlds is disturbed.</p>
-                    <div class="voice-section">
-                        <h6><i class="bi bi-mic-fill me-2"></i>Voice Lines:</h6>
-                        <audio controls src="Voice/Reimu1.mp3"></audio>
-                        <audio controls src="Voice/Reimu2.mp3"></audio>
-                        <audio controls src="Voice/Reimu3.mp3"></audio>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="reimuVoiceSelect">
+                            <option value="Voice/Reimu1.mp3">Line 1 - "Ok!"</option>
+                            <option value="Voice/Reimu2.mp3">Line 2 - "Yosh!"</option>
+                            <option value="Voice/Reimu3.mp3">Line 3 - "Laugh!"</option>
+                        </select>
+                        <button onclick="playVoice('reimuVoiceSelect', 'reimuAudio')">▶ Play Voice Line</button>
+                        <audio id="reimuAudio" controls style="display: none;"></audio>
                     </div>
                 </div>
             </div>
@@ -177,14 +238,35 @@
             </div>
         </div>
     </footer>
-    
-    <!-- Other Scripts (at the bottom) -->
+
+    <script>
+        // Function to play selected voice line
+        function playVoice(selectId, audioId) {
+            const select = document.getElementById(selectId);
+            const audio = document.getElementById(audioId);
+            const selectedFile = select.value;
+            
+            // Set the audio source
+            audio.src = selectedFile;
+            // Show the audio player (optional - you can hide it if you prefer just playing)
+            audio.style.display = 'block';
+            // Play the audio
+            audio.play().catch(error => {
+                console.log('Playback failed:', error);
+                // Auto-play might be blocked, but user interaction (click) should allow it
+            });
+        }
+    </script>
+
+    <!-- Other Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
     <script src="./firebase-config.js"></script>
     <script src="./theme-switcher.js"></script>
-	    <!-- Snow Effect Script -->
+    <!-- Snow Effect Script -->
     <script src="./snow.js"></script>
+    <!-- Cherry Blossom Effect Script -->
+    <script src="./cherry-blossom.js"></script>
 </body>
 </html>

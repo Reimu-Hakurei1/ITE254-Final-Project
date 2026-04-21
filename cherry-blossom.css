@@ -1,0 +1,133 @@
+/* cherry-blossom.css - Cherry Blossom Leaf Falling Effect */
+.cherry-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.cherry-leaf {
+    position: absolute;
+    top: -50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    opacity: 0.85;
+    animation-name: leafFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* Leaf sizes */
+.cherry-leaf.tiny {
+    width: 12px;
+    height: 12px;
+}
+
+.cherry-leaf.small {
+    width: 16px;
+    height: 16px;
+}
+
+.cherry-leaf.medium {
+    width: 22px;
+    height: 22px;
+}
+
+.cherry-leaf.large {
+    width: 28px;
+    height: 28px;
+}
+
+/* Image-based leaves (fixed paths - assuming images are in 'image/' folder) */
+.cherry-leaf.type1 {
+    background-image: url('image/cherry_blossom_leaf1.png');
+}
+
+.cherry-leaf.type2 {
+    background-image: url('image/cherry_blossom_leaf2.png');
+}
+
+/* Fallback: if images fail to load, use pink/green gradient circles */
+.cherry-leaf.type1.fallback,
+.cherry-leaf.type2.fallback {
+    background-image: none !important;
+    background: linear-gradient(135deg, #ffb7c5, #ff8da1);
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(45deg);
+}
+
+/* Dark theme subtle adjustment */
+[data-theme="dark"] .cherry-leaf {
+    filter: drop-shadow(0 2px 5px rgba(255, 200, 200, 0.3));
+}
+
+/* Leaf falling animation */
+@keyframes leafFall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.9;
+    }
+    30% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--sway-end)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Toggle button styling */
+#cherryToggle {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 32px !important;
+    padding: 0.25rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1rem !important;
+}
+
+.btn-pink {
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    color: #5a2e2e;
+    border: none;
+}
+
+.btn-pink:hover {
+    background: linear-gradient(135deg, #ff8a8e, #febfef);
+    color: #3a1e1e;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cherry-leaf.large { width: 20px; height: 20px; }
+    .cherry-leaf.medium { width: 16px; height: 16px; }
+    .cherry-leaf.small { width: 12px; height: 12px; }
+    .cherry-leaf.tiny { width: 10px; height: 10px; }
+    #cherryToggle { width: 36px !important; height: 30px !important; font-size: 0.9rem !important; }
+}
+
+@media (max-width: 576px) {
+    .cherry-leaf.large { width: 16px; height: 16px; }
+    .cherry-leaf.medium { width: 14px; height: 14px; }
+    .cherry-leaf.small { width: 12px; height: 12px; }
+    .cherry-leaf.tiny { width: 8px; height: 8px; }
+    #cherryToggle { width: 32px !important; height: 28px !important; font-size: 0.8rem !important; }
+}
+
+.performance-mode .cherry-leaf.large,
+.performance-mode .cherry-leaf.medium {
+    display: none;
+}
+.performance-mode .cherry-leaf {
+    opacity: 0.7;
+}
