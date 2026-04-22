@@ -1,0 +1,512 @@
+/* ========== CURTAIN ANIMATION ========== */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Initial state - curtains closed to hide page */
+body.curtains-loading {
+  overflow: hidden !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+}
+
+.curtain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  pointer-events: none;
+  display: none;
+  overflow: hidden;
+}
+
+/* Block interactions when curtains are animating */
+.curtain-container.curtain-closing,
+.curtain-container.curtain-opening,
+.curtain-container.initial-closed {
+  pointer-events: all !important;
+  cursor: wait !important;
+}
+
+/* Prevent body scroll when curtains are active */
+.curtain-container.curtain-closing ~ *,
+.curtain-container.curtain-opening ~ *,
+.curtain-container.initial-closed ~ * {
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Initial closed state - hides page completely */
+.curtain-container.initial-closed {
+  display: flex;
+}
+
+.curtain-container.initial-closed .curtain-left {
+  transform: translateX(-5%);
+  z-index: 2;
+}
+
+.curtain-container.initial-closed .curtain-right {
+  transform: translateX(5%);
+  z-index: 1;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 140%; /* Wider than 50% to ensure full coverage with overlap */
+  height: 100%;
+  overflow: hidden; /* Prevent image overflow cutoff */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover; /* Resize image to cover panel without distortion or cutoff */
+}
+
+.curtain-left {
+  left: 0;
+  transform: translateX(-100%); /* Start completely off-screen left */
+  justify-content: flex-end;
+  z-index: 2; /* Left curtain on top when overlapping */
+  background-position: right center; /* Focus on right side of image for left curtain */
+  background-image: url('../image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161.png');
+}
+
+.curtain-right {
+  right: 0;
+  transform: translateX(100%); /* Start completely off-screen right */
+  justify-content: flex-start;
+  z-index: 1; /* Right curtain behind when overlapping */
+  background-position: left center; /* Focus on left side of image for right curtain */
+  background-image: url('../image/IMAGE_ZOMBIE_ZOMBIE_RENAI_ZOMBOSS_ZOMBIE_RENAI_ZOMBOSS_2408X1161_2.png');
+}
+
+/* Curtain animation states */
+.curtain-closing {
+  display: flex;
+}
+
+.curtain-closing .curtain-left {
+  animation: curtainCloseLeft 0.6s ease-out forwards;
+}
+
+.curtain-closing .curtain-right {
+  animation: curtainCloseRight 0.6s ease-out forwards;
+}
+
+.curtain-closed {
+  display: flex;
+}
+
+.curtain-closed .curtain-left {
+  transform: translateX(-5%); /* Overlap position - left curtain goes 5% past center */
+}
+
+.curtain-closed .curtain-right {
+  transform: translateX(5%); /* Overlap position - right curtain goes 5% past center */
+}
+
+.curtain-opening {
+  display: flex;
+}
+
+.curtain-opening .curtain-left {
+  animation: curtainOpenLeft 0.6s ease-out forwards;
+}
+
+.curtain-opening .curtain-right {
+  animation: curtainOpenRight 0.6s ease-out forwards;
+}
+
+/* Curtain animations - full off-screen to overlap position */
+@keyframes curtainCloseLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(-5%); /* Overlap position */
+  }
+}
+
+@keyframes curtainCloseRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(5%); /* Overlap position */
+  }
+}
+
+@keyframes curtainOpenLeft {
+  0% {
+    transform: translateX(-5%); /* Start from overlap position */
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes curtainOpenRight {
+  0% {
+    transform: translateX(5%); /* Start from overlap position */
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* More dramatic overlap (optional) */
+.curtain-container.dramatic-overlap .curtain {
+  width: 65%; /* Even wider for more overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closed .curtain-left {
+  transform: translateX(-10%); /* More overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closed .curtain-right {
+  transform: translateX(10%); /* More overlap */
+}
+
+.curtain-container.dramatic-overlap .curtain-closing .curtain-left {
+  animation: curtainCloseLeftDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-closing .curtain-right {
+  animation: curtainCloseRightDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-opening .curtain-left {
+  animation: curtainOpenLeftDramatic 0.6s ease-out forwards;
+}
+
+.curtain-container.dramatic-overlap .curtain-opening .curtain-right {
+  animation: curtainOpenRightDramatic 0.6s ease-out forwards;
+}
+
+@keyframes curtainCloseLeftDramatic {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(-10%); /* More dramatic overlap */
+  }
+}
+
+@keyframes curtainCloseRightDramatic {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(10%); /* More dramatic overlap */
+  }
+}
+
+@keyframes curtainOpenLeftDramatic {
+  0% {
+    transform: translateX(-10%); /* Start from dramatic overlap position */
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes curtainOpenRightDramatic {
+  0% {
+    transform: translateX(10%); /* Start from dramatic overlap position */
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Additional styles for reload handling */
+body.reloading {
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Style for browser's reload button area (limited effect) */
+.curtain-closing *,
+.curtain-opening * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+/* Tablets and phones (general adjustments) */
+@media (max-width: 768px) {
+  .curtain-container {
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .curtain {
+    height: 100vh;
+    background-size: cover !important; /* Ensure resize on mobile */
+  }
+}
+
+/* Small mobile devices (portrait) - stacked full-width for better fit */
+@media (max-width: 480px) {
+  .curtain {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .curtain-left {
+    left: 0 !important;
+    right: auto !important;
+    justify-content: center !important;
+    background-position: center center !important; /* Center for full-width */
+  }
+  
+  .curtain-right {
+    right: 0 !important;
+    left: auto !important;
+    justify-content: center !important;
+    background-position: center center !important; /* Center for full-width */
+  }
+  
+  .curtain-closed .curtain-left,
+  .curtain-container.initial-closed .curtain-left {
+    transform: translateX(0%) !important;
+  }
+  
+  .curtain-closed .curtain-right,
+  .curtain-container.initial-closed .curtain-right {
+    transform: translateX(0%) !important;
+  }
+  
+  /* Mobile-specific animations (no overlap) */
+  @keyframes curtainCloseLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainCloseRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainOpenLeft {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes curtainOpenRight {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  @keyframes curtainCloseLeftDramatic {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainCloseRightDramatic {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes curtainOpenLeftDramatic {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes curtainOpenRightDramatic {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .curtain-container.dramatic-overlap .curtain-closed .curtain-left {
+    transform: translateX(0%);
+  }
+  
+  .curtain-container.dramatic-overlap .curtain-closed .curtain-right {
+    transform: translateX(0%);
+  }
+}
+
+/* Landscape orientation on mobile/tablet - side-by-side with overlap */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .curtain {
+    width: 60% !important;
+    background-size: cover !important;
+  }
+  
+  .curtain-left {
+    justify-content: flex-end !important;
+    background-position: right center !important;
+  }
+  
+  .curtain-right {
+    justify-content: flex-start !important;
+    background-position: left center !important;
+  }
+  
+  .curtain-closed .curtain-left,
+  .curtain-container.initial-closed .curtain-left {
+    transform: translateX(-5%) !important;
+  }
+  
+  .curtain-closed .curtain-right,
+  .curtain-container.initial-closed .curtain-right {
+    transform: translateX(5%) !important;
+  }
+  
+  @keyframes curtainCloseLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(-5%);
+    }
+  }
+  
+  @keyframes curtainCloseRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(5%);
+    }
+  }
+  
+  @keyframes curtainOpenLeft {
+    0% {
+      transform: translateX(-5%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes curtainOpenRight {
+    0% {
+      transform: translateX(5%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .curtain-container.dramatic-overlap .curtain {
+    width: 65% !important;
+  }
+  
+  .curtain-container.dramatic-overlap .curtain-closed .curtain-left {
+    transform: translateX(-10%) !important;
+  }
+  
+  .curtain-container.dramatic-overlap .curtain-closed .curtain-right {
+    transform: translateX(10%) !important;
+  }
+  
+  @keyframes curtainCloseLeftDramatic {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(-10%);
+    }
+  }
+  
+  @keyframes curtainCloseRightDramatic {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(10%);
+    }
+  }
+  
+  @keyframes curtainOpenLeftDramatic {
+    0% {
+      transform: translateX(-10%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  @keyframes curtainOpenRightDramatic {
+    0% {
+      transform: translateX(10%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* Fix for iOS Safari and mobile browsers */
+@supports (-webkit-touch-callout: none) {
+  .curtain-container {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  .curtain {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+}
+
+/* Debug styles - add to body class="debug-curtains" to see boundaries */
+.debug-curtains .curtain-container {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 2px solid red;
+}
+
+.debug-curtains .curtain {
+  background-color: rgba(0, 255, 0, 0.1);
+  border: 2px solid green;
+}

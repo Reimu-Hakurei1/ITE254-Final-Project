@@ -1,0 +1,172 @@
+/* snow.css - Snowfall Animation */
+.snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.9;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+}
+
+.snowflake.small {
+    width: 4px;
+    height: 4px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+}
+
+.snowflake.medium {
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+}
+
+.snowflake.large {
+    width: 8px;
+    height: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
+.snowflake.xlarge {
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+}
+
+/* Dark theme adjustments - make snow more visible */
+[data-theme="dark"] .snowflake {
+    background: #e6f7ff;
+    box-shadow: 0 0 8px rgba(230, 247, 255, 0.9);
+}
+
+[data-theme="dark"] .snowflake.small {
+    box-shadow: 0 0 8px rgba(230, 247, 255, 0.8);
+}
+
+[data-theme="dark"] .snowflake.medium {
+    box-shadow: 0 0 10px rgba(230, 247, 255, 0.9);
+}
+
+[data-theme="dark"] .snowflake.large {
+    box-shadow: 0 0 12px rgba(230, 247, 255, 1);
+}
+
+[data-theme="dark"] .snowflake.xlarge {
+    box-shadow: 0 0 18px rgba(230, 247, 255, 1);
+}
+
+/* Improve visibility on light background */
+:root .snowflake {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+}
+
+/* Snowfall animation */
+@keyframes snowfall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.9;
+    }
+    70% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--sway-end)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Small snow toggle button in navbar */
+#navSnowToggle {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 32px !important;
+    padding: 0.25rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .snowflake.xlarge {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .snowflake.large {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .snowflake.medium {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .snowflake.small {
+        width: 3px;
+        height: 3px;
+    }
+    
+    #navSnowToggle {
+        width: 36px !important;
+        min-width: 36px !important;
+        height: 30px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .snowflake.xlarge {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .snowflake.large {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .snowflake.medium {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .snowflake.small {
+        width: 2px;
+        height: 2px;
+    }
+    
+    #navSnowToggle {
+        width: 32px !important;
+        min-width: 32px !important;
+        height: 28px !important;
+        font-size: 0.8rem !important;
+        margin-left: 0.3rem !important;
+    }
+}
+
+/* Reduce snow on performance mode */
+.performance-mode .snowflake {
+    opacity: 0.7;
+}
+
+.performance-mode .snowflake.xlarge,
+.performance-mode .snowflake.large {
+    display: none;
+}

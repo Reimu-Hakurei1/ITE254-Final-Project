@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mario Level Selector | Interactive Slideshow</title>
+  <link rel="icon" type="image/png" href="../image/icon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles-web.css">
+  <link rel="stylesheet" href="../css/curtain.css">
+  <link rel="stylesheet" href="../css/snow.css">
+  <link rel="stylesheet" href="../css/cherry-blossom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <meta name="theme-color" content="#0a0a0a">
+</head>
+<body>
+  <script src="../js/curtain.js"></script>
+  <div class="theme-switcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="light-icon">☀️</span><span class="dark-icon">🌙</span>
+    </button>
+  </div>
+
+  <!-- Hidden iframe for background music on world grid -->
+  <iframe src="../levelselector/index.html" style="display:none;" id="hidden-frame"></iframe>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">ITE254-Final-Project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="levelselector.html">Play Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="characters.html">Characters</a></li>
+          <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
+        <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
+        <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;"><i class="bi bi-snow"></i></button>
+        <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Cherry Blossom" style="padding: 0.25rem 0.5rem; width: 40px;">🌸</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center p-5 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));">
+    <h1>Select Your Mario Adventure!</h1>
+    <p>Choose a world, then slide through levels. Each world has its own music.</p>
+  </header>
+
+  <main class="container py-4">
+    <div id="worldGrid" class="world-grid">
+      <div class="row g-4" id="categoriesContainer"></div>
+    </div>
+
+    <div id="slideshowView" class="slideshow-view hide-slideshow">
+      <div class="slideshow-header mb-4">
+        <button id="backToGridBtn" class="back-btn btn"><i class="bi bi-arrow-left-circle me-2"></i> Back to Worlds</button>
+        <h2 id="slideshowTitle" class="m-0 text-warning fw-bold">World 1-1</h2>
+      </div>
+
+      <div class="slideshow-container">
+        <div class="row align-items-center g-4">
+          <div class="col-1 text-center d-none d-md-block">
+            <div id="prevLevelBtn" class="nav-arrow"><i class="bi bi-chevron-left"></i></div>
+          </div>
+          <div class="col-12 col-md-10">
+            <div class="text-center">
+              <img id="levelImage" class="level-image mb-3" alt="Level preview">
+              <h3 id="levelNameDisplay" class="text-white mb-2 fw-bold"></h3>
+              <div class="slide-indicators my-3" id="slideIndicators"></div>
+              <div class="d-flex justify-content-center gap-3 mt-3 flex-wrap">
+                <a id="playLevelLink" href="#" class="btn play-level-btn text-white"><i class="bi bi-play-fill me-2"></i>Play This Level</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-1 text-center d-none d-md-block">
+            <div id="nextLevelBtn" class="nav-arrow"><i class="bi bi-chevron-right"></i></div>
+          </div>
+        </div>
+        <div class="row mt-4 d-md-none">
+          <div class="col-6 text-center"><div id="prevLevelBtnMobile" class="nav-arrow mx-auto" style="width: 50px; height: 50px; font-size: 2rem;"><i class="bi bi-chevron-left"></i></div></div>
+          <div class="col-6 text-center"><div id="nextLevelBtnMobile" class="nav-arrow mx-auto" style="width: 50px; height: 50px; font-size: 2rem;"><i class="bi bi-chevron-right"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center p-4 bg-dark mt-5">
+    <div class="container">
+      <p class="mb-3">© 2025 ITE254 Final Project</p>
+      <div class="social-icons mb-3">
+        <a href="https://www.facebook.com/" class="me-2"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.twitter.com/" class="me-2"><i class="bi bi-twitter"></i></a>
+        <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div><a href="contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a><a href="about.html" class="btn btn-outline-dark btn-sm me-2">About Project</a><a href="levelselector.html" class="btn btn-warning btn-sm">Play Game</a></div>
+    </div>
+  </footer>
+
+  <button id="musicEnableBtn">🔊 Enable Background Music</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/theme-switcher.js"></script>
+  <script src="../js/snow.js"></script>
+  <script src="../js/cherry-blossom.js"></script>
+  
+  <!-- External Level Selector JavaScript -->
+  <script src="../js/levelselector.js"></script>
+</body>
+</html>

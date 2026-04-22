@@ -6,24 +6,46 @@
     <title>ITE254-Final-Project - Home</title>
     <link rel="icon" href="image/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./styles (web).css">
+    <link rel="stylesheet" href="css/styles-web.css">
     <!-- Curtain Animation -->
-    <link rel="stylesheet" href="./curtain.css">
-    <!-- Pages CSS -->
-    <link rel="stylesheet" href="./pages.css">
+    <link rel="stylesheet" href="css/curtain.css">
     <!-- Snow Effect CSS -->
-    <link rel="stylesheet" href="./snow.css">
+    <link rel="stylesheet" href="css/snow.css">
     <!-- Cherry Blossom Effect CSS -->
-    <link rel="stylesheet" href="./cherry-blossom.css">
+    <link rel="stylesheet" href="css/cherry-blossom.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="theme-color" content="#0a0a0a">
+    <style>
+        /* Fix carousel controls visibility in light theme */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.6);
+            background-size: 60% 60%;
+            border-radius: 50%;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-control-prev-icon:hover,
+        .carousel-control-next-icon:hover {
+            background-color: var(--primary, #f5b10a);
+        }
+        /* Dark theme adjustment */
+        [data-theme="dark"] .carousel-control-prev-icon,
+        [data-theme="dark"] .carousel-control-next-icon {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        [data-theme="dark"] .carousel-control-prev-icon:hover,
+        [data-theme="dark"] .carousel-control-next-icon:hover {
+            background-color: var(--primary, #f5b10a);
+        }
+    </style>
 </head>
 <body>
     <!-- CURTAIN SCRIPT LOADS FIRST -->
-    <script src="./curtain.js"></script>
+    <script src="js/curtain.js"></script>
     
     <!-- Theme Switcher -->
     <div class="theme-switcher">
@@ -39,7 +61,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="./index.html">ITE254-Final-Project</a>
+            <a class="navbar-brand" href="index.html">ITE254-Final-Project</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -48,12 +70,12 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./levelselector.html">Play Game</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./characters.html">Characters</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./music.html">Music</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="html/levelselector.html">Play Game</a></li>
+                    <li class="nav-item"><a class="nav-link" href="html/characters.html">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="html/music.html">Music</a></li>
+                    <li class="nav-item"><a class="nav-link" href="html/about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="html/contact.html">Contact</a></li>
                 </ul>
 
                 <!-- User info + Sign Out -->
@@ -63,7 +85,7 @@
                 <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
                     <i class="bi bi-snow"></i>
                 </button>
-                <!-- Cherry Blossom Toggle Button (NEW) -->
+                <!-- Cherry Blossom Toggle Button -->
                 <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Cherry Blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
                     🌸
                 </button>
@@ -76,7 +98,7 @@
         <section>
             <h1 class="display-3 fw-bold mb-4">Embark on an Epic Adventure!</h1>
             <p class="lead mb-4">Collect coins, avoid obstacles, and save the kingdom in this thrilling Mario adventure!</p>
-            <a href="./levelselector.html" class="btn btn-warning btn-lg px-5">Start Playing</a>
+            <a href="html/levelselector.html" class="btn btn-warning btn-lg px-5">Start Playing</a>
         </section>
     </header>
 
@@ -90,29 +112,21 @@
                 <div class="carousel-item active">
                     <img src="image/Image 1.png" class="d-block w-100" alt="Level 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Exciting World 1</h5>
-                        <p>Start your journey in the Mushroom Kingdom</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/Image 2.png" class="d-block w-100" alt="Level 2">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Challenging Obstacles</h5>
-                        <p>Navigate through tricky platforms</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/image 3.png" class="d-block w-100" alt="Level 3">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Boss Battles</h5>
-                        <p>Face epic boss encounters</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/image 4.png" class="d-block w-100" alt="Level 4">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Secret Areas</h5>
-                        <p>Discover hidden paths and surprises</p>
                     </div>
                 </div>
             </div>
@@ -145,8 +159,8 @@
             </div>
         </div>
         <div class="mt-4">
-            <a href="./characters.html" class="btn btn-warning btn-lg me-3">View All Characters</a>
-            <a href="./levelselector.html" class="btn btn-primary btn-lg">Play Game Now</a>
+            <a href="html/characters.html" class="btn btn-warning btn-lg me-3">View All Characters</a>
+            <a href="html/levelselector.html" class="btn btn-primary btn-lg">Play Game Now</a>
         </div>
     </div>
 
@@ -159,7 +173,7 @@
                         <h2 class="card-title mb-4">About the Game</h2>
                         <p class="card-text">This game is a modern remake of the classic Mario Forever by Buziol Games from 2004. We've enhanced the graphics, added new features, and improved gameplay while keeping the nostalgic feel that made the original so beloved.</p>
                         <p class="card-text">Experience 42 exciting levels across different worlds, each with unique challenges and enemies. The game stays true to the classic Mario formula while introducing modern gameplay elements.</p>
-                        <a href="./about.html" class="btn btn-primary mt-3">Learn More</a>
+                        <a href="html/about.html" class="btn btn-primary mt-3">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -175,7 +189,7 @@
                             <li class="mb-2"><strong>🏆 Goals:</strong> Reach the flag at the end of each level</li>
                             <li class="mb-2"><strong>💎 Collectibles:</strong> Coins and hidden items throughout levels</li>
                         </ul>
-                        <a href="./levelselector.html" class="btn btn-warning mt-3">Try It Now</a>
+                        <a href="html/levelselector.html" class="btn btn-warning mt-3">Try It Now</a>
                     </div>
                 </div>
             </div>
@@ -236,8 +250,8 @@
                 </a>
             </div>
             <div>
-                <a href="./contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
-                <a href="./about.html" class="btn btn-outline-dark btn-sm">About Project</a>
+                <a href="html/contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
+                <a href="html/about.html" class="btn btn-outline-dark btn-sm">About Project</a>
             </div>
         </div>
     </footer>
@@ -246,11 +260,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-    <script src="./firebase-config.js"></script>
-    <script src="./theme-switcher.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme-switcher.js"></script>
     <!-- Snow Effect Script -->
-    <script src="./snow.js"></script>
-    <!-- Cherry Blossom Effect Script (NEW) -->
-    <script src="./cherry-blossom.js"></script>
+    <script src="js/snow.js"></script>
+    <!-- Cherry Blossom Effect Script -->
+    <script src="js/cherry-blossom.js"></script>
 </body>
 </html>

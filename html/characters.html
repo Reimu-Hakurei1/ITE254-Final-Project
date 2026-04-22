@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Characters - ITE254 Final Project</title>
+    <link rel="icon" type="image/png" href="../image/icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles-web.css">
+    <link rel="stylesheet" href="../css/curtain.css">
+    <link rel="stylesheet" href="../css/snow.css">
+    <link rel="stylesheet" href="../css/cherry-blossom.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+<body>
+    <script src="../js/curtain.js"></script>
+    <script src="../js/voice-line.js"></script>
+
+    <div class="theme-switcher">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="light-icon">☀️</span>
+            <span class="dark-icon">🌙</span>
+        </button>
+    </div>
+
+    <iframe src="../save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">ITE254-Final-Project</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="levelselector.html">Play Game</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="characters.html">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
+                <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
+                <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
+                    <i class="bi bi-snow"></i>
+                </button>
+                <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable cherry blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
+                    🌸
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="character-header">
+        <h1>Meet the Characters</h1>
+        <p class="lead">Discover the heroes of our Mario adventure</p>
+    </div>
+
+    <main class="container py-5">
+        <div class="row g-4">
+            <!-- Mario -->
+            <div class="col-md-6 col-lg-4">
+                <div class="character-card">
+                    <h3 class="character-title">Mario</h3>
+                    <img src="../image/Mario_render.webp" alt="Mario" class="img-fluid">
+                    <div class="character-tags mb-3">
+                        <span class="character-tag">Hero</span>
+                        <span class="character-tag">Adventurer</span>
+                        <span class="character-tag">Leader</span>
+                    </div>
+                    <p><strong>Personality & Role:</strong> Mario is courageous, joyful, and endlessly optimistic...</p>
+                    <p><strong>Likes & Hobbies:</strong> Racing karts, exploring new worlds, collecting power-ups...</p>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="marioVoiceSelect">
+                            <option value="../Voice/Mario1.mp3">Line 1 - "Hehe I got it!"</option>
+                            <option value="../Voice/Mario2.mp3">Line 2 - "All right the!"</option>
+                            <option value="../Voice/Mario3.mp3">Line 3 - "Woohoo!"</option>
+                        </select>
+                        <button onclick="playVoice('marioVoiceSelect', 'marioAudio')">▶ Play Voice Line</button>
+                        <audio id="marioAudio" controls style="display: none;"></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Luigi -->
+            <div class="col-md-6 col-lg-4">
+                <div class="character-card">
+                    <h3 class="character-title">Luigi</h3>
+                    <img src="../image/Luigi_by_Shigehisa_Nakaue.png" alt="Luigi" class="img-fluid">
+                    <div class="character-tags mb-3">
+                        <span class="character-tag">Loyal</span>
+                        <span class="character-tag">Brave</span>
+                        <span class="character-tag">Supportive</span>
+                    </div>
+                    <p><strong>Personality & Role:</strong> Luigi may seem timid and shy, but he is also deeply loyal...</p>
+                    <p><strong>Likes & Hobbies:</strong> Exploring haunted mansions, experimenting with gadgets...</p>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="luigiVoiceSelect">
+                            <option value="../Voice/Luigi1.mp3">Line 1 - "Yes!"</option>
+                            <option value="../Voice/Luigi2.mp3">Line 2 - "All right!"</option>
+                            <option value="../Voice/Luigi3.mp3">Line 3 - "Yeah!"</option>
+                        </select>
+                        <button onclick="playVoice('luigiVoiceSelect', 'luigiAudio')">▶ Play Voice Line</button>
+                        <audio id="luigiAudio" controls style="display: none;"></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toad -->
+            <div class="col-md-6 col-lg-4">
+                <div class="character-card">
+                    <h3 class="character-title">Toad</h3>
+                    <img src="../image/Toad_by_Shigehisa_Nakaue.png" alt="Toad" class="img-fluid">
+                    <div class="character-tags mb-3">
+                        <span class="character-tag">Cheerful</span>
+                        <span class="character-tag">Helpful</span>
+                        <span class="character-tag">Energetic</span>
+                    </div>
+                    <p><strong>Personality & Role:</strong> Toad is cheerful, humble, and full of energy...</p>
+                    <p><strong>Likes & Hobbies:</strong> Mushrooms, assisting Mario, organizing events...</p>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="toadVoiceSelect">
+                            <option value="../Voice/Toad1.mp3">Line 1 - "yahoo!!!"</option>
+                            <option value="../Voice/Toad2.mp3">Line 2 - "Let's go!"</option>
+                            <option value="../Voice/Toad3.mp3">Line 3 - "yahoo!"</option>
+                        </select>
+                        <button onclick="playVoice('toadVoiceSelect', 'toadAudio')">▶ Play Voice Line</button>
+                        <audio id="toadAudio" controls style="display: none;"></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reimu Hakurei -->
+            <div class="col-md-6 col-lg-4">
+                <div class="character-card">
+                    <h3 class="character-title">Reimu Hakurei</h3>
+                    <img src="../image/Th18Reimu.webp" alt="Reimu Hakurei" class="img-fluid">
+                    <div class="character-tags mb-3">
+                        <span class="character-tag">Shrine Maiden</span>
+                        <span class="character-tag">Protector</span>
+                        <span class="character-tag">Powerful</span>
+                    </div>
+                    <p><strong>Personality & Role:</strong> A shrine maiden called to safeguard the barrier...</p>
+                    <p><strong>Likes & Hobbies:</strong> Peaceful solitude, shrine maintenance, floating study breaks...</p>
+                    <div class="voice-player">
+                        <label><i class="bi bi-mic-fill me-2"></i>Voice Line:</label>
+                        <select id="reimuVoiceSelect">
+                            <option value="../Voice/Reimu1.mp3">Line 1 - "Ok!"</option>
+                            <option value="../Voice/Reimu2.mp3">Line 2 - "Yosh!"</option>
+                            <option value="../Voice/Reimu3.mp3">Line 3 - "Laugh!"</option>
+                        </select>
+                        <button onclick="playVoice('reimuVoiceSelect', 'reimuAudio')">▶ Play Voice Line</button>
+                        <audio id="reimuAudio" controls style="display: none;"></audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center p-4 bg-dark">
+        <div class="container">
+            <p class="mb-3">© 2025 ITE254 Final Project</p>
+            <div class="social-icons mb-3">
+                <a href="https://www.facebook.com/" class="me-2"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.twitter.com/" class="me-2"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            </div>
+            <div>
+                <a href="contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
+                <a href="about.html" class="btn btn-outline-dark btn-sm">About Project</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/theme-switcher.js"></script>
+    <script src="../js/snow.js"></script>
+    <script src="../js/cherry-blossom.js"></script>
+</body>
+</html>

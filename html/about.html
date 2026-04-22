@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - ITE254 Final Project</title>
+    <link rel="icon" type="image/png" href="../image/icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles-web.css">
+    <link rel="stylesheet" href="../css/curtain.css">
+    <link rel="stylesheet" href="../css/snow.css">
+    <link rel="stylesheet" href="../css/cherry-blossom.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+<body>
+    <script src="../js/curtain.js"></script>
+    <div class="theme-switcher"><button class="theme-toggle" id="themeToggle"><span class="light-icon">☀️</span><span class="dark-icon">🌙</span></button></div>
+    <iframe src="../save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">ITE254-Final-Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="levelselector.html">Play Game</a></li>
+                    <li class="nav-item"><a class="nav-link" href="characters.html">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
+                <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
+                <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;"><i class="bi bi-snow"></i></button>
+                <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable cherry blossom" style="padding: 0.25rem 0.5rem; width: 40px;">🌸</button>
+            </div>
+        </div>
+    </nav>
+    <div class="about-header"><h1>About Our Project</h1><p class="lead mt-3" style="position: relative; z-index: 1; color: white;">A modern remake of Mario Forever with passion and innovation</p></div>
+    <main class="container py-5">
+        <div class="row mb-5">
+            <div class="col-md-3 mb-4"><div class="stat-card"><div class="stat-number">42</div><h5>Exciting Levels</h5><p class="text-muted">Across multiple worlds</p></div></div>
+            <div class="col-md-3 mb-4"><div class="stat-card"><div class="stat-number">4</div><h5>Team Members</h5><p class="text-muted">Passionate developers</p></div></div>
+            <div class="col-md-3 mb-4"><div class="stat-card"><div class="stat-number">2004</div><h5>Original Release</h5><p class="text-muted">Buziol Games</p></div></div>
+            <div class="col-md-3 mb-4"><div class="stat-card"><div class="stat-number">2025</div><h5>Modern Remake</h5><p class="text-muted">Updated & Enhanced</p></div></div>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6"><div class="card h-100"><img src="../image/unnamed.jpg" class="card-img-top" alt="Mario Inspiration"><div class="card-body"><h2 class="card-title mb-4">The Inspiration</h2><p class="card-text">Our project was born from a shared passion for classic Mario games. Two members of our team (Wachaira and Alex) are avid fans of Mario Kart, while Alex has a special love for Mario Forever. We wanted to create something that pays homage to the games we enjoy while introducing modern web technologies.</p><p class="card-text">The goal was to build a web-based version of Mario Forever that retains the nostalgic gameplay while improving the graphics, adding new features, and making it accessible to everyone through modern browsers.</p></div></div></div>
+            <div class="col-lg-6"><div class="card h-100"><img src="../image/team2.jpg" class="card-img-top" alt="Development Team"><div class="card-body"><h2 class="card-title mb-4">Development Team</h2><p class="card-text">Our passionate team consists of dedicated developers who brought their unique skills to this project:</p><div class="row mt-4"><div class="col-md-6 mb-3"><div class="team-member"><div class="team-icon mb-3" style="font-size: 3rem;">🎨</div><h5>Wachaira & Alex</h5><p class="text-muted">Website Development</p><p>Created the modern web interface and user experience</p></div></div><div class="col-md-6 mb-3"><div class="team-member"><div class="team-icon mb-3" style="font-size: 3rem;">👨‍💻</div><h5>Alex</h5><p class="text-muted">Game Development</p><p>Engineered the core game mechanics and physics</p></div></div><div class="col-md-6 mb-3"><div class="team-member"><div class="team-icon mb-3" style="font-size: 3rem;">📊</div><h5>Rehan</h5><p class="text-muted">Glide Integration</p><p>Implemented smooth animations and transitions</p></div></div><div class="col-md-6 mb-3"><div class="team-member"><div class="team-icon mb-3" style="font-size: 3rem;">📈</div><h5>Abdulrahman</h5><p class="text-muted">Excel & Data</p><p>Managed game data and analytics</p></div></div></div></div></div></div>
+        </div>
+        <section class="mb-5"><h2 class="text-center mb-5">Game Features</h2><div class="row"><div class="col-md-6"><ul class="feature-list list-unstyled"><li><h5><i class="bi bi-1-circle-fill text-primary me-2"></i>42 Exciting Levels</h5><p class="mb-0">Journey through diverse worlds with unique challenges</p></li><li><h5><i class="bi bi-2-circle-fill text-primary me-2"></i>Classic Gameplay</h5><p class="mb-0">True to original Mario mechanics with modern enhancements</p></li><li><h5><i class="bi bi-3-circle-fill text-primary me-2"></i>Responsive Design</h5><p class="mb-0">Play on any device - desktop, tablet, or mobile</p></li></ul></div><div class="col-md-6"><ul class="feature-list list-unstyled"><li><h5><i class="bi bi-4-circle-fill text-primary me-2"></i>Modern Graphics</h5><p class="mb-0">Enhanced visuals while keeping the nostalgic feel</p></li><li><h5><i class="bi bi-5-circle-fill text-primary me-2"></i>User Authentication</h5><p class="mb-0">Secure login system to save your progress</p></li><li><h5><i class="bi bi-6-circle-fill text-primary me-2"></i>Cross-Platform</h5><p class="mb-0">Accessible from any modern web browser</p></li></ul></div></div></section>
+        <section class="mb-5"><h2 class="text-center mb-5">Technology Stack</h2><div class="row text-center"><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">🌐</div><h6>HTML5</h6></div><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">🎨</div><h6>CSS3</h6></div><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">⚡</div><h6>JavaScript</h6></div><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">🔥</div><h6>Firebase</h6></div><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">🚀</div><h6>Bootstrap 5</h6></div><div class="col-md-2 col-4 mb-4"><div class="tech-icon mb-3" style="font-size: 3rem;">🎮</div><h6>Canvas API</h6></div></div></section>
+    </main>
+    <footer class="text-center p-4 bg-dark"><div class="container"><p class="mb-3">© 2025 ITE254 Final Project</p><div class="social-icons mb-3"><a href="https://www.facebook.com/" class="me-2"><i class="bi bi-facebook"></i></a><a href="https://www.twitter.com/" class="me-2"><i class="bi bi-twitter"></i></a><a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a></div><div><a href="contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a><a href="levelselector.html" class="btn btn-warning btn-sm">Play Game</a></div></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/theme-switcher.js"></script>
+    <script src="../js/snow.js"></script>
+    <script src="../js/cherry-blossom.js"></script>
+</body>
+</html>
