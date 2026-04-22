@@ -15,6 +15,21 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
+// Helper function to get the correct login page path based on current location
+function getLoginPath() {
+    const path = window.location.pathname;
+    // Check if we are in the root directory (e.g., /index.html or /)
+    if (path === '/' || path === '/index.html' || path.endsWith('/index.html') || path.split('/').length === 2 && path.includes('index.html')) {
+        return 'html/Login.html';
+    } else if (path.includes('/html/')) {
+        // Already inside the html folder
+        return 'Login.html';
+    } else {
+        // Fallback to root-relative path
+        return 'html/Login.html';
+    }
+}
+
 // Auth State Listener
 firebase.auth().onAuthStateChanged(function(user) {
     const signOutBtn = document.getElementById('signOutBtn');
@@ -31,7 +46,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
     } else {
         // User is signed out, redirect to login
-        window.location.href = "html/Login.html";
+        // Avoid redirect loop if already on login page
+        const loginPath = getLoginPath();
+        if (!window.location.href.includes('Login.html')) {
+            window.location.href = loginPath;
+        }
     }
 });
 
@@ -41,8 +60,9 @@ function setupSignOut() {
     if (signOutBtn) {
         signOutBtn.addEventListener('click', function() {
             firebase.auth().signOut().then(() => {
-                // Sign-out successful
-                window.location.href = "html/Login.html";
+                // Sign-out successful – redirect to login page
+                const loginPath = getLoginPath();
+                window.location.href = loginPath;
             }).catch((error) => {
                 console.error("Sign out error:", error);
                 alert("Error signing out: " + error.message);

@@ -67,18 +67,19 @@ body::before {
     box-shadow: 0 10px 20px rgba(245, 177, 10, 0.3);
 }
 
-.btn-danger {
-    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+.btn-info {
+    background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
     border: none;
     border-radius: 50px;
     padding: 12px 0;
     font-weight: 600;
     transition: all 0.3s ease;
+    color: white;
 }
 
-.btn-danger:hover {
+.btn-info:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255, 65, 108, 0.3);
+    box-shadow: 0 10px 20px rgba(33, 147, 176, 0.3);
 }
 
 .form-control {
