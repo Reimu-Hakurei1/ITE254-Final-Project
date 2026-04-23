@@ -188,6 +188,46 @@ p, li, span, div:not(.special) {
 .nav-link.active::after {
     transform: translateX(-50%) scaleX(1);
 }
+
+/* Profile Circle (replaces email) */
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-right: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+.profile-circle:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+@media (max-width: 768px) {
+    .profile-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+}
+@media (max-width: 576px) {
+    .profile-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* User email (legacy, kept for compatibility) */
 .user-email {
     color: var(--user-email-color) !important;
     font-weight: 600;
@@ -207,6 +247,7 @@ p, li, span, div:not(.special) {
     background: rgba(245, 177, 10, 0.25);
     transform: translateY(-2px);
 }
+
 #navSnowToggle, #cherryToggle {
     width: 44px !important;
     min-width: 44px !important;
@@ -449,7 +490,7 @@ header section {
         min-height: 250px;
     }
 }
-/* Carousel controls visibility */
+/* Carousel controls visibility (light/dark theme) */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: rgba(0, 0, 0, 0.6);
@@ -1126,4 +1167,32 @@ main {
 [data-theme="dark"] .alert-info {
     background-color: rgba(0, 176, 155, 0.15);
     border-color: rgba(0, 176, 155, 0.4);
+}
+/* Profile Dropdown */
+.profile-circle {
+    cursor: pointer;
+}
+.dropdown-menu {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem 0;
+}
+.dropdown-item {
+    color: var(--text-primary);
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+.dropdown-item:hover {
+    background-color: var(--primary);
+    color: #000;
+}
+.dropdown-toggle::after {
+    display: none; /* Hide the default caret, we use the circle as the toggle */
+}
+/* Ensure the dropdown is positioned correctly */
+.d-flex .dropdown {
+    display: inline-flex;
 }

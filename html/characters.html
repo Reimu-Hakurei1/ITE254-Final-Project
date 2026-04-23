@@ -44,14 +44,24 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
-                <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
-                <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
-                <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
-                    <i class="bi bi-snow"></i>
-                </button>
-                <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable cherry blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
-                    🌸
-                </button>
+
+                <!-- Profile circle dropdown (replaces old email + sign out) -->
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <div id="userProfile" class="profile-circle dropdown-toggle d-none" data-bs-toggle="dropdown" aria-expanded="false"></div>
+                        <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+                            <!-- Dropdown content will be populated by firebase-config.js -->
+                        </ul>
+                    </div>
+                    <!-- Snow toggle button -->
+                    <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
+                        <i class="bi bi-snow"></i>
+                    </button>
+                    <!-- Cherry blossom toggle button -->
+                    <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable cherry blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
+                        🌸
+                    </button>
+                </div>
             </div>
         </div>
     </nav>

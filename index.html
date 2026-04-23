@@ -7,47 +7,20 @@
     <link rel="icon" href="image/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles-web.css">
-    <!-- Curtain Animation -->
     <link rel="stylesheet" href="css/curtain.css">
-    <!-- Snow Effect CSS -->
     <link rel="stylesheet" href="css/snow.css">
-    <!-- Cherry Blossom Effect CSS -->
     <link rel="stylesheet" href="css/cherry-blossom.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="theme-color" content="#0a0a0a">
-    <style>
-        /* Fix carousel controls visibility in light theme */
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: rgba(0, 0, 0, 0.6);
-            background-size: 60% 60%;
-            border-radius: 50%;
-            padding: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .carousel-control-prev-icon:hover,
-        .carousel-control-next-icon:hover {
-            background-color: var(--primary, #f5b10a);
-        }
-        /* Dark theme adjustment */
-        [data-theme="dark"] .carousel-control-prev-icon,
-        [data-theme="dark"] .carousel-control-next-icon {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        [data-theme="dark"] .carousel-control-prev-icon:hover,
-        [data-theme="dark"] .carousel-control-next-icon:hover {
-            background-color: var(--primary, #f5b10a);
-        }
-    </style>
 </head>
 <body>
-    <!-- CURTAIN SCRIPT LOADS FIRST -->
+    <!-- Curtain script loads first -->
     <script src="js/curtain.js"></script>
-    
-    <!-- Theme Switcher -->
+
+    <!-- Theme switcher button -->
     <div class="theme-switcher">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <span class="light-icon">☀️</span>
@@ -55,9 +28,9 @@
         </button>
     </div>
 
-    <!-- Hidden iframe (completely invisible) -->
+    <!-- Hidden iframe (background music) -->
     <iframe src="save game room/index.html" style="display:none;" id="hidden-frame"></iframe>
-    
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -78,22 +51,28 @@
                     <li class="nav-item"><a class="nav-link" href="html/contact.html">Contact</a></li>
                 </ul>
 
-                <!-- User info + Sign Out -->
-                <span id="userEmail" class="user-email text-user-email navbar-text me-2 d-none"></span>
-                <button id="signOutBtn" class="btn btn-outline-dark d-none">Sign Out</button>
-                <!-- Snow Toggle Button -->
-                <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
-                    <i class="bi bi-snow"></i>
-                </button>
-                <!-- Cherry Blossom Toggle Button -->
-                <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Cherry Blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
-                    🌸
-                </button>
+                <!-- Profile circle dropdown -->
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <div id="userProfile" class="profile-circle dropdown-toggle d-none" data-bs-toggle="dropdown" aria-expanded="false"></div>
+                        <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
+                            <!-- Dropdown content will be populated by firebase-config.js -->
+                        </ul>
+                    </div>
+                    <!-- Snow toggle button -->
+                    <button id="navSnowToggle" class="btn btn-outline-dark btn-sm ms-2" title="Enable snow" style="padding: 0.25rem 0.5rem; width: 40px;">
+                        <i class="bi bi-snow"></i>
+                    </button>
+                    <!-- Cherry blossom toggle button -->
+                    <button id="cherryToggle" class="btn btn-outline-dark btn-sm ms-2" title="Cherry Blossom" style="padding: 0.25rem 0.5rem; width: 40px;">
+                        🌸
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header -->
+    <!-- Hero header -->
     <header class="text-center p-5 text-white" style="background: linear-gradient(180deg, rgba(252, 252, 252), rgba(0,0,0,0.3));">
         <section>
             <h1 class="display-3 fw-bold mb-4">Embark on an Epic Adventure!</h1>
@@ -102,7 +81,7 @@
         </section>
     </header>
 
-    <!-- Carousel -->
+    <!-- Game preview carousel -->
     <div class="container my-5">
         <div class="carousel-title">
             <h2>Game Preview</h2>
@@ -111,23 +90,15 @@
             <div class="carousel-inner rounded-4">
                 <div class="carousel-item active">
                     <img src="image/Image 1.png" class="d-block w-100" alt="Level 1">
-                    <div class="carousel-caption d-none d-md-block">
-                    </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/Image 2.png" class="d-block w-100" alt="Level 2">
-                    <div class="carousel-caption d-none d-md-block">
-                    </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/image 3.png" class="d-block w-100" alt="Level 3">
-                    <div class="carousel-caption d-none d-md-block">
-                    </div>
                 </div>
                 <div class="carousel-item">
                     <img src="image/image 4.png" class="d-block w-100" alt="Level 4">
-                    <div class="carousel-caption d-none d-md-block">
-                    </div>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
@@ -141,7 +112,7 @@
         </div>
     </div>
 
-    <!-- 3D Character Carousel -->
+    <!-- 3D character carousel -->
     <div class="container text-center my-5">
         <div class="carousel-title">
             <h2>Meet the Characters</h2>
@@ -164,7 +135,7 @@
         </div>
     </div>
 
-    <!-- Main content -->
+    <!-- About the game and mechanics -->
     <main class="container py-5">
         <div class="row">
             <div class="col-lg-6 mb-4">
@@ -195,36 +166,29 @@
             </div>
         </div>
 
+        <!-- Key features -->
         <div class="row mt-5">
             <div class="col-12">
                 <div class="game-feature">
                     <h3 class="text-center mb-4">Key Features</h3>
                     <div class="row text-center">
                         <div class="col-md-3 mb-4">
-                            <div class="feature-icon">
-                                <h1>🎮</h1>
-                            </div>
+                            <div class="feature-icon"><h1>🎮</h1></div>
                             <h5>42 Levels</h5>
                             <p>Exciting challenges across multiple worlds</p>
                         </div>
                         <div class="col-md-3 mb-4">
-                            <div class="feature-icon">
-                                <h1>👾</h1>
-                            </div>
+                            <div class="feature-icon"><h1>👾</h1></div>
                             <h5>Unique Enemies</h5>
                             <p>Face new challenges in each level</p>
                         </div>
                         <div class="col-md-3 mb-4">
-                            <div class="feature-icon">
-                                <h1>🎵</h1>
-                            </div>
+                            <div class="feature-icon"><h1>🎵</h1></div>
                             <h5>Original Music</h5>
                             <p>Enjoy nostalgic Mario tunes</p>
                         </div>
                         <div class="col-md-3 mb-4">
-                            <div class="feature-icon">
-                                <h1>🌟</h1>
-                            </div>
+                            <div class="feature-icon"><h1>🌟</h1></div>
                             <h5>Classic Gameplay</h5>
                             <p>True to original Mario mechanics</p>
                         </div>
@@ -239,15 +203,9 @@
         <div class="container">
             <p class="mb-3">© 2025 ITE254 Final Project - Mario Forever Remake</p>
             <div class="social-icons mb-3">
-                <a href="https://www.facebook.com/" class="me-2" title="Share on Facebook">
-                    <i class="bi bi-facebook"></i>
-                </a>
-                <a href="https://www.twitter.com/" class="me-2" title="Share on Twitter">
-                    <i class="bi bi-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com/" title="Share on Instagram">
-                    <i class="bi bi-instagram"></i>
-                </a>
+                <a href="https://www.facebook.com/" class="me-2" title="Share on Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.twitter.com/" class="me-2" title="Share on Twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.instagram.com/" title="Share on Instagram"><i class="bi bi-instagram"></i></a>
             </div>
             <div>
                 <a href="html/contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a>
@@ -255,16 +213,14 @@
             </div>
         </div>
     </footer>
-    
-    <!-- Other Scripts (at the bottom) -->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/theme-switcher.js"></script>
-    <!-- Snow Effect Script -->
     <script src="js/snow.js"></script>
-    <!-- Cherry Blossom Effect Script -->
     <script src="js/cherry-blossom.js"></script>
 </body>
 </html>
