@@ -13,7 +13,6 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-// Helper: get the correct path to settings.html based on current location
 function getSettingsPath() {
     const path = window.location.pathname;
     if (path === '/' || path === '/index.html' || path.endsWith('/index.html')) {
@@ -25,7 +24,6 @@ function getSettingsPath() {
     }
 }
 
-// Helper: get login path
 function getLoginPath() {
     const path = window.location.pathname;
     if (path === '/' || path === '/index.html' || path.endsWith('/index.html')) {
@@ -43,28 +41,35 @@ function getUserDisplayName(user) {
     return 'User';
 }
 
-function getUserInitials(user) {
-    const name = getUserDisplayName(user);
-    if (name.includes('@')) return name[0].toUpperCase();
-    const parts = name.split(' ');
-    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-    return parts[0][0].toUpperCase();
-}
-
 function updateProfileAndDropdown(user) {
     const profileCircle = document.getElementById('userProfile');
     const dropdownMenu = document.getElementById('profileDropdown');
     if (!profileCircle || !dropdownMenu) return;
 
-    const initials = getUserInitials(user);
-    profileCircle.textContent = initials;
-    profileCircle.title = getUserDisplayName(user);
     profileCircle.classList.remove('d-none');
+    
+    // Reset to default icon first
+    profileCircle.style.backgroundImage = '';
+    profileCircle.style.backgroundSize = '';
+    profileCircle.style.backgroundPosition = '';
+    profileCircle.innerHTML = '<i class="bi bi-person-fill"></i>';
+    
+    // If user has a photo, try to set it
     if (user.photoURL) {
-        profileCircle.style.backgroundImage = `url(${user.photoURL})`;
-        profileCircle.style.backgroundSize = 'cover';
-        profileCircle.style.backgroundPosition = 'center';
-        profileCircle.textContent = '';
+        // Create an image element to test loading (optional) or just set background
+        const img = new Image();
+        img.onload = function() {
+            // Photo loaded successfully: set background image
+            profileCircle.style.backgroundImage = `url(${user.photoURL})`;
+            profileCircle.style.backgroundSize = 'cover';
+            profileCircle.style.backgroundPosition = 'center';
+            profileCircle.innerHTML = ''; // remove icon
+        };
+        img.onerror = function() {
+            // If photo fails to load, keep the icon (already set)
+            console.log("Failed to load profile photo, using icon");
+        };
+        img.src = user.photoURL;
     }
 
     const displayName = getUserDisplayName(user);
@@ -95,11 +100,14 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         updateProfileAndDropdown(user);
         if (typeof bootstrap !== 'undefined' && profileCircle) {
-            new bootstrap.Dropdown(profileCircle);
+            // Reinitialize dropdown if needed (Bootstrap might already have it)
+            // Just ensure it's enabled
+            try {
+                new bootstrap.Dropdown(profileCircle);
+            } catch(e) {}
         }
     } else {
         if (profileCircle) profileCircle.classList.add('d-none');
-        // Only redirect if not already on login/register/settings page
         const current = window.location.pathname;
         if (!current.includes('Login.html') && !current.includes('Register.html') && !current.includes('settings.html')) {
             window.location.href = getLoginPath();

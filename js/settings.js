@@ -3,15 +3,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const auth = firebase.auth();
 
-    // Wait for auth state to resolve before proceeding
     auth.onAuthStateChanged(function(user) {
         if (!user) {
-            // Only redirect if definitely not logged in
             window.location.href = 'Login.html';
             return;
         }
-
-        // User is logged in – load and setup the page
         setupSettingsPage(user);
     });
 });
@@ -25,8 +21,8 @@ function setupSettingsPage(user) {
     const profileEmail = document.getElementById('profileEmail');
     const saveProfileBtn = document.getElementById('saveProfileBtn');
     const saveSuccess = document.getElementById('saveSuccess');
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
 
-    // Function to split display name into first and last name
     function splitDisplayName(displayName) {
         if (!displayName) return { firstName: '', lastName: '' };
         const parts = displayName.trim().split(' ');
@@ -36,7 +32,6 @@ function setupSettingsPage(user) {
         return { firstName, lastName };
     }
 
-    // Load user data into form
     function loadUserData() {
         profileEmail.value = user.email;
         profileUserEmail.textContent = user.email;
@@ -48,7 +43,6 @@ function setupSettingsPage(user) {
         profileLastName.value = lastName;
     }
 
-    // Save changes: update display name in Firebase
     async function saveProfile() {
         const firstName = profileFirstName.value.trim();
         const lastName = profileLastName.value.trim();
@@ -90,6 +84,77 @@ function setupSettingsPage(user) {
         alert('Error: ' + msg);
     }
 
+    // ---- Delete Account Logic (supports both email/password and Google) ----
+    async function deleteAccount() {
+        const confirmDelete = confirm(
+            'WARNING: This action is permanent!\n\n' +
+            'Are you sure you want to delete your account?\n' +
+            'All your user data will be lost forever.'
+        );
+        if (!confirmDelete) return;
+
+        // Check what provider the user used to sign in
+        const providerData = user.providerData;
+        const isGoogle = providerData.some(p => p.providerId === 'google.com');
+
+        let reauthSuccess = false;
+
+        if (isGoogle) {
+            // Re-authenticate with Google popup
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                await user.reauthenticateWithPopup(provider);
+                reauthSuccess = true;
+            } catch (error) {
+                console.error('Google reauthentication error:', error);
+                if (error.code === 'auth/popup-blocked') {
+                    alert('Popup was blocked. Please allow popups for this site and try again.');
+                } else if (error.code === 'auth/cancelled-popup-request') {
+                    alert('Sign-in popup was cancelled.');
+                } else {
+                    alert('Reauthentication failed: ' + error.message);
+                }
+                return;
+            }
+        } else {
+            // Email/password user: ask for password
+            const password = prompt('Please enter your password to confirm account deletion:');
+            if (!password) {
+                alert('Deletion cancelled – password required.');
+                return;
+            }
+            const credential = firebase.auth.EmailAuthProvider.credential(user.email, password);
+            try {
+                await user.reauthenticateWithCredential(credential);
+                reauthSuccess = true;
+            } catch (error) {
+                console.error('Password reauthentication error:', error);
+                let errorMsg = error.message;
+                if (error.code === 'auth/wrong-password') {
+                    errorMsg = 'Incorrect password. Deletion cancelled.';
+                } else if (error.code === 'auth/requires-recent-login') {
+                    errorMsg = 'Please sign out and sign in again, then try deleting your account.';
+                }
+                alert('Failed to reauthenticate: ' + errorMsg);
+                return;
+            }
+        }
+
+        if (reauthSuccess) {
+            try {
+                await user.delete();
+                window.location.href = 'Login.html';
+            } catch (error) {
+                console.error('Delete account error:', error);
+                alert('Error deleting account: ' + error.message);
+            }
+        }
+    }
+
     saveProfileBtn.addEventListener('click', saveProfile);
+    if (deleteAccountBtn) {
+        deleteAccountBtn.addEventListener('click', deleteAccount);
+    }
+
     loadUserData();
 }

@@ -92,7 +92,6 @@ const levelScreenshots = {
 function getLevelImageUrl(categoryId, levelName) {
   let key = "";
   if (categoryId.startsWith("world")) {
-    // levelName is like "1-1", so key becomes "world1-1"
     key = "world" + levelName;
   } else if (categoryId === "story") {
     key = "story";
@@ -105,11 +104,7 @@ function getLevelImageUrl(categoryId, levelName) {
   } else if (categoryId === "original") {
     key = `original-${levelName}`;
   }
-  
-  console.log(`Screenshot lookup: key = "${key}"`);
-  const url = levelScreenshots[key];
-  console.log(`Resolved URL: ${url || "NOT FOUND"}`);
-  return url || ""; // Return empty string if missing (no placeholder)
+  return levelScreenshots[key] || "";
 }
 
 // ---------- HIDDEN IFRAME (Background Music) ----------
@@ -326,25 +321,12 @@ function renderGrid() {
   });
 }
 
-// ---------- AUTOPLAY HANDLER ----------
-const musicEnableBtn = document.getElementById('musicEnableBtn');
-function enableMusic() {
-  if (iframe) iframe.src = IFRAME_SRC;
-  if (musicEnableBtn) musicEnableBtn.style.display = 'none';
-  localStorage.setItem('musicEnabled', 'true');
-}
-if (musicEnableBtn) {
-  musicEnableBtn.addEventListener('click', enableMusic);
-  setTimeout(() => {
-    if (!localStorage.getItem('musicEnabled')) musicEnableBtn.style.display = 'block';
-  }, 1000);
-}
-
-// ---------- INITIALIZE ----------
+// ---------- INITIALIZE (Music starts automatically) ----------
 document.addEventListener('DOMContentLoaded', () => {
   renderGrid();
   slideshowDiv.classList.add('hide-slideshow');
   worldGridDiv.classList.remove('hide-grid');
+  // Start background music immediately – no button needed
   startGridMusic();
 
   const backBtn = document.getElementById('backToGridBtn');
@@ -353,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('prevLevelBtn');
   const nextBtn = document.getElementById('nextLevelBtn');
   const prevBtnMobile = document.getElementById('prevLevelBtnMobile');
-  const nextBtnMobile = document.getElementById('nextBtnMobile');
+  const nextBtnMobile = document.getElementById('nextLevelBtnMobile');
   
   if (prevBtn) prevBtn.addEventListener('click', prevLevel);
   if (nextBtn) nextBtn.addEventListener('click', nextLevel);

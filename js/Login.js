@@ -24,6 +24,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Helper: Show non-blocking success message and redirect
+function showSuccessAndRedirect(message, redirectUrl) {
+  // Create a temporary floating notification
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.backgroundColor = '#28a745';
+  toast.style.color = 'white';
+  toast.style.padding = '12px 24px';
+  toast.style.borderRadius = '8px';
+  toast.style.zIndex = '10000';
+  toast.style.fontWeight = 'bold';
+  toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+  toast.style.fontSize = '1rem';
+  document.body.appendChild(toast);
+  
+  // Redirect after 1 second (message visible for a short time)
+  setTimeout(() => {
+    window.location.href = redirectUrl;
+  }, 1000);
+}
+
 // Handle login form
 document.getElementById("loginForm").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -32,19 +57,15 @@ document.getElementById("loginForm").addEventListener("submit", (event) => {
   const password = document.getElementById("password").value;
   const remember = document.getElementById("remember").checked;
 
-  // persistence: remember = local, otherwise session
   const persistenceType = remember ? browserLocalPersistence : browserSessionPersistence;
 
   setPersistence(auth, persistenceType)
+    .then(() => signInWithEmailAndPassword(auth, email, password))
     .then(() => {
-      return signInWithEmailAndPassword(auth, email, password);
-    })
-    .then(() => {
-      alert("Login successful! Redirecting...");
-      window.location.href = "../index.html";
+      showSuccessAndRedirect("Login successful! Redirecting...", "../index.html");
     })
     .catch((error) => {
-      alert(error.message);
+      alert(error.message); // Keep error alerts as they require user attention
     });
 });
 
@@ -53,8 +74,7 @@ document.getElementById("googleLogin").addEventListener("click", () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(auth, provider)
     .then(() => {
-      alert("Login successful with Google! Redirecting...");
-      window.location.href = "../index.html";;
+      showSuccessAndRedirect("Login successful with Google! Redirecting...", "../index.html");
     })
     .catch((error) => {
       alert(error.message);

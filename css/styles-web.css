@@ -189,7 +189,7 @@ p, li, span, div:not(.special) {
     transform: translateX(-50%) scaleX(1);
 }
 
-/* Profile Circle (replaces email) */
+/* Profile Circle (replaces email) - FIXED for icon */
 .profile-circle {
     width: 40px;
     height: 40px;
@@ -206,6 +206,13 @@ p, li, span, div:not(.special) {
     box-shadow: var(--shadow-sm);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    overflow: hidden;
+}
+/* Ensure the person icon is white and properly sized */
+.profile-circle i {
+    font-size: 1.5rem;
+    color: white;
+    line-height: 1;
 }
 .profile-circle:hover {
     transform: scale(1.05);
@@ -218,12 +225,18 @@ p, li, span, div:not(.special) {
         font-size: 1rem;
         margin-right: 6px;
     }
+    .profile-circle i {
+        font-size: 1.2rem;
+    }
 }
 @media (max-width: 576px) {
     .profile-circle {
         width: 32px;
         height: 32px;
         font-size: 0.9rem;
+    }
+    .profile-circle i {
+        font-size: 1rem;
     }
 }
 
@@ -1168,7 +1181,8 @@ main {
     background-color: rgba(0, 176, 155, 0.15);
     border-color: rgba(0, 176, 155, 0.4);
 }
-/* Profile Dropdown */
+
+/* ----- PROFILE DROPDOWN (additional styles) ----- */
 .profile-circle {
     cursor: pointer;
 }
@@ -1190,9 +1204,8 @@ main {
     color: #000;
 }
 .dropdown-toggle::after {
-    display: none; /* Hide the default caret, we use the circle as the toggle */
+    display: none; /* Hide the default caret */
 }
-/* Ensure the dropdown is positioned correctly */
 .d-flex .dropdown {
     display: inline-flex;
 }
