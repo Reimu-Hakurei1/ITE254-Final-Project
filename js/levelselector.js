@@ -10,12 +10,12 @@ const categories = [
   { id: "world7", name: "World 7", levels: ["7-1","7-2","7-3","7-4"], music: "../songs/The Golden Ages.mp3", basePath: "../Mario Forever/World 7/World " },
   { id: "world8", name: "World 8", levels: ["8-1","8-2","8-3","8-4"], music: "../songs/Federation.mp3", basePath: "../Mario Forever/World 8/World " },
   { id: "ending", name: "Ending", levels: ["Ending"], music: "../songs/Mario World - Ending.mp3", basePath: "../Mario Forever/Ending/Ending/index.html", single: true },
-  { id: "humanlab", name: "Human Laboratory", levels: ["Level 1","Level 2","Level 3","Level 4","Level 5"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Human Lab/Level " },
-  { id: "extra", name: "Extra", levels: ["Funny Tank?"], music: "../songs/dreamoff.mp3", basePath: "../Mario Forever/Extra/Funny Tank/index.html", single: true },
+  { id: "humanlab", name: "Human Laboratory", levels: ["Level 1","Level 2","Level 3","Level 4","Level 5"], music: "../songs/08 - Alien Power.mp3", basePath: "../Mario Forever/Human Lab/Level " },
+  { id: "extra", name: "Extra", levels: ["Goomba Party","Funny Tank?"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Extra/", multi: true },
   { id: "original", name: "Original Level", levels: ["Icy Castle","Icy Snowy Night","Stormy Snowy Tank","Remilia Scarlet"], music: "../songs/05. 夢幻能 ～ Taboo Marionette.flac", basePath: "../Mario Forever/Original Level/" }
 ];
 
-// ---------- SCREENSHOT PATHS (EDIT THESE) ----------
+// ---------- SCREENSHOT PATHS (use normalized keys: lowercase, spaces→_ , remove special chars) ----------
 const levelScreenshots = {
   // World 1
   "world1-1": "../screenshots/world1/1-1.png",
@@ -72,37 +72,51 @@ const levelScreenshots = {
   "ending": "../screenshots/ending/ending.png",
   
   // Human Laboratory
-  "humanlab-Level 1": "../screenshots/humanlab/Level_1.png",
-  "humanlab-Level 2": "../screenshots/humanlab/Level_2.png",
-  "humanlab-Level 3": "../screenshots/humanlab/Level_3.png",
-  "humanlab-Level 4": "../screenshots/humanlab/Level_4.png",
-  "humanlab-Level 5": "../screenshots/humanlab/Level_5.png",
+  "humanlab-level_1": "../screenshots/humanlab/Level_1.png",
+  "humanlab-level_2": "../screenshots/humanlab/Level_2.png",
+  "humanlab-level_3": "../screenshots/humanlab/Level_3.png",
+  "humanlab-level_4": "../screenshots/humanlab/Level_4.png",
+  "humanlab-level_5": "../screenshots/humanlab/Level_5.png",
   
   // Extra
-  "extra": "../screenshots/extra/funny_tank.png",
+  "extra-goomba_party": "../screenshots/extra/goomba_party.png",
+  "extra-funny_tank": "../screenshots/extra/funny_tank.png",
   
   // Original Levels
-  "original-Icy Castle": "../screenshots/original/Icy_Castle.png",
-  "original-Icy Snowy Night": "../screenshots/original/Icy_Snowy_Night.png",
-  "original-Stormy Snowy Tank": "../screenshots/original/Stormy_Snowy_Tank.png",
-  "original-Remilia Scarlet": "../screenshots/original/Remilia_Scarlet.png"
+  "original-icy_castle": "../screenshots/original/Icy_Castle.png",
+  "original-icy_snowy_night": "../screenshots/original/Icy_Snowy_Night.png",
+  "original-stormy_snowy_tank": "../screenshots/original/Stormy_Snowy_Tank.png",
+  "original-remilia_scarlet": "../screenshots/original/Remilia_Scarlet.png"
 };
 
-// ---------- SCREENSHOT LOOKUP (NO PLACEHOLDER) ----------
+// Helper: normalize a level name for the screenshot key
+function normalizeName(name) {
+  return name.toLowerCase()
+    .replace(/[?]/g, '')       
+    .replace(/\s+/g, '_')      
+    .replace(/-/g, '_');       
+}
+
+// ---------- SCREENSHOT LOOKUP ----------
 function getLevelImageUrl(categoryId, levelName) {
   let key = "";
   if (categoryId.startsWith("world")) {
+    // levelName is like "1-1" → "world1-1"
     key = "world" + levelName;
   } else if (categoryId === "story") {
     key = "story";
   } else if (categoryId === "ending") {
     key = "ending";
   } else if (categoryId === "humanlab") {
-    key = `humanlab-${levelName}`;
+    // levelName: "Level 1" → "humanlab-level_1"
+    const num = levelName.split(' ')[1];
+    key = `humanlab-level_${num}`;
   } else if (categoryId === "extra") {
-    key = "extra";
+    const normalized = normalizeName(levelName);
+    key = `extra-${normalized}`;
   } else if (categoryId === "original") {
-    key = `original-${levelName}`;
+    const normalized = normalizeName(levelName);
+    key = `original-${normalized}`;
   }
   return levelScreenshots[key] || "";
 }
@@ -163,13 +177,12 @@ function handleVisibilityChange() {
 
 document.addEventListener('visibilitychange', handleVisibilityChange);
 
-// ---------- LEVEL URL BUILDER ----------
+// ---------- LEVEL URL BUILDER (fixed for Extra) ----------
 function getLevelUrl(category, levelIndex) {
   const cat = category;
   const levelName = cat.levels[levelIndex];
   if (cat.id === "story") return cat.basePath;
   if (cat.id === "ending") return cat.basePath;
-  if (cat.id === "extra") return cat.basePath;
   if (cat.id === "original") {
     const folderMap = {
       "Icy Castle": "Icy Castle",
@@ -184,6 +197,12 @@ function getLevelUrl(category, levelIndex) {
     const num = levelIndex + 1;
     return `../Mario Forever/Human Lab/Level ${num}/index.html`;
   }
+  if (cat.id === "extra") {
+    let folder = levelName.replace(/[?]/g, '').replace(/\s+/g, '');
+    const cleanName = levelName.replace(/[?]/g, '').trim();
+    return `../Mario Forever/Extra/${cleanName}/index.html`;
+  }
+  // worlds
   const levelCode = cat.levels[levelIndex];
   return `${cat.basePath}${levelCode}/index.html`;
 }
@@ -205,34 +224,34 @@ let currentIndex = 0;
 function updateSlideshow() {
   if (!currentCategory) return;
   const levelName = currentCategory.levels[currentIndex];
-  
+
   if (currentCategory.id.startsWith("world")) {
     slideshowTitle.innerText = `World ${levelName}`;
   } else {
     slideshowTitle.innerText = currentCategory.name;
   }
-  
+
   levelNameDisplay.innerText = levelName;
-  
+
   const imageUrl = getLevelImageUrl(currentCategory.id, levelName);
   levelImage.src = imageUrl;
   levelImage.alt = `${currentCategory.name} - ${levelName}`;
-  
+
   const levelUrl = getLevelUrl(currentCategory, currentIndex);
   playLevelLink.href = levelUrl;
-  
+
   let indicatorsHtml = '';
   for (let i = 0; i < currentCategory.levels.length; i++) {
     indicatorsHtml += `<span class="${i === currentIndex ? 'active' : ''}"></span>`;
   }
   slideIndicators.innerHTML = indicatorsHtml;
-  
+
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < currentCategory.levels.length - 1;
   const prevBtns = [document.getElementById('prevLevelBtn'), document.getElementById('prevLevelBtnMobile')];
   const nextBtns = [document.getElementById('nextLevelBtn'), document.getElementById('nextLevelBtnMobile')];
-  prevBtns.forEach(btn => { if(btn) { btn.style.opacity = hasPrev ? '1' : '0.3'; btn.style.pointerEvents = hasPrev ? 'auto' : 'none'; } });
-  nextBtns.forEach(btn => { if(btn) { btn.style.opacity = hasNext ? '1' : '0.3'; btn.style.pointerEvents = hasNext ? 'auto' : 'none'; } });
+  prevBtns.forEach(btn => { if (btn) { btn.style.opacity = hasPrev ? '1' : '0.3'; btn.style.pointerEvents = hasPrev ? 'auto' : 'none'; } });
+  nextBtns.forEach(btn => { if (btn) { btn.style.opacity = hasNext ? '1' : '0.3'; btn.style.pointerEvents = hasNext ? 'auto' : 'none'; } });
 }
 
 function nextLevel() {
@@ -279,9 +298,9 @@ function getCardBackgroundColor(id) {
 
 function getTextColor(bgColor) {
   const hex = bgColor.substring(1);
-  const r = parseInt(hex.substr(0,2),16);
-  const g = parseInt(hex.substr(2,2),16);
-  const b = parseInt(hex.substr(4,2),16);
+  const r = parseInt(hex.substr(0,2), 16);
+  const g = parseInt(hex.substr(2,2), 16);
+  const b = parseInt(hex.substr(4,2), 16);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
   return luminance > 180 ? "#1a1a2e" : "#ffffff";
 }
@@ -299,7 +318,7 @@ function renderGrid() {
     card.style.color = textColor;
     card.style.border = 'none';
     card.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
-    
+
     let icon = '';
     if (cat.id.includes('world')) icon = '🌍';
     else if (cat.id === 'story') icon = '📖';
@@ -308,7 +327,7 @@ function renderGrid() {
     else if (cat.id === 'extra') icon = '🎁';
     else if (cat.id === 'original') icon = '✨';
     else icon = '🎮';
-    
+
     card.innerHTML = `
       <div class="category-icon" style="color:${textColor}">${icon}</div>
       <h3 class="fw-bold" style="color:${textColor}">${cat.name}</h3>
@@ -326,17 +345,16 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGrid();
   slideshowDiv.classList.add('hide-slideshow');
   worldGridDiv.classList.remove('hide-grid');
-  // Start background music immediately – no button needed
   startGridMusic();
 
   const backBtn = document.getElementById('backToGridBtn');
   if (backBtn) backBtn.addEventListener('click', backToGrid);
-  
+
   const prevBtn = document.getElementById('prevLevelBtn');
   const nextBtn = document.getElementById('nextLevelBtn');
   const prevBtnMobile = document.getElementById('prevLevelBtnMobile');
   const nextBtnMobile = document.getElementById('nextLevelBtnMobile');
-  
+
   if (prevBtn) prevBtn.addEventListener('click', prevLevel);
   if (nextBtn) nextBtn.addEventListener('click', nextLevel);
   if (prevBtnMobile) prevBtnMobile.addEventListener('click', prevLevel);
