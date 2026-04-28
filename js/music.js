@@ -32,7 +32,7 @@ const tracks = [
   {title:"Streets of Rage 2 - Alien Power", artist:"Yuzo Koshiro", file: "../songs/08 - Alien Power.mp3", cover:"../covers/Streets of Rage 2.jpg"},
   {title:"Suomalainen Kaupunki", artist:"Janne Kivilahti", file: "../songs/kaupunki.mp3", cover:"../covers/PEKKA32.png"},
   {title:"Dream Off", artist:"Hmc", file: "../songs/dreamoff.mp3", cover:"../covers/art-placeholder.jpg"},
-  {title:"Mugen Noh ~ Taboo Marionette", artist:"ZUN", file: "../songs/05. 夢幻能 ～ Taboo Marionette.flac", cover:"../covers/Taboo Japan Disentanglement.png"},
+  {title:"Taboo Japan Disentanglement - Mugen Noh ~ Taboo Marionette", artist:"ZUN", file: "../songs/05. 夢幻能 ～ Taboo Marionette.flac", cover:"../covers/Taboo Japan Disentanglement.png"},
   {title:"Atelier Iris ETERNAL MANA - Big Play Board", artist:"Ken Nakagawa, Daisuke Achiwa, and Akira Tsuchiya", file: "../songs/Atelier Iris ETERNAL MANA - Big Play Board.mp3", cover:"../covers/Atelier Iris ETERNAL MANA.jpg"},
   {title:"MegaMari - Marisa no Yabou - Boss Battle", artist:"Uni Akiyama", file: "../songs/MegaMari - Marisa no Yabou - Boss Battle.mp3", cover:"../covers/Megamari.jpg"},
   {title:"Oriental Sacred Place 2 - A Midnight Fairy Dance", artist:"Zun", file: "../songs/Oriental Sacred Place 2 - A Midnight Fairy Dance.mp3", cover:"../covers/Oriental Sacred Place 2.jpg"},
