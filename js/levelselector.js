@@ -11,7 +11,7 @@ const categories = [
   { id: "world8", name: "World 8", levels: ["8-1","8-2","8-3","8-4"], music: "../songs/Federation.mp3", basePath: "../Mario Forever/World 8/World " },
   { id: "ending", name: "Ending", levels: ["Ending"], music: "../songs/Mario World - Ending.mp3", basePath: "../Mario Forever/Ending/Ending/index.html", single: true },
   { id: "humanlab", name: "Human Laboratory", levels: ["Level 1","Level 2","Level 3","Level 4","Level 5"], music: "../songs/08 - Alien Power.mp3", basePath: "../Mario Forever/Human Lab/Level " },
-  { id: "extra", name: "Extra", levels: ["Mario Minix","Goomba Party","Funny Tank?"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Extra/", multi: true },
+  { id: "extra", name: "Extra", levels: ["Goomba Party","Funny Tank?"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Extra/", multi: true },
   { id: "original", name: "Original Level", levels: ["Icy Castle","Icy Snowy Night","Stormy Snowy Tank","Remilia Scarlet"], music: "../songs/05. 夢幻能 ～ Taboo Marionette.flac", basePath: "../Mario Forever/Original Level/" }
 ];
 
@@ -79,7 +79,6 @@ const levelScreenshots = {
   "humanlab-level_5": "../screenshots/humanlab/Level_5.png",
   
   // Extra
-  "extra-mario_minix": "../screenshots/extra/mario_minix.png",
   "extra-goomba_party": "../screenshots/extra/goomba_party.png",
   "extra-funny_tank": "../screenshots/extra/funny_tank.png",
   
