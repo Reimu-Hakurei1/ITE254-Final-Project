@@ -11,7 +11,7 @@ const categories = [
   { id: "world8", name: "World 8", levels: ["8-1","8-2","8-3","8-4"], music: "../songs/Federation.mp3", basePath: "../Mario Forever/World 8/World " },
   { id: "ending", name: "Ending", levels: ["Ending"], music: "../songs/Mario World - Ending.mp3", basePath: "../Mario Forever/Ending/Ending/index.html", single: true },
   { id: "humanlab", name: "Human Laboratory", levels: ["Level 1","Level 2","Level 3","Level 4","Level 5"], music: "../songs/08 - Alien Power.mp3", basePath: "../Mario Forever/Human Lab/Level " },
-  { id: "extra", name: "Extra", levels: ["Goomba Party","Funny Tank?"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Extra/", multi: true },
+  { id: "extra", name: "Extra", levels: ["Mario Minix","Goomba Party","Koopa The Devastator Level","Funny Tank?","Koopa Troopa Liberation","Starman Running"], music: "../songs/kaupunki.mp3", basePath: "../Mario Forever/Extra/", multi: true },
   { id: "original", name: "Original Level", levels: ["Icy Castle","Icy Snowy Night","Stormy Snowy Tank","Remilia Scarlet"], music: "../songs/05. 夢幻能 ～ Taboo Marionette.flac", basePath: "../Mario Forever/Original Level/" }
 ];
 
@@ -79,8 +79,12 @@ const levelScreenshots = {
   "humanlab-level_5": "../screenshots/humanlab/Level_5.png",
   
   // Extra
+  "extra-mario_minix": "../screenshots/extra/mario_minix.png",
   "extra-goomba_party": "../screenshots/extra/goomba_party.png",
+  "extra-koopa_the_devastator_level": "../screenshots/extra/koopa_the_devastator_level.png",
   "extra-funny_tank": "../screenshots/extra/funny_tank.png",
+  "extra-koopa_troopa_liberation": "../screenshots/extra/koopa_troopa_liberation.png",
+  "extra-starman_running": "../screenshots/extra/starman_running.png",
   
   // Original Levels
   "original-icy_castle": "../screenshots/original/Icy_Castle.png",
@@ -340,6 +344,22 @@ function renderGrid() {
   });
 }
 
+// ---------- HUPA VOICE FOR HUMAN LAB ----------
+function setupHupaVoice() {
+  const hupaAudio = document.getElementById('hupaAudio');
+  if (!playLevelLink || !hupaAudio) return;
+
+  playLevelLink.addEventListener('click', function(e) {
+    // Only apply special behavior for Human Laboratory category
+    if (currentCategory && currentCategory.id === 'humanlab') {
+      e.preventDefault();
+      // Play hupa sound
+      hupaAudio.currentTime = 0;
+      hupaAudio.play().catch(err => console.log('Hupa sound error:', err));
+    }
+  });
+}
+
 // ---------- INITIALIZE (Music starts automatically) ----------
 document.addEventListener('DOMContentLoaded', () => {
   renderGrid();
@@ -359,4 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nextBtn) nextBtn.addEventListener('click', nextLevel);
   if (prevBtnMobile) prevBtnMobile.addEventListener('click', prevLevel);
   if (nextBtnMobile) nextBtnMobile.addEventListener('click', nextLevel);
+
+  // Attach the hupa voice click handler
+  setupHupaVoice();
 });

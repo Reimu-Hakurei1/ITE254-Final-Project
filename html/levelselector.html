@@ -27,6 +27,9 @@
   <!-- Hidden iframe for background music on world grid -->
   <iframe src="../levelselector/index.html" style="display:none;" id="hidden-frame"></iframe>
 
+  <!-- Hidden audio for hupa voice (used only on Human Lab levels) -->
+  <audio id="hupaAudio" src="../sounds/hupa.mp3" preload="auto"></audio>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="../index.html">ITE254-Final-Project</a>
@@ -114,8 +117,6 @@
       <div><a href="contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a><a href="about.html" class="btn btn-outline-dark btn-sm me-2">About Project</a><a href="levelselector.html" class="btn btn-warning btn-sm">Play Game</a></div>
     </div>
   </footer>
-
-  <button id="musicEnableBtn">🔊 Enable Background Music</button>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
