@@ -242,7 +242,10 @@ async function loadTrack(i) {
 
   // Update UI for new track
   songTitleInner.textContent = t.title || 'Unknown Title';
+  songTitleInner.title = t.title || 'Unknown Title';
   songArtist.textContent = t.artist || 'Unknown Artist';
+  const featuredTrackTitle = document.getElementById('featuredTrackTitle');
+  if (featuredTrackTitle) featuredTrackTitle.textContent = t.title || 'Unknown Title';
   albumCover.src = t.cover || '../covers/default.jpg';
   miniCover.src = t.cover || '../covers/default.jpg';
   bigPlayerCover.src = t.cover || '../covers/default.jpg';
@@ -319,6 +322,8 @@ function updatePlayButtons() {
   const icon = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
   if (playBtn) playBtn.innerHTML = `<i class="${icon}"></i>`;
   if (bigPlay) bigPlay.innerHTML = `<i class="${icon}"></i>`;
+  playBtn?.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+  bigPlay?.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
 }
 
 function handleTrackEnd() {
@@ -497,13 +502,18 @@ function checkTitleScrolling() {
   const container = title?.parentElement;
   if (!container) return;
   title.classList.remove('scrolling');
-  setTimeout(() => {
-    if (title.scrollWidth > container.offsetWidth) {
+  title.style.animationDuration = '';
+
+  // Measure after layout so the dock has its final responsive width.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const availableWidth = container.clientWidth;
+    const titleWidth = title.getBoundingClientRect().width;
+    if (availableWidth > 0 && titleWidth > availableWidth + 2) {
       title.classList.add('scrolling');
       const duration = Math.max(10, title.textContent.length * 0.5);
       title.style.animationDuration = `${duration}s`;
     }
-  }, 100);
+  }));
 }
 
 function downloadTrack(index) {
@@ -551,7 +561,7 @@ function setupEventListeners() {
 
   // Keyboard
   document.addEventListener('keydown', e => {
-    if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    if (e.code === 'Space' && !e.target.closest('button, [role="button"], input, textarea, select, [contenteditable="true"]')) {
       e.preventDefault();
       isPlaying ? pauseTrack() : playTrack();
     }
@@ -565,7 +575,7 @@ function setupEventListeners() {
       volume = Math.max(0, volume - 10);
       updateVolume(volume);
     }
-    if (e.code === 'KeyM' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    if (e.code === 'KeyM' && !e.target.closest('button, [role="button"], input, textarea, select, [contenteditable="true"]')) {
       e.preventDefault();
       toggleMute();
     }
@@ -600,11 +610,25 @@ function setupEventListeners() {
   bigProgress?.addEventListener('click', seekHandler);
 
   // Big player open/close
-  playerLeft?.addEventListener('click', () => bigPlayer?.classList.add('active'));
-  closeBigPlayer?.addEventListener('click', () => bigPlayer?.classList.remove('active'));
+  const openBigPlayer = () => {
+    bigPlayer?.classList.add('active');
+    bigPlayer?.setAttribute('aria-hidden', 'false');
+  };
+  const closePlayer = () => {
+    bigPlayer?.classList.remove('active');
+    bigPlayer?.setAttribute('aria-hidden', 'true');
+  };
+  playerLeft?.addEventListener('click', openBigPlayer);
+  playerLeft?.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openBigPlayer();
+    }
+  });
+  closeBigPlayer?.addEventListener('click', closePlayer);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && bigPlayer?.classList.contains('active')) {
-      bigPlayer.classList.remove('active');
+      closePlayer();
     }
   });
 

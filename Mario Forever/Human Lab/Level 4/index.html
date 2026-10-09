@@ -1,98 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<style type="text/css">
-  h1 {
-	  font-family: Arial, Helvetica, sans-serif;
-	  color: #F00;
-	  font-size: x-large;
-  }
-  p {
-	  font-family: Arial, Helvetica, sans-serif;
-	  color: #000;
-	  font-size: small;
-  }
-  body {
-	  background-color: #FFF;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-  }
-  #bloctxt {
-	  border-left-width: 5px;
-	  border-left-style: solid;
-	  border-left-color: #F00;
-	  padding-left: 10px;
-	  position: absolute;
-	  left: 50%%;
-	  width: 600px;
-	  margin-left: -260px
-  }
-</style>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-  <!-- Enables full-screen on iOS devices -->
-  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="HandheldFriendly" content="true" />
-
-  <title>Human Lab - 4</title>
-
-	<script>
-	   	// Detection of old browsers that do not support the canvas element
-		// Falls back to a default page
-	    if (!document.createElement("canvas").getContext)
-	    {
-			window.open("http://www.clickteam.com/html5-fallback", "_self");
-		}
-	</script>
-
-
-  	<!-- EXTRASOURCES -->
-    <!-- Loads the Javascript code...-->
-    <script src="src/Runtime.js"></script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f8ff">
+  <meta name="description" content="Play Level 4 in the ITE254 Final Project.">
+  <title>Level 4 | ITE254 Final Project</title>
+  <link rel="icon" type="image/png" href="../../../image/icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../css/styles-web.css">
+  <link rel="stylesheet" href="../../../css/site-refresh.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/game-page.css">
   <script>
-
-	// Detection of when the html file is ran locally.
-	// You can remove this code for the final version
-	if (window.location.protocol == "file:")
-	{
-		document.write('<div id="bloctxt">');
-		document.write('<h1>The application cannot be run...</h1>');
-		document.write('<p>HTML browsers do not allow you to launch data files directly from the file system.<br>');
-		document.write('A drag & drop of the html file on a web-browser window will not work, on any machine.<br>');
-		document.write('Please use the Build & Run option (it opens a local web server) to run your application,<br>')
-		document.write('or upload your application folder to a remote web-server, and start it from there...</p>');
-		document.write('</div>');
-		throw new error("Cannot run application");
-	}
-  </script>
-</head>
-
-<body>
-
-<div style="display: inline-block; -webkit-user-select: none; text-align: left;">
-    <canvas id="MMFCanvas" width="640" height="480">
-    	Your browser does not support Canvas.
-    </canvas>
-</div>
-
-<script>
-    // RUNTIMESTART
-    // This is where the HTML5 runtime is actually started
-    window.addEventListener("load", windowLoaded, false);
-    function windowLoaded()
-    {
-        // Calls the runtime
-        // First parameter : name of the canvas element
-        // Second parameter : path to the cch file. Images and sounds must lay beside this file
-        new Runtime("MMFCanvas", "resources/Level 4.cch");
+    if (!document.createElement("canvas").getContext) {
+      window.location.replace("https://www.clickteam.com/html5-fallback");
     }
-    // RUNTIMESTARTEND
-</script>
+  </script>
+  <script src="src/Runtime.js"></script>
+</head>
+<body class="game-page">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../../../index.html"><img src="../../../image/icon.png" width="32" height="32" alt=""> ITE254 Final Project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="../../../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="../../../html/levelselector.html" aria-current="page">Play Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="../../../html/characters.html">Characters</a></li>
+          <li class="nav-item"><a class="nav-link" href="../../../html/music.html">Music</a></li>
+          <li class="nav-item"><a class="nav-link" href="../../../html/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="../../../html/contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  <div class="theme-switcher"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme"><span class="light-icon" aria-hidden="true">☀️</span><span class="dark-icon" aria-hidden="true">🌙</span></button></div>
+  <main class="game-page-main">
+    <section class="level-top" aria-labelledby="level-title">
+      <div>
+        <p class="level-eyebrow">HUMAN LAB</p>
+        <h1 class="level-title" id="level-title">Level 4</h1>
+        <p class="level-subtitle">Your adventure starts here. Good luck!</p>
+      </div>
+    </section>
+
+    <section class="game-shell" id="gameShell" aria-label="Level 4 game">
+      <div class="game-play-row">
+        <div class="game-stage">
+          <canvas id="MMFCanvas" width="640" height="480" aria-label="Level 4 game canvas">
+          Your browser does not support Canvas.
+        </canvas>
+        </div>
+        <button class="game-fullscreen" id="fullscreenButton" type="button" aria-label="Play in fullscreen" title="Fullscreen">
+          <span aria-hidden="true">⛶</span><span class="visually-hidden">Fullscreen</span>
+        </button>
+      </div>
+      <div class="game-meta">
+        <span class="game-status"><span class="game-status-dot" aria-hidden="true"></span> Game ready</span>
+        <span>Tip: use fullscreen for the best view</span>
+      </div>
+    </section>
+
+    <div class="game-controls" aria-label="Game controls">
+      <strong>Controls</strong>
+      <span><kbd>←</kbd> <kbd>→</kbd> Move</span>
+      <span><kbd>↑</kbd> <kbd>↓</kbd> Enter pipe</span>
+      <span><kbd>Z</kbd> Jump</span>
+      <span><kbd>X</kbd> Run / action</span>
+    </div>
+    <a class="game-back" href="../../../html/levelselector.html"><span aria-hidden="true">←</span> Back to level select</a>
+  </main>
+
+  <footer class="text-center p-4 bg-dark mt-5">
+    <div class="container">
+      <p class="mb-3">© 2026 ITE254 Final Project</p>
+      <div class="social-icons mb-3">
+        <a href="https://www.facebook.com/" class="me-2" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.twitter.com/" class="me-2" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+        <a href="https://www.instagram.com/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div><a href="../../../html/contact.html" class="btn btn-outline-dark btn-sm me-2">Contact Us</a><a href="../../../html/about.html" class="btn btn-outline-dark btn-sm me-2">About Project</a><a href="../../../html/levelselector.html" class="btn btn-warning btn-sm">Play Game</a></div>
+    </div>
+  </footer>
+
+  <script src="../../../js/theme-switcher.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("keydown", function (event) { if (event.key === "ArrowUp" || event.key === "ArrowDown") event.preventDefault(); }, true);
+    function centerGameCanvas() {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          const canvas = document.getElementById("MMFCanvas");
+          if (!canvas) return;
+          const rect = canvas.getBoundingClientRect();
+          const centeredTop = rect.top + window.scrollY + rect.height / 2 - window.innerHeight / 2;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          window.scrollTo(0, Math.max(0, Math.min(centeredTop, maxScroll)));
+        });
+      });
+    }
+    document.getElementById("fullscreenButton").addEventListener("click", async function () {
+      const shell = document.getElementById("gameShell");
+      try {
+        if (!document.fullscreenElement) await shell.requestFullscreen();
+        else await document.exitFullscreen();
+      } catch (error) {
+        this.title = "Fullscreen is unavailable in this browser";
+      }
+    });
+    document.addEventListener("fullscreenchange", function () {
+      const button = document.getElementById("fullscreenButton");
+      const active = document.fullscreenElement === document.getElementById("gameShell");
+      button.innerHTML = active ? '<span aria-hidden="true">⛶</span><span class="visually-hidden">Exit fullscreen</span>' : '<span aria-hidden="true">⛶</span><span class="visually-hidden">Fullscreen</span>';
+      button.setAttribute("aria-label", active ? "Exit fullscreen" : "Play in fullscreen");
+      if (!active) centerGameCanvas();
+    });
+    window.addEventListener("load", function () {
+      new Runtime("MMFCanvas", "resources/Level 4.cch");
+      window.setTimeout(centerGameCanvas, 150);
+    }, false);
+  </script>
 </body>
 </html>

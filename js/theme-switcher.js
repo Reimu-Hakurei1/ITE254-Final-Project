@@ -2,16 +2,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     const themeToggle = document.getElementById('themeToggle');
     
-    // Get saved theme or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // Restore the saved theme, using light mode by default.
+    const savedTheme = localStorage.getItem('theme') || 'light';
     
     // Apply saved theme
     document.documentElement.setAttribute('data-theme', savedTheme);
     
+    if (!themeToggle) return;
+
     // Update toggle button icon based on current theme
     updateToggleIcon(savedTheme);
     
     // Toggle theme when button is clicked
+
+
     themeToggle.addEventListener('click', function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';

@@ -301,12 +301,16 @@ function getCardBackgroundColor(id) {
 }
 
 function getTextColor(bgColor) {
-  const hex = bgColor.substring(1);
-  const r = parseInt(hex.substr(0,2), 16);
-  const g = parseInt(hex.substr(2,2), 16);
-  const b = parseInt(hex.substr(4,2), 16);
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
-  return luminance > 180 ? "#1a1a2e" : "#ffffff";
+  const channels = bgColor.slice(1).match(/.{2}/g).map(value => parseInt(value, 16) / 255);
+  const luminance = channels
+    .map(channel => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+    .reduce((total, channel, index) => total + channel * [0.2126, 0.7152, 0.0722][index], 0);
+  const contrast = (foreground) => {
+    const lighter = Math.max(luminance, foreground);
+    const darker = Math.min(luminance, foreground);
+    return (lighter + 0.05) / (darker + 0.05);
+  };
+  return contrast(0.02) >= contrast(1) ? "#17271d" : "#ffffff";
 }
 
 function renderGrid() {
@@ -318,8 +322,11 @@ function renderGrid() {
     card.className = 'category-card card h-100 text-center p-4';
     const bgColor = getCardBackgroundColor(cat.id);
     const textColor = getTextColor(bgColor);
-    card.style.background = bgColor;
-    card.style.color = textColor;
+    card.style.setProperty('--world-card-color', bgColor);
+    card.style.setProperty('--world-card-text-color', textColor);
+    // Inline important colors intentionally outrank the shared card surface styles.
+    card.style.setProperty('background-color', bgColor, 'important');
+    card.style.setProperty('color', textColor, 'important');
     card.style.border = 'none';
     card.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
 
