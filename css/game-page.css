@@ -25,7 +25,8 @@ body.game-page .navbar { z-index: 10; }
 .game-page-main {
   width: min(1344px, calc(100% - 36px));
   margin: 0 auto;
-  padding: clamp(34px, 6vw, 64px) 0 52px;
+  /* Give the sticky header a little extra clearance above the level content. */
+  padding: clamp(46px, 6vw, 76px) 0 52px;
   flex: 1;
 }
 
@@ -422,7 +423,7 @@ html[data-theme="dark"] .game-fullscreen:not(:fullscreen) {
 .game-layout:fullscreen .game-meta { display: none; }
 
 @media (max-width: 600px) {
-  .game-page-main { width: min(100% - 24px, 1060px); padding-top: 34px; }
+  .game-page-main { width: min(100% - 24px, 1060px); padding-top: 46px; }
   .game-shell:not(:fullscreen) { margin: 58px 0 0; }
   .game-shell:not(:fullscreen) .game-fullscreen { top: -50px; right: 8px; left: auto; }
   .game-shell:not(:fullscreen) .game-back-rail { top: -50px; right: auto; left: 8px; }
