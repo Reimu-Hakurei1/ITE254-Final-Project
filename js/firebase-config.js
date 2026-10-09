@@ -35,6 +35,23 @@ function getLoginPath() {
     }
 }
 
+function showGuestLoginLink() {
+    const nav = document.querySelector('.navbar-nav');
+    if (!nav || document.getElementById('guestLoginLink')) return;
+
+    const item = document.createElement('li');
+    item.className = 'nav-item';
+
+    const link = document.createElement('a');
+    link.id = 'guestLoginLink';
+    link.className = 'nav-link';
+    link.href = getLoginPath();
+    link.textContent = 'Sign in';
+
+    item.appendChild(link);
+    nav.appendChild(item);
+}
+
 function getUserDisplayName(user) {
     if (user.displayName) return user.displayName;
     if (user.email) return user.email;
@@ -98,6 +115,7 @@ function updateProfileAndDropdown(user) {
 firebase.auth().onAuthStateChanged(function(user) {
     const profileCircle = document.getElementById('userProfile');
     if (user) {
+        document.getElementById('guestLoginLink')?.closest('.nav-item')?.remove();
         updateProfileAndDropdown(user);
         if (typeof bootstrap !== 'undefined' && profileCircle) {
             // Reinitialize dropdown if needed (Bootstrap might already have it)
@@ -108,9 +126,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
     } else {
         if (profileCircle) profileCircle.classList.add('d-none');
-        const current = window.location.pathname;
-        if (!current.includes('Login.html') && !current.includes('Register.html') && !current.includes('settings.html')) {
-            window.location.href = getLoginPath();
-        }
+        showGuestLoginLink();
     }
 });
